@@ -22,5 +22,6 @@ const checkOpacity = function () {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
+    checkOpacity();
     listenToSlider();
 });
