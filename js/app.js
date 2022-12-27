@@ -8,12 +8,17 @@ const listenToSlider = function () {
 
     //change opacity of item based on slider value
     slider.addEventListener('input', function () {
-        document.querySelectorAll('.c-item__inner').forEach(function (item) {
-            item.style.setProperty('opacity', '0.2');
-        });
-        const activeElement = document.querySelectorAll('.c-item__inner')[slider.value];
-        activeElement.style.setProperty('opacity', '1');
+        checkOpacity();
     });
+};
+
+const checkOpacity = function () {
+  document.querySelectorAll(".c-item__inner").forEach(function (item) {
+    item.style.setProperty("opacity", "0.2");
+  });
+  const activeElement =
+    document.querySelectorAll(".c-item__inner")[slider.value];
+  activeElement.style.setProperty("opacity", "1");
 };
 
 document.addEventListener('DOMContentLoaded', function() {
