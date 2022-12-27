@@ -1,5 +1,10 @@
+let slider;
+
+const GetDomElements = function () {
+    slider = document.querySelector('.js-slider');
+}
+
 const listenToSlider = function () {
-    const slider = document.querySelector('.js-slider');
     const array_values = [0,232,464,696,928];
     //set transistion ptoperty to slider value
     slider.addEventListener('input', function () {
@@ -22,6 +27,7 @@ const checkOpacity = function () {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
+    GetDomElements();
     checkOpacity();
     listenToSlider();
 });
