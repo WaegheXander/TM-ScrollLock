@@ -1,3 +1,49 @@
+:root {
+  --global-color-alpha-xx-light: #c8c1eb;
+  --global-color-alpha-x-light: #7665cd;
+  --global-color-alpha: #4b38a8;
+  --global-color-alpha-x-dark: #2f236c;
+  --global-color-alpha-xx-dark: #1b143d;
+
+  --global-color-beta-xx-light: #fce2c5;
+  --global-color-beta-x-light: #f8bc77;
+  --global-color-beta: #f4962a;
+  --global-color-beta-x-dark: #9b5608;
+  --global-color-beta-xx-dark: #4e2b04;
+
+  --global-color-gray-xxxx-light: #f0f0f2;
+  --global-color-gray-xxx-light: #e0dfe6;
+  --global-color-gray-xx-light: #cecdd4;
+  --global-color-gray-x-light: #acaab3;
+  --global-color-gray: #908e99;
+  --global-color-gray-x-dark: #767480;
+  --global-color-gray-xx-dark: #5b5966;
+  --global-color-gray-xxx-dark: #3f3e4a;
+  --global-color-gray-xxxx-dark: #1e1d26;
+  --global-color-gray-xxxxx-dark: #010103;
+}
+
+@font-face {
+  font-family: "Urbanist";
+  src: url(../fonts/Urbanist-Light.ttf);
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Urbanist";
+  src: url(../fonts/Urbanist-Regular.ttf);
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Urbanist";
+  src: url(../fonts/Urbanist-Medium.ttf);
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Urbanist";
+  src: url(../fonts/Urbanist-Bold.ttf);
+  font-weight: 700;
+}
+
 body {
   display: flex;
   justify-content: center;
@@ -6,6 +52,22 @@ body {
   min-height: 100vh;
   min-width: 100%;
   box-sizing: border-box;
+  margin: 0;
+  font-family: "Urbanist", sans-serif;
+}
+
+p {
+  font-size: 24px;
+}
+
+.c-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  padding: 32px;
 }
 
 .c-slider {
@@ -132,4 +194,100 @@ body {
 .c-dot:nth-child(9) {
   top: 650px;
   left: 90px;
+}
+
+.c-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 100px);
+  grid-template-rows: repeat(3, 100px);
+  row-gap: 32px;
+  width: 100%;
+  max-width: 950px;
+}
+
+/*
+  primary color
+*/
+.c-grid__item:nth-child(1) {
+  background-color: var(--global-color-alpha-xx-light);
+}
+.c-grid__item:nth-child(2) {
+  background-color: var(--global-color-alpha-x-light);
+}
+.c-grid__item:nth-child(3) {
+  background-color: var(--global-color-alpha);
+}
+.c-grid__item:nth-child(4) {
+  background-color: var(--global-color-alpha-x-dark);
+}
+.c-grid__item:nth-child(5) {
+  background-color: var(--global-color-alpha-xx-dark);
+}
+
+/*
+  secondary color
+*/
+.c-grid__item:nth-child(6) {
+  grid-row-start: 2;
+  background-color: var(--global-color-beta-xx-light);
+}
+.c-grid__item:nth-child(7) {
+  grid-row-start: 2;
+  background-color: var(--global-color-beta-x-light);
+}
+.c-grid__item:nth-child(8) {
+  grid-row-start: 2;
+  background-color: var(--global-color-beta);
+}
+.c-grid__item:nth-child(9) {
+  grid-row-start: 2;
+  background-color: var(--global-color-beta-x-dark);
+}
+.c-grid__item:nth-child(10) {
+  grid-row-start: 2;
+  background-color: var(--global-color-beta-xx-dark);
+}
+
+/*
+  grayscale
+*/
+.c-grid__item:nth-child(11) {
+  grid-row-start: 3;
+  background-color: var(--global-color-gray-xxxx-light);
+}
+.c-grid__item:nth-child(12) {
+  grid-row-start: 3;
+  background-color: var(--global-color-gray-xxx-light);
+}
+.c-grid__item:nth-child(13) {
+  grid-row-start: 3;
+  background-color: var(--global-color-gray-xx-light);
+}
+.c-grid__item:nth-child(14) {
+  grid-row-start: 3;
+  background-color: var(--global-color-gray-x-light);
+}
+.c-grid__item:nth-child(15) {
+  grid-row-start: 3;
+  background-color: var(--global-color-gray);
+}
+.c-grid__item:nth-child(16) {
+  grid-row-start: 3;
+  background-color: var(--global-color-gray-x-dark);
+}
+.c-grid__item:nth-child(17) {
+  grid-row-start: 3;
+  background-color: var(--global-color-gray-xx-dark);
+}
+.c-grid__item:nth-child(18) {
+  grid-row-start: 3;
+  background-color: var(--global-color-gray-xxx-dark);
+}
+.c-grid__item:nth-child(19) {
+  grid-row-start: 3;
+  background-color: var(--global-color-gray-xxxx-dark);
+}
+.c-grid__item:nth-child(20) {
+  grid-row-start: 3;
+  background-color: var(--global-color-gray-xxxxx-dark);
 }

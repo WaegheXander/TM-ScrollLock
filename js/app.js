@@ -1,20 +1,20 @@
-let slider;
-
-const GetDomElements = function () {
-    slider = document.querySelector('.js-slider');
-}
-
 const listenToSlider = function () {
-    const array_values = [0,232,464,696,928];
-    //set transistion ptoperty to slider value
-    slider.addEventListener('input', function () {
-        document.querySelector('.js-active-item').style.setProperty('transform', 'translateX(' + array_values[slider.value] + 'px)');
-    });
+  const slider = document.querySelector(".js-slider");
+  const array_values = [0, 232, 464, 696, 928];
+  //set transistion ptoperty to slider value
+  slider.addEventListener("input", function () {
+    document
+      .querySelector(".js-active-item")
+      .style.setProperty(
+        "transform",
+        "translateX(" + array_values[slider.value] + "px)"
+      );
+  });
 
-    //change opacity of item based on slider value
-    slider.addEventListener('input', function () {
-        checkOpacity();
-    });
+  //change opacity of item based on slider value
+  slider.addEventListener("input", function () {
+    checkOpacity();
+  });
 };
 
 const checkOpacity = function () {
@@ -26,8 +26,6 @@ const checkOpacity = function () {
   activeElement.style.setProperty("opacity", "1");
 };
 
-document.addEventListener('DOMContentLoaded', function() {
-    GetDomElements();
-    checkOpacity();
-    listenToSlider();
+document.addEventListener("DOMContentLoaded", function () {
+  listenToSlider();
 });
