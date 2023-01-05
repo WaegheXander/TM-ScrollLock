@@ -1,4 +1,5 @@
 :root {
+  /* Colors */
   --global-color-alpha-xx-light: #c8c1eb;
   --global-color-alpha-x-light: #7665cd;
   --global-color-alpha: #4b38a8;
@@ -21,181 +22,451 @@
   --global-color-gray-xxx-dark: #3f3e4a;
   --global-color-gray-xxxx-dark: #1e1d26;
   --global-color-gray-xxxxx-dark: #010103;
+
+  --global-color-transparent: #01010333;
+
+  --global-color-white: var(--global-color-gray-xxxx-light);
+
+  --global-color-dark: var(--global-color-alpha-xx-dark);
+  --global-color-light: var(--global-color-alpha-xx-light);
+
+  --global-font-color: var(--global-color-gray-xxxxx-dark);
+  --global-background-color: var(--global-color-gray-xxxx-light);
+
+  /* Whitespace */
+  --global-baseline: 8px;
+  --global-whitespace-xs: calc(var(--global-baseline) / 2); /* = 4px */
+  --global-whitespace-sm: var(--global-baseline); /* = 8px */
+  --global-whitespace-md: calc(var(--global-baseline) * 2); /* = 16px */
+  --global-whitespace-lg: calc(var(--global-whitespace-sm) * 3); /* = 24px*/
+  --global-whitespace-xl: calc(var(--global-whitespace-md) * 2); /* = 32px */
+  --global-whitespace-xxl: calc(var(--global-whitespace-md) * 3); /* = 48px */
+
+  /* Input */
+  --global-input-borderColor: var(--global-color-xx-white);
+  --global-border-width: 1px;
+  --global-input-boxShadow: 0 0 0 2px var(--global-transparent-color-alpha);
+  --global-input-color: var(--global-color-white);
+
+  --global-color-border-dark: #656565;
 }
 
 @font-face {
-  font-family: "Urbanist";
+  font-family: 'Urbanist';
   src: url(../fonts/Urbanist-Light.ttf);
   font-weight: 300;
 }
 @font-face {
-  font-family: "Urbanist";
+  font-family: 'Urbanist';
   src: url(../fonts/Urbanist-Regular.ttf);
   font-weight: 400;
 }
 @font-face {
-  font-family: "Urbanist";
+  font-family: 'Urbanist';
   src: url(../fonts/Urbanist-Medium.ttf);
   font-weight: 500;
 }
 @font-face {
-  font-family: "Urbanist";
+  font-family: 'Urbanist';
   src: url(../fonts/Urbanist-Bold.ttf);
   font-weight: 700;
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  min-height: 100vh;
-  min-width: 100%;
+html {
+  line-height: calc(1rem * 1.5);
+  font-family: 'Urbanist', sans-serif;
+  font-size: 1em;
+  color: var(--global-color-gray-xxxxx-dark);
   box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--global-color-gray-xxxx-light);
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  font-family: inherit;
   margin: 0;
-  font-family: "Urbanist", sans-serif;
+  padding: 0;
 }
 
-p {
-  font-size: 24px;
+/*
+* Remove text-shadow in selection highlight:
+* https://twitter.com/miketaylr/status/12228805301
+*
+* Customize the background color to match your design.
+*/
+
+::selection {
+  background: var(--global-color-alpha);
+  color: var(--global-color-white);
+  text-shadow: none;
 }
 
-.c-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+/*------------------------------------*\
+#Elements
+\*------------------------------------*/
+
+/*
+Elements: Images
+---
+Default markup for images to make them responsive
+*/
+
+img {
+  max-width: 100%;
+  vertical-align: top;
+}
+
+/*
+    Elements: typography
+    ---
+    Default markup for typographic elements
+*/
+
+h1,
+h2,
+h3 {
+  font-weight: 600;
+}
+
+h1 {
+  font-size: calc(1rem * 2.25);
+  line-height: calc(1rem * 3);
+  margin: 0 0 var(--global-whitespace-lg);
+}
+
+h2 {
+  font-size: calc(1rem * 2);
+  line-height: calc(1rem * 2.5);
+  margin: 0 0 var(--global-whitespace-lg);
+}
+
+h3 {
+  font-size: calc(1rem * 1.625);
+  line-height: calc(1rem * 2);
+  margin: 0 0 var(--global-whitespace-lg);
+}
+
+h4,
+h5,
+h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: calc(1rem * 1.5);
+  margin: 0 0 var(--global-whitespace-lg);
+}
+
+p,
+ol,
+ul,
+dl,
+table,
+address,
+figure {
+  margin: 0 0 var(--global-whitespace-lg);
+}
+
+ul,
+ol {
+  padding-left: var(--global-whitespace-lg);
+}
+
+li ul,
+li ol {
+  margin-bottom: 0;
+}
+
+blockquote {
+  font-style: normal;
+  font-size: calc(1rem * 1.5);
+  line-height: calc(1rem * 2);
+  margin: 0 0 var(--global-whitespace-lg);
+}
+
+blockquote * {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+figcaption {
+  font-weight: 400;
+  font-size: calc(1rem * 0.75);
+  line-height: 1rem;
+  margin-top: var(--global-baseline);
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: LightGrey;
+  margin: 0 0 var(--global-whitespace-lg);
+}
+
+a {
+  transition: all var(--transition-alpha);
+  color: var(--global-color-alpha);
+  outline-color: var(--global-color-alpha);
+  outline-width: medium;
+  outline-offset: 2px;
+}
+
+a:visited,
+a:active {
+  color: var(--global-color-alpha);
+}
+
+a:hover,
+a:focus {
+  color: var(--global-color-alpha);
+}
+
+label,
+input {
+  display: inline-block;
+}
+
+select {
   width: 100%;
-  max-width: 1200px;
-  padding: 32px;
 }
 
-.c-slider {
+input::placeholder {
+  color: var(--global-placeholder-color);
+}
+
+input:disabled {
+  cursor: not-allowed;
+}
+
+/*------------------------------------*\
+#OBJECTS
+\*------------------------------------*/
+/*
+    Objects: Container
+    ---
+    Creates a horizontal container that sets de global max-width
+*/
+.o-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 26em;
+  width: 100%;
+}
+
+/*
+    Objects: List
+    ---
+    Small reusable object to remove default list styling from lists
+*/
+.o-list {
+  list-style: none;
+  padding: 0;
+}
+
+/*
+    Object: Button reset
+    ---
+    Small button reset object
+*/
+.o-button-reset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
   -webkit-appearance: none;
-  min-width: 950px;
-  height: 15px;
-  background: #ededed;
-  outline: none;
-  border-radius: 50px;
-  opacity: 0.7;
-  -webkit-transition: 0.2s;
-  transition: opacity 0.2s;
 }
 
-.c-slider:hover {
-  opacity: 1;
+/*
+    Object: Hide accessible
+    ---
+    Accessibly hide any element
+*/
+.o-hide-accessible {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 
-.c-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 40px;
-  height: 40px;
-  background-image: url(../img/arrow.svg);
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
+/*------------------------------------*\
+#COMPONENTS
+\*------------------------------------*/
+/*
+    Component: app
+    ---
+    Website main app
+*/
+
+.c-app {
+  --sidebar-bg-color: var(--global-color-alpha-xx-dark);
+  --topbat-bg-color: var(--global-color-gray-xxx-light);
+  --app-bg-color: var(--global-color-gray-xxxx-light);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 80px 1fr;
 }
 
-.c-slider::-moz-range-thumb {
-  width: 40px;
-  height: 40px;
-  background-image: url(../img/arrow.svg);
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
+.c-app__logo {
+  background-color: var(--sidebar-bg-color);
 }
 
-.c-wrap {
+.c-app__sidebar {
+  background-color: var(--sidebar-bg-color);
+}
+
+.c-app__topbar {
+  background-color: var(--topbat-bg-color);
+}
+
+.c-app__main {
+  background-color: var(--app-bg-color);
+}
+
+/*
+    Component: Logo
+    ---
+    Website main logo
+*/
+.c-logo {
+  width: 48px;
+  padding: 16px 0;
+  display: block;
+  margin: 0 auto;
+}
+
+/*
+    Component: Topbar
+    ---
+    Website main Topbar
+*/
+.c-topbar {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 32px;
+}
+
+.c-topbar__title {
+  font-size: 2em;
+  font-weight: 700;
+  color: var(--global-font-color);
+  margin-bottom: 0;
+}
+
+.c-topbar__user {
+  display: flex;
   align-items: center;
   gap: 32px;
-  margin-bottom: 32px;
+}
+
+.c-topbar-icon {
+  width: 32px;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--global-color-gray-xxxxx-dark);
+}
+
+.c-topbar__bell {
   position: relative;
 }
 
-.c-item {
-  width: 200px;
-  height: 700px;
-  background-image: url(../img/lowpoly.png);
+/* Uncomment to show notification dot
+.c-topbar__bell::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--global-color-beta);
+  position: absolute;
+  top: -4px;
+  right: 0;
+}
+*/
+
+.c-topbar__photo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--global-color-alpha-x-light);
+  background-image: url(../img/user.jpeg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  position: relative;
+
+  border: 2px solid var(--global-color-gray-xxxxx-dark);
+  box-shadow: 1px 1px 1px 1px var(--global-color-transparent);
 }
 
-.c-item-active {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 700px;
-  box-shadow: 0 0 2px 5px sandybrown;
-  transition: all 0.1s ease-in-out;
-  transform: translateX(0px);
-}
-
-.c-item__inner {
-  width: 200px;
+/*
+    Component: Sidebar
+    ---
+    Website main Sidebar
+*/
+.c-sidebar__nav {
   height: 100%;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 72px 16px 32px;
+}
+
+.c-sidebar__nav--top {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: relative;
+}
+.c-sidebar__link,
+.c-sidebar__link:visited {
+  z-index: 1;
+  width: 100%;
+  color: var(--global-color-gray-xxxx-light);
+}
+
+.c-sibebar--active {
+  background-color: var(--global-color-gray-xxxx-light);
+  border-radius: 100px 0 0 100px;
+  width: 70px;
+  height: 56px;
   position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0.2;
-  transition: all 0.1s ease-in;
+  right: -16px;
+  top: -16px;
+  display: block;
 }
 
-.c-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 5px solid white;
-  background-color: transparent;
-  cursor: pointer;
-  position: absolute;
+.c-sidebar__link--icon {
+  width: 100%;
 }
-
-.c-dot:nth-child(1) {
-  top: 50px;
-  left: 50px;
-}
-.c-dot:nth-child(2) {
-  top: 125px;
-  left: 100px;
-}
-.c-dot:nth-child(3) {
-  top: 200px;
-  left: 150px;
-}
-.c-dot:nth-child(4) {
-  top: 275px;
-  left: 75px;
-}
-.c-dot:nth-child(5) {
-  top: 350px;
-  left: 125px;
-}
-.c-dot:nth-child(6) {
-  top: 425px;
-  left: 125px;
-}
-.c-dot:nth-child(7) {
-  top: 500px;
-  left: 110px;
-}
-.c-dot:nth-child(8) {
-  top: 575px;
-  left: 60px;
-}
-.c-dot:nth-child(9) {
-  top: 650px;
-  left: 90px;
-}
-
+/*
+    Component: grid
+    ---
+    Website main grid
+*/
 .c-grid {
   display: grid;
   grid-template-columns: repeat(10, 100px);
