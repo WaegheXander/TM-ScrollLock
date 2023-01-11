@@ -629,8 +629,7 @@ input:disabled {
   color: var(--global-color-alpha-xx-dark);
 }
 
-.c-home__button,
-.c-home__button:active {
+.c-home__button {
   font-size: 12px;
   line-height: 1.5;
   font-weight: 700;
@@ -641,6 +640,10 @@ input:disabled {
   color: var(--global-color-gray-xxxxx-dark);
   background-color: transparent;
   transition: all 0.25s ease;
+}
+
+.c-home__button:active {
+  background-color: transparent;
 }
 
 @media (min-width: 768px) {
