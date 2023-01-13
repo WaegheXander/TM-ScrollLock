@@ -699,21 +699,24 @@ input:disabled {
   z-index: 1;
 }
 
-.c-wall__backgouround {
+.c-wall__backgouround-1 {
   position: absolute;
   top: 0;
   width: 100%;
   height: 100%;
+  background: url(../img/Wall/sander.jpg) no-repeat center center / cover;
   filter: blur(1px);
   z-index: -1;
 }
 
-.c-wall__backgouround-1 {
-  background: url(../img/Wall/sander.jpg) no-repeat center center / cover;
-}
-
 .c-wall__backgouround-2 {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
   background: url(../img/Wall/huygh.jpg) no-repeat center center / cover;
+  filter: blur(1px);
+  z-index: -1;
 }
 
 .c-wall__backgouround--filter {
