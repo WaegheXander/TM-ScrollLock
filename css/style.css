@@ -704,19 +704,16 @@ input:disabled {
   top: 0;
   width: 100%;
   height: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
   filter: blur(1px);
   z-index: -1;
 }
 
 .c-wall__backgouround-1 {
-  background-image: url(/img/Wall/sander.jpg);
+  background: url(../img/Wall/sander.jpg) no-repeat center center / cover;
 }
 
 .c-wall__backgouround-2 {
-  background-image: url(/img/Wall/huygh.jpg);
+  background: url(../img/Wall/huygh.jpg) no-repeat center center / cover;
 }
 
 .c-wall__backgouround--filter {
