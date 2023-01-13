@@ -676,14 +676,97 @@ input:disabled {
   }
 }
 
+.c-Routes__wall {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.c-wall {
+  height: 100%;
+  width: 300px;
+  transition: all 250ms ease-in;
+  position: relative;
+  z-index: 0;
+}
+
+.c-wall:hover {
+  transform: scaleX(1.05);
+  z-index: 1;
+}
+
+.c-wall__backgouround {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: blur(1px);
+  z-index: -1;
+}
+
+.c-wall__backgouround-1 {
+  background-image: url(/img/Wall/sander.png);
+}
+
+.c-wall__backgouround-2 {
+  background-image: url(/img/Wall/huygh.jpg);
+}
+
+.c-wall__backgouround--filter {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #7665cd67;
+  z-index: -1;
+}
+
+.c-wall__content {
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+  color: var(--global-color-gray-xxxx-light);
+}
+
+.c-wall__content--button {
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 2px solid var(--global-color-beta);
+  color: var(--global-color-gray-xxxxx-light);
+  background-color: transparent;
+  transition: all 0.25s ease;
+}
+
+.c-wall__content--button:focus,
+.c-wall__content--button:hover {
+  background-color: var(--global-color-beta);
+  color: var(--global-color-alpha-xxxx-light);
+}
+
+.c-wall__content--button:active {
+  background-color: transparent;
+}
+
 /*
   Utility: Text
 */
 
 .u-mb-clear {
   margin-bottom: 0;
-}
-
-body:has(.has-mobile-nav) {
-  background-color: var(--global-color-alpha-xx-dark);
 }
