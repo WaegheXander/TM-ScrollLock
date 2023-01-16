@@ -1,0 +1,170 @@
+[
+  {
+    "ID": 65,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [8, 1],
+    "route": 1
+  },
+  {
+    "ID": 92,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [11, 4],
+    "route": 1
+  },
+  {
+    "ID": 34,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [10, 7],
+    "route": 1
+  },
+  {
+    "ID": 3,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [13, 10],
+    "route": 1
+  },
+  {
+    "ID": 13,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [9, 13],
+    "route": 1
+  },
+  {
+    "ID": 93,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [10, 16],
+    "route": 1
+  },
+  {
+    "ID": 32,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [9, 19],
+    "route": 1
+  },
+  {
+    "ID": 22,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [10, 22],
+    "route": 1
+  },
+  {
+    "ID": 30,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [10, 25],
+    "route": 1
+  },
+  {
+    "ID": 51,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [11, 28],
+    "route": 1
+  },
+  {
+    "ID": 94,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [8, 31],
+    "route": 1
+  },
+  {
+    "ID": 87,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [12, 34],
+    "route": 1
+  },
+  {
+    "ID": 47,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [13, 37],
+    "route": 1
+  },
+  {
+    "ID": 85,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [9, 40],
+    "route": 1
+  },
+  {
+    "ID": 44,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [12, 43],
+    "route": 1
+  },
+  {
+    "ID": 82,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [12, 46],
+    "route": 1
+  },
+  {
+    "ID": 93,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [10, 49],
+    "route": 1
+  },
+  {
+    "ID": 17,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [11, 52],
+    "route": 1
+  },
+  {
+    "ID": 27,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [12, 55],
+    "route": 1
+  },
+  {
+    "ID": 37,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [10, 58],
+    "route": 1
+  },
+  {
+    "ID": 63,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [11, 61],
+    "route": 1
+  },
+  {
+    "ID": 45,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [10, 64],
+    "route": 1
+  },
+  {
+    "ID": 9,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [12, 67],
+    "route": 1
+  },
+  {
+    "ID": 54,
+    "type": "handgrip",
+    "handgriptype": "Bak",
+    "point": [13, 70],
+    "route": 1
+  }
+]

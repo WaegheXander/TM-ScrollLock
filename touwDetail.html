@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Routes - KlimApp</title>
+    <title>KlimApp - Touw Detail</title>
 
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -13,6 +13,7 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <link rel="manifest" href="manifest.json" />
 
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="js/app.js"></script>
   </head>
   <body>
@@ -41,7 +42,7 @@
         <nav class="c-nav">
           <ul class="o-list c-nav__list u-mb-clear">
             <li class="c-nav__item"><a href="index.html" class="c-nav__link">Home</a></li>
-            <li class="c-nav__item"><a href="routes.html" class="c-nav__link is-selected">Routes</a></li>
+            <li class="c-nav__item"><a href="routes.html" class="c-nav__link">Routes</a></li>
             <li class="c-nav__item"><a href="#!" class="c-nav__link">Ranglijst</a></li>
             <li class="c-nav__item"><a href="#!" class="c-nav__link">Tijdlijn</a></li>
           </ul>
@@ -120,22 +121,8 @@
         </div>
       </div>
     </aside>
-
-    <section class="c-Routes__touw">
-      <div class="c-touw">
-        <div class="c-touw__backgouround c-touw__backgouround-1"></div>
-        <div class="c-touw__content">
-          <h1 class="c-touw__content--title">Touw 1</h1>
-          <a href="touwDetail.html?touw=1" class="c-touw__content--button">Bekijk routes</a>
-        </div>
-      </div>
-      <div class="c-touw">
-        <div class="c-touw__backgouround c-touw__backgouround-2"></div>
-        <div class="c-touw__content">
-          <h1 class="c-touw__content--title">Touw 2</h1>
-          <a href="touwDetail.html?touw=1" class="c-touw__content--button">Bekijk routes</a>
-        </div>
-      </div>
-    </section>
+    <div class="c-detailRoute">
+      <div class="c-wall js-wall"></div>
+    </div>
   </body>
 </html>

@@ -321,6 +321,10 @@ input:disabled {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  width: 100%;
 }
 
 .c-header__nav {
@@ -441,7 +445,7 @@ input:disabled {
   height: 2px;
   background-color: var(--global-color-gray-xxxx-light);
   transition: width 0.1s ease-in-out, left 0.1s ease-in-out;
-  transition: background-color 0.1 ease-in-out;
+  transition: background-color 0.1s ease-in-out;
 }
 
 .c-nav__link:active {
@@ -477,6 +481,7 @@ input:disabled {
   height: 100vh;
   pointer-events: none;
   transition: all 0.5s ease-in;
+  z-index: 1;
 }
 
 .has-mobile-nav .c-mobile-nav {
@@ -498,7 +503,7 @@ input:disabled {
   bottom: 0;
   right: 0;
   background-color: #202024;
-  transition: opacity 0.5 ease;
+  transition: opacity 0.5s ease;
 }
 
 .has-mobile-nav .c-mobile-nav__bg {
@@ -513,7 +518,7 @@ input:disabled {
   clip-path: polygon(0 0, 100% 0, 100% 72vh, 0% 100%);
   background-color: var(--global-color-alpha-xx-dark);
   opacity: 0;
-  transform: translateX(-100);
+  transform: translateX(-100px);
   transition: transform 0.25s ease;
 }
 
@@ -525,7 +530,7 @@ input:disabled {
 .c-page {
   opacity: 1;
   transform: translateX(0);
-  transition: transform 0.25 ease;
+  transition: transform 0.25s ease;
 }
 
 .has-mobile-nav .c-page {
@@ -676,62 +681,54 @@ input:disabled {
   }
 }
 
-.c-Routes__wall {
-  position: absolute;
-  top: 0;
-  z-index: -1;
+.c-Routes__touw {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 
-.c-wall {
+.c-touw {
   height: 100%;
-  width: 300px;
+  width: 100%;
   transition: all 250ms ease-in;
   position: relative;
   z-index: 0;
+  overflow: hidden;
 }
 
-.c-wall:hover {
-  transform: scaleX(1.05);
-  z-index: 1;
+.c-touw__backgouround {
+  transition: all 200ms ease-in;
 }
 
-.c-wall__backgouround-1 {
+.c-touw:hover .c-touw__backgouround {
+  transform: scale(1.25);
+}
+
+.c-touw__backgouround-1 {
   position: absolute;
   top: 0;
   width: 100%;
   height: 100%;
   background: url(../img/Wall/sander.jpg) no-repeat center center / cover;
-  filter: blur(1px);
+  filter: sepia(50%) saturate(350%) hue-rotate(210deg) brightness(50%) blur(1px);
   z-index: -1;
 }
 
-.c-wall__backgouround-2 {
+.c-touw__backgouround-2 {
   position: absolute;
   top: 0;
   width: 100%;
   height: 100%;
   background: url(../img/Wall/huygh.jpg) no-repeat center center / cover;
-  filter: blur(1px);
+  filter: sepia(50%) saturate(350%) hue-rotate(210deg) brightness(50%) blur(1px);
   z-index: -1;
 }
 
-.c-wall__backgouround--filter {
-  position: absolute;
-  top: 0;
+.c-touw__content {
   width: 100%;
-  height: 100%;
-  background-color: #7665cd67;
-  z-index: -1;
-}
-
-.c-wall__content {
-  width: 100%;
-  height: 100%;
-  z-index: 10;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -740,7 +737,7 @@ input:disabled {
   color: var(--global-color-gray-xxxx-light);
 }
 
-.c-wall__content--button {
+.c-touw__content--button {
   font-size: 12px;
   line-height: 1.5;
   font-weight: 700;
@@ -753,14 +750,25 @@ input:disabled {
   transition: all 0.25s ease;
 }
 
-.c-wall__content--button:focus,
-.c-wall__content--button:hover {
+.c-touw__content--button:focus,
+.c-touw__content--button:hover {
   background-color: var(--global-color-beta);
   color: var(--global-color-alpha-xxxx-light);
 }
 
-.c-wall__content--button:active {
+.c-touw__content--button:active {
   background-color: transparent;
+}
+
+@media (min-width: 768px) {
+  .c-Routes__touw {
+    flex-direction: row;
+  }
+
+  .c-touw {
+    max-width: 300px;
+    height: 100vh;
+  }
 }
 
 /*
@@ -769,4 +777,88 @@ input:disabled {
 
 .u-mb-clear {
   margin-bottom: 0;
+}
+
+.c-detailRoute {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 32px;
+}
+
+.c-wall {
+  display: grid;
+  place-content: center;
+  margin-top: 150px;
+  gap: 10px;
+  grid-template-columns: repeat(20, 4px);
+  grid-template-rows: repeat(71, 4px);
+  background-color: var(--global-color-gray-xxx-light);
+  padding: 16px;
+  position: relative;
+}
+
+.c-wall__grid--item {
+  background-color: var(--global-color-gray-x-light);
+}
+
+.c-wall__grid--item--grip::after {
+  content: '';
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+  left: -8px;
+  top: -8px;
+  background: url(../img/grips/Sloper.svg) no-repeat center center / 100%;
+}
+
+.c-wall--meta {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.c-wall__svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 16px;
+  width: 100%;
+  height: 100%;
+}
+
+.js-path {
+  stroke-dasharray: 5000;
+  stroke-dashoffset: 5000;
+  animation: path 2s linear forwards;
+}
+
+@keyframes path {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .c-detailRoute {
+    padding: 16px;
+  }
+  .c-wall {
+    gap: 16px;
+    padding: 32px;
+  }
+  .c-wall__svg {
+    padding: 32px;
+  }
+  .c-wall__grid--item--grip::after {
+    width: 24px;
+    height: 24px;
+    left: -12px;
+    top: -12px;
+  }
 }
