@@ -435,6 +435,7 @@ input:disabled {
   border-color: var(--global-color-beta);
 }
 
+.is-selected:after,
 .c-nav__link:after {
   content: '';
   pointer-events: none;
@@ -445,6 +446,11 @@ input:disabled {
   height: 2px;
   background-color: var(--global-color-gray-xxxx-light);
   transition: all 0.1s ease-in-out;
+}
+
+.is-selected:after {
+  width: 100%;
+  max-width: 40px;
 }
 
 .c-nav__link:active {
@@ -563,7 +569,7 @@ input:disabled {
   position: absolute;
   top: 0;
   left: 0;
-  background: url(../img/LW002.jpg) no-repeat center center / cover;
+  background: url(../img/Background.jpg) no-repeat center center / cover;
   width: 100%;
   height: 100%;
   z-index: -1;
@@ -583,7 +589,7 @@ input:disabled {
   position: absolute;
   top: 0;
   right: 0;
-  background: url(../img/man.png) no-repeat center center / cover;
+  background: url(../img/man.svg) no-repeat center center / cover;
   width: 50%;
   height: 100%;
   z-index: -1;
@@ -712,6 +718,7 @@ input:disabled {
   height: 100%;
   background: url(../img/Wall/sander.jpg) no-repeat center center / cover;
   filter: sepia(50%) saturate(350%) hue-rotate(210deg) brightness(50%) blur(1px);
+  transform: scale(1.05);
   z-index: -1;
 }
 
@@ -722,6 +729,7 @@ input:disabled {
   height: 100%;
   background: url(../img/Wall/huygh.jpg) no-repeat center center / cover;
   filter: sepia(50%) saturate(350%) hue-rotate(210deg) brightness(50%) blur(1px);
+  transform: scale(1.05);
   z-index: -1;
 }
 
