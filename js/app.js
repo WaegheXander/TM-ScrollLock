@@ -24,11 +24,55 @@ const showWall = function () {
 
 const getWallRoutes = function () {
   return fetch('https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
+  // return fetch('http://127.0.0.1:5500/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
 };
 
+let wall, wallItem, selectedPath;
+
 const showGrips = async function () {
-  let wall = document.querySelectorAll('.c-wall');
-  let wallItem = document.querySelectorAll('.c-wall__grid--item');
+  wall = document.querySelectorAll('.c-wall');
+  wallItem = document.querySelectorAll('.c-wall__grid--item');
+  const routes = await getWallRoutes();
+
+  for (let i = 0; i < routes.length; i++) {
+    let x = routes[i].point[0];
+    let y = routes[i].point[1];
+    let index = x - 1 + (y - 1) * 20;
+    wallItem[index].classList.add('c-wall__grid--item--grip');
+    console;
+
+    switch (routes[i].handgriptype) {
+      case 'Bak':
+        wallItem[index].classList.add('c-wall__grid--item--grip--bak');
+        break;
+      case 'Sloper':
+        wallItem[index].classList.add('c-wall__grid--item--grip--sloper');
+        break;
+      case 'Crimp':
+        wallItem[index].classList.add('c-wall__grid--item--grip--crimp');
+        break;
+      case 'Pocket':
+        wallItem[index].classList.add('c-wall__grid--item--grip--pocket');
+        break;
+      case 'Jug':
+        wallItem[index].classList.add('c-wall__grid--item--grip--jug');
+        break;
+      case 'Undercling':
+        wallItem[index].classList.add('c-wall__grid--item--grip--undercling');
+        break;
+      case 'Mono':
+        wallItem[index].classList.add('c-wall__grid--item--grip--mono');
+        break;
+      case 'Bidoigt':
+        wallItem[index].classList.add('c-wall__grid--item--grip--bidoigt');
+        break;
+    }
+  }
+  selectedPath = 3;
+  drawSelectedPath(selectedPath);
+};
+
+const drawSelectedPath = async function (selectedPath) {
   const routes = await getWallRoutes();
 
   const topDiffrence = wallItem[20].getBoundingClientRect().top - wallItem[0].getBoundingClientRect().top;
@@ -36,6 +80,9 @@ const showGrips = async function () {
 
   let cords = [];
   for (let i = 0; i < routes.length; i++) {
+    if (routes[i].route !== selectedPath) {
+      continue;
+    }
     let top = routes[i].point[0] * topDiffrence - topDiffrence;
     if (top < 0) {
       top = 0;
@@ -56,13 +103,6 @@ const showGrips = async function () {
     .curve(d3.curveCardinal);
 
   d3.select('#gfg').append('path').attr('d', Gen(points)).attr('fill', 'none').attr('stroke', '#5804f4').attr('stroke-width', '2').attr('class', 'js-path');
-
-  for (let i = 0; i < routes.length; i++) {
-    let x = routes[i].point[0];
-    let y = routes[i].point[1];
-    let index = x - 1 + (y - 1) * 20;
-    wallItem[index].classList.add('c-wall__grid--item--grip');
-  }
 
   animatePath();
 };

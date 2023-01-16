@@ -811,7 +811,7 @@ input:disabled {
   background-color: var(--global-color-gray-x-light);
 }
 
-.c-wall__grid--item--grip::after {
+.c-wall__grid--item--grip:after {
   content: '';
   position: relative;
   display: block;
@@ -819,7 +819,35 @@ input:disabled {
   height: 16px;
   left: -8px;
   top: -8px;
+  background-image: url(../img/grips/Bak.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100%;
+}
+
+.c-wall__grid--item--grip--bak:after {
+  background: url(../img/grips/Bak.svg) no-repeat center center / 100%;
+}
+.c-wall__grid--item--grip--sloper:after {
   background: url(../img/grips/Sloper.svg) no-repeat center center / 100%;
+}
+.c-wall__grid--item--grip--crimp:after {
+  background: url(../img/grips/Crimp.svg) no-repeat center center / 100%;
+}
+.c-wall__grid--item--grip--pocket:after {
+  background: url(../img/grips/Pocket.svg) no-repeat center center / 100%;
+}
+.c-wall__grid--item--grip--jug:after {
+  background: url(../img/grips/Jug.svg) no-repeat center center / 100%;
+}
+.c-wall__grid--item--grip--undercling:after {
+  background: url(../img/grips/Undercling.svg) no-repeat center center / 100%;
+}
+.c-wall__grid--item--grip--mono:after {
+  background: url(../img/grips/Mono.svg) no-repeat center center / 100%;
+}
+.c-wall__grid--item--grip--bidoigt:after {
+  background: url(../img/grips/Bidoigt.svg) no-repeat center center / 100%;
 }
 
 .c-wall--meta {
