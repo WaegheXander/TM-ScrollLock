@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   toggleNav();
+
   if (document.querySelector('#ropeDetail')) {
     showWall();
     stars();
@@ -8,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 const stars = function () {
   const starEls = document.querySelectorAll('.star.rating');
+
   starEls.forEach((star) => {
     star.addEventListener('click', function (e) {
       let starEl = e.currentTarget;
@@ -19,6 +21,7 @@ const stars = function () {
 
 function toggleNav() {
   let toggleTrigger = document.querySelectorAll('.js-toggle-nav');
+
   for (let i = 0; i < toggleTrigger.length; i++) {
     toggleTrigger[i].addEventListener('click', function () {
       document.querySelector('body').classList.toggle('has-mobile-nav');
@@ -28,9 +31,11 @@ function toggleNav() {
 
 const showWall = function () {
   let html = '';
+
   for (let i = 0; i < 1420; i++) {
     html += '<div class="c-wall__grid--item"></div>';
   }
+
   html += '<svg id="gfg" width="200" height="200" class="c-wall__svg"></svg>';
   document.querySelector('.js-wall').innerHTML = html;
   showGrips();
@@ -81,11 +86,14 @@ const showGrips = async function () {
         break;
     }
   }
+
+  drawSelectedPath(1);
   listenToRouteClick();
 };
 
 const listenToRouteClick = function () {
   let options = document.querySelectorAll('.js-path-select');
+
   options.forEach((option) => {
     option.addEventListener('change', function (event) {
       let selectedPath = this.dataset.id;
@@ -99,19 +107,28 @@ const drawSelectedPath = function (selectedPath) {
   const leftDiffrence = wallItem[1].getBoundingClientRect().left - wallItem[0].getBoundingClientRect().left;
 
   let cords = [];
+
   for (let i = 0; i < routes.length; i++) {
     if (routes[i].route !== selectedPath) {
       continue;
     }
+
     let top = routes[i].point[0] * topDiffrence - topDiffrence;
+
     if (top < 0) {
       top = 0;
     }
+
     let left = routes[i].point[1] * leftDiffrence - leftDiffrence;
+
     if (left < 0) {
       left = 0;
     }
-    cords.push({ xpoint: top, ypoint: left });
+
+    cords.push({
+      xpoint: top,
+      ypoint: left,
+    });
   }
 
   var points = cords;

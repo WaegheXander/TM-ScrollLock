@@ -412,6 +412,18 @@ input:disabled {
   padding: 8px 0;
 }
 
+.c-nav__link:after {
+  content: '';
+  pointer-events: none;
+  bottom: -2px;
+  left: 0;
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: var(--global-color-gray-xxxx-light);
+  transition: all 0.1s ease-in-out;
+}
+
 .c-nav__link--meta {
   border: 2px solid var(--global-color-gray-xx-light);
 }
@@ -429,10 +441,10 @@ input:disabled {
   color: var(--global-color-gray-xxxx-light);
 }
 
+.is-selected:after,
 .c-nav__link:focus:after,
 .c-nav__link:hover:after {
-  width: 100%;
-  max-width: 40px;
+  max-width: 30px;
 }
 
 .c-nav__link--meta:focus:after,
@@ -443,24 +455,6 @@ input:disabled {
 .c-nav__link--meta:focus,
 .c-nav__link--meta:hover {
   border-color: var(--global-color-beta);
-}
-
-.is-selected:after,
-.c-nav__link:after {
-  content: '';
-  pointer-events: none;
-  bottom: -2px;
-  left: 0;
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  background-color: var(--global-color-gray-xxxx-light);
-  transition: all 0.1s ease-in-out;
-}
-
-.is-selected:after {
-  width: 100%;
-  max-width: 40px;
 }
 
 .c-nav__link:active {
@@ -478,6 +472,7 @@ input:disabled {
     margin-right: -16px;
   }
 
+  .is-selected,
   .c-nav__link {
     padding: 4px 16px;
   }
@@ -723,6 +718,10 @@ input:disabled {
   transform: scale(1.25);
 }
 
+.c-touw:hover .c-touw__content--button {
+  transform: scale(1.20);
+}
+
 .c-touw__backgouround-1 {
   position: absolute;
   top: 0;
@@ -750,7 +749,6 @@ input:disabled {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 32px;
   justify-content: center;
   align-items: center;
   color: var(--global-color-gray-xxxx-light);
@@ -767,6 +765,12 @@ input:disabled {
   color: var(--global-color-gray-xxxxx-light);
   background-color: transparent;
   transition: all 0.25s ease;
+}
+
+.c-touw__content--button:focus,
+.c-touw__content--button:hover {
+  background-color: var(--global-color-beta);
+  color: var(--global-color-alpha-xxxx-light);
 }
 
 .c-touw__content--button:focus,
@@ -807,7 +811,13 @@ input:disabled {
   width: 100%;
   height: 100%;
   position: relative;
-  top: 125px;
+  top: 700px;
+}
+
+@media (min-width: 768px) {
+  .c-detailRoute {
+    top: 125px;
+  }
 }
 
 .c-wall {
