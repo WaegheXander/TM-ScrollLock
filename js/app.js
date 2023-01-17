@@ -1,7 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
   toggleNav();
-  if (document.querySelector('#ropeDetail')) showWall();
+  if (document.querySelector('#ropeDetail')) {
+    showWall();
+    stars();
+  }
 });
+
+const stars = function () {
+  const starEls = document.querySelectorAll('.star.rating');
+  starEls.forEach((star) => {
+    star.addEventListener('click', function (e) {
+      let starEl = e.currentTarget;
+      let starRating = starEl.dataset.rating;
+      starEl.parentNode.setAttribute('data-stars', starRating);
+    });
+  });
+};
 
 function toggleNav() {
   let toggleTrigger = document.querySelectorAll('.js-toggle-nav');
@@ -23,8 +37,8 @@ const showWall = function () {
 };
 
 const getWallRoutes = function () {
-  // return fetch('https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
-  return fetch('http://127.0.0.1:5500/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
+  return fetch('https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
+  // return fetch('http://127.0.0.1:5500/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
 };
 
 let wall, wallItem, routes;

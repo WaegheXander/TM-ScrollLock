@@ -1,48 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
+< !DOCTYPE html>
+  <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KlimApp - Touw Detail</title>
-
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
-
     <link rel="icon" href="favicon.svg" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <link rel="manifest" href="manifest.json" />
-
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="js/app.js"></script>
   </head>
+
   <body id="ropeDetail">
     <header class="c-header">
       <div class="c-header__logo">
-        <a href="index.html" class="c-logo u-mb-clear">
-          <svg xmlns="http://www.w3.org/2000/svg" class="c-logo__symbol" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+        <a href="index.html" class="c-logo u-mb-clear"><svg xmlns="http://www.w3.org/2000/svg"
+            class="c-logo__symbol" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32"
+            viewBox="0 0 32 32">
             <defs>
               <style>
                 .x {
                   clip-path: url(#b);
                 }
+
                 .y {
                   fill: #44c9f6;
                   stroke: rgba(0, 0, 0, 0);
                   stroke-miterlimit: 10;
                 }
               </style>
-              <clipPath id="x"><rect width="32" height="32" /></clipPath>
+              <clipPath id="x">
+                <rect width="32" height="32" />
+              </clipPath>
             </defs>
-            <g id="y" class="a"><path class="b" d="M-955.584,341.472l-2.942-1.7v-5.662l4.91,2.71,4.91-2.71v5.662l-2.942,1.7a3.932,3.932,0,0,1-1.968.528A3.932,3.932,0,0,1-955.584,341.472Zm12.565-20.839a.848.848,0,0,0-1.272-.734l-9.318,5.257-9.332-5.257a.848.848,0,0,0-1.272.734v15.857l-1.819-1.05A3.939,3.939,0,0,1-968,332.033V319.967a3.939,3.939,0,0,1,1.968-3.408l10.448-6.031a3.933,3.933,0,0,1,3.936,0l10.448,6.031a3.938,3.938,0,0,1,1.968,3.408v12.065a3.938,3.938,0,0,1-1.968,3.408l-1.819,1.05Z" transform="translate(970 -310)" /></g>
-          </svg>
-        </a>
+            <g id="y" class="a">
+              <path class="b"
+                d="M-955.584,341.472l-2.942-1.7v-5.662l4.91,2.71,4.91-2.71v5.662l-2.942,1.7a3.932,3.932,0,0,1-1.968.528A3.932,3.932,0,0,1-955.584,341.472Zm12.565-20.839a.848.848,0,0,0-1.272-.734l-9.318,5.257-9.332-5.257a.848.848,0,0,0-1.272.734v15.857l-1.819-1.05A3.939,3.939,0,0,1-968,332.033V319.967a3.939,3.939,0,0,1,1.968-3.408l10.448-6.031a3.933,3.933,0,0,1,3.936,0l10.448,6.031a3.938,3.938,0,0,1,1.968,3.408v12.065a3.938,3.938,0,0,1-1.968,3.408l-1.819,1.05Z"
+                transform="translate(970 -310)" />
+            </g>
+          </svg></a>
       </div>
       <div class="c-header__nav c-header__nav--main">
         <nav class="c-nav">
           <ul class="o-list c-nav__list u-mb-clear">
             <li class="c-nav__item"><a href="index.html" class="c-nav__link">Home</a></li>
-            <li class="c-nav__item"><a href="routes.html" class="c-nav__link is-selected">Routes</a></li>
+            <li class="c-nav__item"><a href="routes.html" class="c-nav__link is-selected">Routes</a>
+            </li>
             <li class="c-nav__item"><a href="#!" class="c-nav__link">Ranglijst</a></li>
             <li class="c-nav__item"><a href="#!" class="c-nav__link">Community</a></li>
           </ul>
@@ -51,12 +58,9 @@
       <div class="c-header__nav">
         <nav class="c-nav c-nav--meta">
           <ul class="o-list c-nav__list u-mb-clear">
-            <li class="c-nav__item">
-              <a href="#!" class="c-nav__link">Login</a>
-            </li>
-            <li class="c-nav__item">
-              <a href="#!" class="c-nav__link c-nav__link--meta">Registreer</a>
-            </li>
+            <li class="c-nav__item"><a href="#!" class="c-nav__link">Login</a></li>
+            <li class="c-nav__item"><a href="#!"
+                class="c-nav__link c-nav__link--meta">Registreer</a></li>
           </ul>
         </nav>
       </div>
@@ -73,26 +77,35 @@
       <div class="c-mobile-nav__body">
         <div class="c-mobile-nav__header">
           <p class="c-logo">
-            <svg xmlns="http://www.w3.org/2000/svg" class="c-logo__symbol" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+            <svg xmlns="http://www.w3.org/2000/svg" class="c-logo__symbol"
+              xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
               <defs>
                 <style>
                   .a {
                     clip-path: url(#b);
                   }
+
                   .b {
                     fill: #44c9f6;
                     stroke: rgba(0, 0, 0, 0);
                     stroke-miterlimit: 10;
                   }
                 </style>
-                <clipPath id="b"><rect width="32" height="32" /></clipPath>
+                <clipPath id="b">
+                  <rect width="32" height="32" />
+                </clipPath>
               </defs>
-              <g id="a" class="a"><path class="b" d="M-955.584,341.472l-2.942-1.7v-5.662l4.91,2.71,4.91-2.71v5.662l-2.942,1.7a3.932,3.932,0,0,1-1.968.528A3.932,3.932,0,0,1-955.584,341.472Zm12.565-20.839a.848.848,0,0,0-1.272-.734l-9.318,5.257-9.332-5.257a.848.848,0,0,0-1.272.734v15.857l-1.819-1.05A3.939,3.939,0,0,1-968,332.033V319.967a3.939,3.939,0,0,1,1.968-3.408l10.448-6.031a3.933,3.933,0,0,1,3.936,0l10.448,6.031a3.938,3.938,0,0,1,1.968,3.408v12.065a3.938,3.938,0,0,1-1.968,3.408l-1.819,1.05Z" transform="translate(970 -310)" /></g>
+              <g id="a" class="a">
+                <path class="b"
+                  d="M-955.584,341.472l-2.942-1.7v-5.662l4.91,2.71,4.91-2.71v5.662l-2.942,1.7a3.932,3.932,0,0,1-1.968.528A3.932,3.932,0,0,1-955.584,341.472Zm12.565-20.839a.848.848,0,0,0-1.272-.734l-9.318,5.257-9.332-5.257a.848.848,0,0,0-1.272.734v15.857l-1.819-1.05A3.939,3.939,0,0,1-968,332.033V319.967a3.939,3.939,0,0,1,1.968-3.408l10.448-6.031a3.933,3.933,0,0,1,3.936,0l10.448,6.031a3.938,3.938,0,0,1,1.968,3.408v12.065a3.938,3.938,0,0,1-1.968,3.408l-1.819,1.05Z"
+                  transform="translate(970 -310)" />
+              </g>
             </svg>
           </p>
           <button class="o-button-reset c-nav-trigger js-toggle-nav">
             <svg class="c-nav-trigger__svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
             </svg>
           </button>
         </div>
@@ -100,7 +113,8 @@
           <nav class="c-nav">
             <ul class="o-list c-nav__list">
               <li class="c-nav__item"><a href="index.html" class="c-nav__link">Home</a></li>
-              <li class="c-nav__item"><a href="routes.html" class="c-nav__link is-selected">Routes</a></li>
+              <li class="c-nav__item"><a href="routes.html"
+                  class="c-nav__link is-selected">Routes</a></li>
               <li class="c-nav__item"><a href="#!" class="c-nav__link">Ranglijst</a></li>
               <li class="c-nav__item"><a href="#!" class="c-nav__link">Community</a></li>
             </ul>
@@ -109,12 +123,8 @@
         <div class="c-mobile-nav__nav">
           <nav class="c-nav c-nav--meta">
             <ul class="o-list c-nav__list">
-              <li class="c-nav__item">
-                <a href="#!" class="c-nav__link">Login</a>
-              </li>
-              <li class="c-nav__item">
-                <a href="#!" class="c-nav__link">Registreer</a>
-              </li>
+              <li class="c-nav__item"><a href="#!" class="c-nav__link">Login</a></li>
+              <li class="c-nav__item"><a href="#!" class="c-nav__link">Registreer</a></li>
             </ul>
           </nav>
         </div>
@@ -127,58 +137,167 @@
           <h3 class="c-wall__routes--title">Touw 1</h3>
           <h6 class="c-wall__routes--subtitle">selecteer de route die u wilt zien</h6>
           <div class="c-wall__routes--options js-wall_route--options">
-            <input class="o-hide-accessible c-options c-option--hidden js-path-select" type="radio" id="route1" name="routes" data-id="1" />
-            <label class="c-label c-label--options c-custom-options" for="route1">
-              <span class="u-mb-clear c-wall__rating--title">Route 1</span>
-              <span class="u-mb-clear c-wall__rating--subtitle">Niveu: <span>5B</span></span>
-              <span class="u-mb-s c-wall__rating--subtitle">Builder: <span>Some name :)</span></span>
-              <span class="u-mb-clear c-wall__rating--subtitle">Rating:</span>
-              <span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-              </span>
-            </label>
-            <input class="o-hide-accessible c-options c-option--hidden js-path-select" type="radio" id="route2" name="routes" data-id="2" />
-            <label class="c-label c-label--options c-custom-options" for="route2">
-              <span class="u-mb-clear c-wall__rating--title">Route 2</span>
-              <span class="u-mb-clear c-wall__rating--subtitle">Niveu: <span>2A</span></span>
-              <span class="u-mb-s c-wall__rating--subtitle">Builder: <span>Some other name</span></span>
-              <span class="u-mb-clear c-wall__rating--subtitle">Rating:</span>
-              <span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-              </span>
-            </label>
-            <input class="o-hide-accessible c-options c-option--hidden js-path-select" type="radio" id="route3" name="routes" data-id="3" />
-            <label class="c-label c-label--options c-custom-options" for="route3">
-              <span class="u-mb-clear c-wall__rating--title">Route 3</span>
-              <span class="u-mb-clear c-wall__rating--subtitle">Niveu: <span>5C</span></span>
-              <span class="u-mb-s c-wall__rating--subtitle">Builder: <span>And an other name</span></span>
-              <span class="u-mb-clear c-wall__rating--subtitle">Rating:</span>
-              <span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-              </span>
-            </label>
+            <input class="o-hide-accessible c-options c-option--hidden js-path-select" type="radio"
+              id="route1" name="routes" data-id="1" /><label
+              class="c-label c-label--options c-custom-options" for="route1"><span
+                class="u-mb-clear c-wall__rating--title">Route 1</span><span
+                class="u-mb-clear c-wall__rating--subtitle">Niveu: <span>5B</span></span><span
+                class="u-mb-s c-wall__rating--subtitle">Builder: <span>Some name
+                  :)</span></span><span
+                class="u-mb-clear c-wall__rating--subtitle">Rating:</span><span><svg
+                  xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill"
+                  width="40" height="38" viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg><svg xmlns="http://www.w3.org/2000/svg"
+                  class="c-wall__star c-wall__star--fill" width="40" height="38"
+                  viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg><svg xmlns="http://www.w3.org/2000/svg"
+                  class="c-wall__star c-wall__star--fill" width="40" height="38"
+                  viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg><svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40"
+                  height="38" viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg><svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40"
+                  height="38" viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg></span></label><input
+              class="o-hide-accessible c-options c-option--hidden js-path-select" type="radio"
+              id="route2" name="routes" data-id="2" /><label
+              class="c-label c-label--options c-custom-options" for="route2"><span
+                class="u-mb-clear c-wall__rating--title">Route 2</span><span
+                class="u-mb-clear c-wall__rating--subtitle">Niveu: <span>2A</span></span><span
+                class="u-mb-s c-wall__rating--subtitle">Builder: <span>Some other
+                  name</span></span><span
+                class="u-mb-clear c-wall__rating--subtitle">Rating:</span><span><svg
+                  xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill"
+                  width="40" height="38" viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg><svg xmlns="http://www.w3.org/2000/svg"
+                  class="c-wall__star c-wall__star--fill" width="40" height="38"
+                  viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg><svg xmlns="http://www.w3.org/2000/svg"
+                  class="c-wall__star c-wall__star--fill" width="40" height="38"
+                  viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg><svg xmlns="http://www.w3.org/2000/svg"
+                  class="c-wall__star c-wall__star--fill" width="40" height="38"
+                  viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg><svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40"
+                  height="38" viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg></span></label><input
+              class="o-hide-accessible c-options c-option--hidden js-path-select" type="radio"
+              id="route3" name="routes" data-id="3" /><label
+              class="c-label c-label--options c-custom-options" for="route3"><span
+                class="u-mb-clear c-wall__rating--title">Route 3</span><span
+                class="u-mb-clear c-wall__rating--subtitle">Niveu: <span>5C</span></span><span
+                class="u-mb-s c-wall__rating--subtitle">Builder: <span>And an other
+                  name</span></span><span
+                class="u-mb-clear c-wall__rating--subtitle">Rating:</span><span><svg
+                  xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill"
+                  width="40" height="38" viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg><svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40"
+                  height="38" viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg><svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40"
+                  height="38" viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg><svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40"
+                  height="38" viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg><svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40"
+                  height="38" viewBox="0 0 40 38">
+                  <path
+                    d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                    transform="translate(-4 -6)" />
+                </svg></span></label>
           </div>
           <a href="routes.html" class="c-wall__routes--goback">Ga terug</a>
         </div>
         <div class="c-wall__from">
           <div class="c-commend__add">
-            <label for=""></label>
-            <input type="text" />
+            <label for="cocmment">Voeg een comment toe:</label>
+            <textarea name="comment" id="comment" class="c-comment__area" rows="4"
+              placeholder="Wat vind u van deze route?"></textarea>
+            <div class="stars" data-stars="1">
+
+              <svg xmlns="http://www.w3.org/2000/svg" class="star rating" data-rating="1" width="24"
+                height="24" viewBox="0 0 40 38">
+                <path
+                  d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                  transform="translate(-4 -6)" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="star rating" data-rating="2" width="24"
+                height="24" viewBox="0 0 40 38">
+                <path
+                  d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                  transform="translate(-4 -6)" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="star rating" data-rating="3" width="24"
+                height="24" viewBox="0 0 40 38">
+                <path
+                  d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                  transform="translate(-4 -6)" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="star rating" data-rating="4" width="24"
+                height="24" viewBox="0 0 40 38">
+                <path
+                  d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                  transform="translate(-4 -6)" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="star rating" data-rating="5" width="24"
+                height="24" viewBox="0 0 40 38">
+                <path
+                  d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"
+                  transform="translate(-4 -6)" />
+              </svg>
+            </div>
+            <label for="send_comment" class="c-commen__button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" class="feather feather-send">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>Verstuur
+            </label>
           </div>
+          <h3>Recent comments:</h3>
         </div>
       </div>
     </div>
   </body>
-</html>
+
+  </html>

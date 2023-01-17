@@ -32,12 +32,18 @@
 
   /* Whitespace */
   --global-baseline: 8px;
-  --global-whitespace-xs: calc(var(--global-baseline) / 2); /* = 4px */
-  --global-whitespace-sm: var(--global-baseline); /* = 8px */
-  --global-whitespace-md: calc(var(--global-baseline) * 2); /* = 16px */
-  --global-whitespace-lg: calc(var(--global-whitespace-sm) * 3); /* = 24px*/
-  --global-whitespace-xl: calc(var(--global-whitespace-md) * 2); /* = 32px */
-  --global-whitespace-xxl: calc(var(--global-whitespace-md) * 3); /* = 48px */
+  --global-whitespace-xs: calc(var(--global-baseline) / 2);
+  /* = 4px */
+  --global-whitespace-sm: var(--global-baseline);
+  /* = 8px */
+  --global-whitespace-md: calc(var(--global-baseline) * 2);
+  /* = 16px */
+  --global-whitespace-lg: calc(var(--global-whitespace-sm) * 3);
+  /* = 24px*/
+  --global-whitespace-xl: calc(var(--global-whitespace-md) * 2);
+  /* = 32px */
+  --global-whitespace-xxl: calc(var(--global-whitespace-md) * 3);
+  /* = 48px */
 
   /* Input */
   --global-input-borderColor: var(--global-color-xx-white);
@@ -53,16 +59,19 @@
   src: url(../fonts/Urbanist-Light.ttf);
   font-weight: 300;
 }
+
 @font-face {
   font-family: 'Urbanist';
   src: url(../fonts/Urbanist-Regular.ttf);
   font-weight: 400;
 }
+
 @font-face {
   font-family: 'Urbanist';
   src: url(../fonts/Urbanist-Medium.ttf);
   font-weight: 500;
 }
+
 @font-face {
   font-family: 'Urbanist';
   src: url(../fonts/Urbanist-Bold.ttf);
@@ -457,6 +466,7 @@ input:disabled {
 .c-nav__link:active {
   color: var(--global-color-beta);
 }
+
 .c-nav__link:active:after {
   background-color: var(--global-color-beta);
 }
@@ -556,10 +566,12 @@ input:disabled {
 }
 
 @media (min-width: 992px) {
+
   /* Hide the mobile nav on larger viewports even whent it's open on smaller screens */
   .c-mobile-nav {
     display: none !important;
   }
+
   .c-nav__link:after {
     left: 16px;
   }
@@ -831,24 +843,31 @@ input:disabled {
 .c-wall__grid--item--grip--bak:after {
   background: url(../img/grips/Bak.svg) no-repeat center center / 100%;
 }
+
 .c-wall__grid--item--grip--sloper:after {
   background: url(../img/grips/Sloper.svg) no-repeat center center / 100%;
 }
+
 .c-wall__grid--item--grip--crimp:after {
   background: url(../img/grips/Crimp.svg) no-repeat center center / 100%;
 }
+
 .c-wall__grid--item--grip--pocket:after {
   background: url(../img/grips/Pocket.svg) no-repeat center center / 100%;
 }
+
 .c-wall__grid--item--grip--jug:after {
   background: url(../img/grips/Jug.svg) no-repeat center center / 100%;
 }
+
 .c-wall__grid--item--grip--undercling:after {
   background: url(../img/grips/Undercling.svg) no-repeat center center / 100%;
 }
+
 .c-wall__grid--item--grip--mono:after {
   background: url(../img/grips/Mono.svg) no-repeat center center / 100%;
 }
+
 .c-wall__grid--item--grip--bidoigt:after {
   background: url(../img/grips/Bidoigt.svg) no-repeat center center / 100%;
 }
@@ -888,13 +907,16 @@ input:disabled {
     flex-direction: row;
     align-items: flex-start;
   }
+
   .c-wall {
     gap: 16px;
     padding: 32px;
   }
+
   .c-wall__svg {
     padding: 32px;
   }
+
   .c-wall__grid--item--grip::after {
     width: 24px;
     height: 24px;
@@ -909,17 +931,19 @@ input:disabled {
 
 */
 .c-wall__options {
-  gap: 16px;
-  padding: 16px;
-  background-color: var(--global-color-alpha-xx-light);
-  border-radius: 4px;
-  box-shadow: 2px 2px 6px 0px var(--global-color-gray-xx-light);
   width: 100%;
   max-width: 302px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .c-wall__routes {
   width: 100%;
+  padding: 24px;
+  background-color: var(--global-color-alpha-xx-light);
+  border-radius: 4px;
+  box-shadow: 2px 2px 6px 0px var(--global-color-gray-xx-light);
 }
 
 .c-wall__routes--title {
@@ -963,13 +987,14 @@ input:disabled {
   cursor: pointer;
 }
 
-.c-option--hidden:checked + .c-label--options {
+.c-option--hidden:checked+.c-label--options {
   background-color: var(--global-color-alpha-x-dark);
   color: var(--global-color-gray-xxxx-light);
   box-shadow: 0px 0px 0px 4px var(--global-color-beta-x-light);
 }
-.c-option--hidden:hover + .c-label--options,
-.c-option--hidden:focus + .c-label--options {
+
+.c-option--hidden:hover+.c-label--options,
+.c-option--hidden:focus+.c-label--options {
   box-shadow: 0px 0px 0px 4px var(--global-color-beta);
 }
 
@@ -1017,6 +1042,7 @@ input:disabled {
   .c-wall__routes {
     padding: 24px;
   }
+
   .c-wall__routes--title {
     font-size: 24px;
     line-height: 1.5;
@@ -1028,14 +1054,17 @@ input:disabled {
     line-height: 20px;
     font-weight: 400;
   }
+
   .c-wall__rating--title {
     font-size: 20px;
     line-height: 24px;
     margin-bottom: 8px;
   }
+
   .c-wall__rating--subtitle {
     margin-bottom: 4px;
   }
+
   .c-wall__rating--subtitle {
     font-size: 14px;
     font-weight: 200;
@@ -1045,6 +1074,7 @@ input:disabled {
 .u-mb-xs {
   margin-bottom: 4px;
 }
+
 .u-mb-s {
   margin-bottom: 8px;
 }
@@ -1053,5 +1083,79 @@ input:disabled {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 16px;
+  padding: 24px;
+  gap: 24px;
+}
+
+.c-comment__area {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 14px;
+  outline: none;
+  padding: 10px;
+  width: 100%;
+}
+
+.c-commen__button {
+  background-color: var(--global-color-alpha);
+  border: none;
+  border-radius: 4px;
+  color: var(--global-color-gray-xxxx-light);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1rem;
+  padding: 8px 16px;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.stars {
+  cursor: pointer;
+  display: flex;
+  gap: 4px;
+  padding: 4px 0;
+}
+
+.stars:hover .star path {
+  fill: #ffd055 !important;
+}
+
+.star path {
+  fill: #d8d8d8;
+}
+
+.star:hover~.star path {
+  fill: #d8d8d8 !important;
+}
+
+.stars[data-stars] .star path {
+  fill: #ffd055;
+}
+
+
+.stars[data-stars="1"] .star:nth-child(1)~.star path {
+  fill: #d8d8d8;
+}
+
+
+.stars[data-stars="2"] .star:nth-child(2)~.star path {
+  fill: #d8d8d8;
+}
+
+
+.stars[data-stars="3"] .star:nth-child(3)~.star path {
+  fill: #d8d8d8;
+}
+
+
+.stars[data-stars="4"] .star:nth-child(4)~.star path {
+  fill: #d8d8d8;
+}
+
+
+.stars[data-stars="5"] .star:nth-child(5)~.star path {
+  fill: #d8d8d8;
 }
