@@ -287,6 +287,7 @@ input:disabled {
 
   /* Corrects inability to style clickable `input` types in iOS */
   -webkit-appearance: none;
+  appearance: none;
 }
 
 /*
@@ -790,21 +791,24 @@ input:disabled {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 32px;
   width: 100%;
   height: 100%;
-  padding: 32px;
+  position: relative;
+  top: 125px;
 }
 
 .c-wall {
   display: grid;
   place-content: center;
-  margin-top: 150px;
   gap: 10px;
   grid-template-columns: repeat(20, 4px);
   grid-template-rows: repeat(71, 4px);
   background-color: var(--global-color-gray-xxx-light);
   padding: 16px;
   position: relative;
+  box-shadow: 2px 2px 6px 0px var(--global-color-gray-xx-light);
 }
 
 .c-wall__grid--item {
@@ -882,6 +886,8 @@ input:disabled {
 @media (min-width: 768px) {
   .c-detailRoute {
     padding: 16px;
+    flex-direction: row;
+    align-items: flex-start;
   }
   .c-wall {
     gap: 16px;
@@ -896,4 +902,150 @@ input:disabled {
     left: -12px;
     top: -12px;
   }
+}
+
+/*
+
+  Wall options
+
+*/
+.c-wall__options {
+  gap: 16px;
+  padding: 16px;
+  background-color: var(--global-color-alpha-xx-light);
+  border-radius: 4px;
+  box-shadow: 2px 2px 6px 0px var(--global-color-gray-xx-light);
+  width: 100%;
+  max-width: 302px;
+}
+
+.c-wall__routes {
+  width: 100%;
+}
+
+.c-wall__routes--title {
+  font-size: 24px;
+  line-height: 1.5;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  color: var(--global-color-gray-xxxxx-dark);
+  margin-bottom: 0;
+}
+
+.c-wall__routes--subtitle {
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  text-align: center;
+  color: var(--global-color-gray-xxxxx-dark);
+  margin-bottom: 16px;
+}
+
+.c-wall__routes--options {
+  /* responive grid */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.c-label--options {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  color: var(--global-color-gray-xxx-light);
+  background-color: var(--global-color-alpha);
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1rem;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.c-option--hidden:checked + .c-label--options {
+  background-color: var(--global-color-alpha-x-dark);
+  color: var(--global-color-gray-xxxx-light);
+  box-shadow: 0px 0px 0px 4px var(--global-color-beta-x-light);
+}
+.c-option--hidden:hover + .c-label--options,
+.c-option--hidden:focus + .c-label--options {
+  box-shadow: 0px 0px 0px 4px var(--global-color-beta);
+}
+
+.c-wall__star {
+  fill: var(--global-color-gray-xxxx-light);
+  width: 20px;
+  height: 20px;
+}
+
+.c-wall__star--fill {
+  fill: var(--global-color-beta);
+}
+
+.c-wall__rating--subtitle {
+  font-size: 12px;
+}
+
+.c-wall__routes--goback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  text-decoration: none;
+  color: var(--global-color-gray-xxxx-light);
+  background-color: var(--global-color-alpha);
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.c-wall__routes--goback:hover,
+.c-wall__routes--goback:focus {
+  background-color: var(--global-color-alpha-xx-dark);
+  color: var(--global-color-gray-xxxx-light);
+  box-shadow: 2px 2px 2px var(--global-color-alpha);
+}
+
+.c-wall__routes--goback:active {
+  background-color: var(--global-color-alpha-x-dark);
+}
+
+@media (min-width: 768px) {
+  .c-wall__routes {
+    padding: 24px;
+  }
+  .c-wall__routes--title {
+    font-size: 24px;
+    line-height: 1.5;
+    font-weight: 700;
+  }
+
+  .c-wall__routes--subtitle {
+    font-size: 18px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+  .c-wall__rating--title {
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 8px;
+  }
+  .c-wall__rating--subtitle {
+    margin-bottom: 4px;
+  }
+  .c-wall__rating--subtitle {
+    font-size: 14px;
+    font-weight: 200;
+  }
+}
+
+.u-mb-xs {
+  margin-bottom: 4px;
+}
+.u-mb-s {
+  margin-bottom: 8px;
 }
