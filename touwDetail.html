@@ -16,7 +16,7 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="js/app.js"></script>
   </head>
-  <body>
+  <body id="ropeDetail">
     <header class="c-header">
       <div class="c-header__logo">
         <a href="index.html" class="c-logo u-mb-clear">
@@ -68,7 +68,6 @@
         </button>
       </div>
     </header>
-
     <aside class="c-mobile-nav">
       <div class="c-mobile-nav__bg"></div>
       <div class="c-mobile-nav__body">
@@ -127,14 +126,14 @@
         <div class="c-wall__routes">
           <h3 class="c-wall__routes--title">Touw 1</h3>
           <h6 class="c-wall__routes--subtitle">selecteer de route die u wilt zien</h6>
-          <div class="c-wall__routes--options">
+          <div class="c-wall__routes--options js-wall_route--options">
             <input class="o-hide-accessible c-options c-option--hidden js-path-select" type="radio" id="route1" name="routes" data-id="1" />
             <label class="c-label c-label--options c-custom-options" for="route1">
               <span class="u-mb-clear c-wall__rating--title">Route 1</span>
               <span class="u-mb-clear c-wall__rating--subtitle">Niveu: <span>5B</span></span>
               <span class="u-mb-s c-wall__rating--subtitle">Builder: <span>Some name :)</span></span>
               <span class="u-mb-clear c-wall__rating--subtitle">Rating:</span>
-              <span class="c-wall__grid--item--grip--jug">
+              <span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
@@ -148,11 +147,11 @@
               <span class="u-mb-clear c-wall__rating--subtitle">Niveu: <span>2A</span></span>
               <span class="u-mb-s c-wall__rating--subtitle">Builder: <span>Some other name</span></span>
               <span class="u-mb-clear c-wall__rating--subtitle">Rating:</span>
-              <span class="c-wall__grid--item--grip--jug">
+              <span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
               </span>
             </label>
@@ -162,10 +161,10 @@
               <span class="u-mb-clear c-wall__rating--subtitle">Niveu: <span>5C</span></span>
               <span class="u-mb-s c-wall__rating--subtitle">Builder: <span>And an other name</span></span>
               <span class="u-mb-clear c-wall__rating--subtitle">Rating:</span>
-              <span class="c-wall__grid--item--grip--jug">
+              <span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
                 <svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>
               </span>
@@ -173,7 +172,12 @@
           </div>
           <a href="routes.html" class="c-wall__routes--goback">Ga terug</a>
         </div>
-        <div class="c-wall__from"></div>
+        <div class="c-wall__from">
+          <div class="c-commend__add">
+            <label for=""></label>
+            <input type="text" />
+          </div>
+        </div>
       </div>
     </div>
   </body>

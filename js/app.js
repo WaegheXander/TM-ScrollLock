@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   toggleNav();
-  showWall();
+  if (document.querySelector('#ropeDetail')) showWall();
 });
 
 function toggleNav() {
@@ -23,23 +23,22 @@ const showWall = function () {
 };
 
 const getWallRoutes = function () {
-  return fetch('https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
-  // return fetch('http://127.0.0.1:5500/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
+  // return fetch('https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
+  return fetch('http://127.0.0.1:5500/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
 };
 
-let wall, wallItem, selectedPath;
+let wall, wallItem, routes;
 
 const showGrips = async function () {
   wall = document.querySelectorAll('.c-wall');
   wallItem = document.querySelectorAll('.c-wall__grid--item');
-  const routes = await getWallRoutes();
+  routes = await getWallRoutes();
 
   for (let i = 0; i < routes.length; i++) {
     let x = routes[i].point[0];
     let y = routes[i].point[1];
     let index = x - 1 + (y - 1) * 20;
     wallItem[index].classList.add('c-wall__grid--item--grip');
-    console;
 
     switch (routes[i].handgriptype) {
       case 'Bak':
@@ -68,13 +67,20 @@ const showGrips = async function () {
         break;
     }
   }
-  selectedPath = 3;
-  drawSelectedPath(selectedPath);
+  listenToRouteClick();
 };
 
-const drawSelectedPath = async function (selectedPath) {
-  const routes = await getWallRoutes();
+const listenToRouteClick = function () {
+  let options = document.querySelectorAll('.js-path-select');
+  options.forEach((option) => {
+    option.addEventListener('change', function (event) {
+      let selectedPath = this.dataset.id;
+      drawSelectedPath(+selectedPath);
+    });
+  });
+};
 
+const drawSelectedPath = function (selectedPath) {
   const topDiffrence = wallItem[20].getBoundingClientRect().top - wallItem[0].getBoundingClientRect().top;
   const leftDiffrence = wallItem[1].getBoundingClientRect().left - wallItem[0].getBoundingClientRect().left;
 
@@ -102,6 +108,7 @@ const drawSelectedPath = async function (selectedPath) {
     .y((p) => p.ypoint)
     .curve(d3.curveCardinal);
 
+  d3.select('#gfg').selectAll('path').remove();
   d3.select('#gfg').append('path').attr('d', Gen(points)).attr('fill', 'none').attr('stroke', '#5804f4').attr('stroke-width', '2').attr('class', 'js-path');
 
   animatePath();

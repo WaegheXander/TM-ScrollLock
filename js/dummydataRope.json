@@ -4,20 +4,23 @@
     "difficulty": "5B",
     "rope": 1,
     "builder": "525cce1c-9429-11ed-a99b-6045bd95a96d",
-    "builddate": "2006-05-10"
+    "builddate": "2006-05-10",
+    "rating": "1"
   },
   {
     "routeID": 2,
-    "difficulty": "1A",
-    "rope": 1,
-    "builder": "525cce1c-9429-11ed-a99b-6045bd95a96d",
-    "builddate": "2006-05-10"
-  },
-  {
-    "routeID": 3,
     "difficulty": "3C",
     "rope": 1,
     "builder": "525cce1c-9429-11ed-a99b-6045bd95a96d",
-    "builddate": "2006-05-10"
+    "builddate": "2006-05-10",
+    "rating": "3"
+  },
+  {
+    "routeID": 3,
+    "difficulty": "1A",
+    "rope": 1,
+    "builder": "525cce1c-9429-11ed-a99b-6045bd95a96d",
+    "builddate": "2006-05-10",
+    "rating": "1"
   }
 ]
