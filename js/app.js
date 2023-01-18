@@ -1,8 +1,13 @@
+const fetchPromis = function (url) {
+  // return fetch('https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
+  return fetch(url).then((response) => response.json().catch((error) => console.log(error)));
+};
+
 document.addEventListener('DOMContentLoaded', function () {
   toggleNav();
 
   if (document.querySelector('#ropeDetail')) {
-    showWall();
+    getWallRoutes();
     stars();
   }
 });
@@ -29,23 +34,21 @@ function toggleNav() {
   }
 }
 
+const getWallRoutes = async function () {
+  routes = await getWallRoutes('http://127.0.0.1:5500/js/dummydata.json');
+  console.log(routes);
+  showWall();
+};
+
 const showWall = function () {
   let html = '';
-
   for (let i = 0; i < 1420; i++) {
     html += '<div class="c-wall__grid--item"></div>';
   }
-
   html += '<svg id="gfg" width="200" height="200" class="c-wall__svg"></svg>';
   document.querySelector('.js-wall').innerHTML = html;
   showGrips();
 };
-
-const getWallRoutes = function () {
-  return fetch('https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
-  // return fetch('http://127.0.0.1:5500/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
-};
-
 let wall, wallItem, routes;
 
 const showGrips = async function () {

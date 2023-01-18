@@ -1,506 +1,557 @@
 [
   {
-    "ID": 65,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [8, 1],
-    "route": 1
-  },
-  {
-    "ID": 92,
-    "type": "handgrip",
-    "handgriptype": "Undercling",
-    "point": [11, 4],
-    "route": 1
-  },
-  {
-    "ID": 34,
-    "type": "handgrip",
-    "handgriptype": "Jug",
-    "point": [10, 7],
-    "route": 1
-  },
-  {
-    "ID": 3,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [13, 10],
-    "route": 1
-  },
-  {
-    "ID": 13,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [9, 13],
-    "route": 1
-  },
-  {
-    "ID": 93,
-    "type": "handgrip",
-    "handgriptype": "Pocket",
-    "point": [10, 16],
-    "route": 1
-  },
-  {
-    "ID": 32,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [9, 19],
-    "route": 1
-  },
-  {
-    "ID": 22,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [10, 22],
-    "route": 1
-  },
-  {
-    "ID": 30,
-    "type": "handgrip",
-    "handgriptype": "Undercling",
-    "point": [10, 25],
-    "route": 1
-  },
-  {
-    "ID": 51,
-    "type": "handgrip",
-    "handgriptype": "Crimp",
-    "point": [11, 28],
-    "route": 1
-  },
-  {
-    "ID": 94,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [8, 31],
-    "route": 1
-  },
-  {
-    "ID": 87,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [12, 34],
-    "route": 1
-  },
-  {
-    "ID": 47,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [13, 37],
-    "route": 1
-  },
-  {
-    "ID": 85,
-    "type": "handgrip",
-    "handgriptype": "Jug",
-    "point": [9, 40],
-    "route": 1
-  },
-  {
-    "ID": 44,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [12, 43],
-    "route": 1
-  },
-  {
-    "ID": 82,
-    "type": "handgrip",
-    "handgriptype": "Pocket",
-    "point": [12, 46],
-    "route": 1
-  },
-  {
-    "ID": 93,
-    "type": "handgrip",
-    "handgriptype": "Crimp",
-    "point": [10, 49],
-    "route": 1
-  },
-  {
-    "ID": 17,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [11, 52],
-    "route": 1
-  },
-  {
-    "ID": 27,
-    "type": "handgrip",
-    "handgriptype": "Undercling",
-    "point": [12, 55],
-    "route": 1
-  },
-  {
-    "ID": 37,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [10, 58],
-    "route": 1
-  },
-  {
-    "ID": 63,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [11, 61],
-    "route": 1
-  },
-  {
-    "ID": 45,
-    "type": "handgrip",
-    "handgriptype": "Crimp",
-    "point": [10, 64],
-    "route": 1
-  },
-  {
-    "ID": 9,
-    "type": "handgrip",
-    "handgriptype": "Jug",
-    "point": [12, 67],
-    "route": 1
-  },
-  {
-    "ID": 54,
-    "type": "handgrip",
-    "handgriptype": "Bidoigt",
-    "point": [13, 70],
-    "route": 1
-  },
-  {
-    "ID": 65,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [18, 2],
-    "route": 2
-  },
-  {
-    "ID": 92,
-    "type": "handgrip",
-    "handgriptype": "Pocket",
-    "point": [17, 5],
-    "route": 2
-  },
-  {
-    "ID": 34,
-    "type": "handgrip",
-    "handgriptype": "Undercling",
-    "point": [17, 8],
-    "route": 2
-  },
-  {
-    "ID": 3,
-    "type": "handgrip",
-    "handgriptype": "Bidoigt",
-    "point": [15, 11],
-    "route": 2
-  },
-  {
-    "ID": 13,
-    "type": "handgrip",
-    "handgriptype": "Crimp",
-    "point": [16, 14],
-    "route": 2
-  },
-  {
-    "ID": 93,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [17, 17],
-    "route": 2
-  },
-  {
-    "ID": 32,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [17, 20],
-    "route": 2
-  },
-  {
-    "ID": 22,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [15, 23],
-    "route": 2
-  },
-  {
-    "ID": 30,
-    "type": "handgrip",
-    "handgriptype": "Jug",
-    "point": [18, 26],
-    "route": 2
-  },
-  {
-    "ID": 51,
-    "type": "handgrip",
-    "handgriptype": "Undercling",
-    "point": [17, 29],
-    "route": 2
-  },
-  {
-    "ID": 94,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [19, 32],
-    "route": 2
-  },
-  {
-    "ID": 87,
-    "type": "handgrip",
-    "handgriptype": "Pocket",
-    "point": [17, 35],
-    "route": 2
-  },
-  {
-    "ID": 47,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [18, 38],
-    "route": 2
-  },
-  {
-    "ID": 85,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [15, 41],
-    "route": 2
-  },
-  {
-    "ID": 44,
-    "type": "handgrip",
-    "handgriptype": "Crimp",
-    "point": [16, 44],
-    "route": 2
-  },
-  {
-    "ID": 82,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [18, 47],
-    "route": 2
-  },
-  {
-    "ID": 93,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [17, 50],
-    "route": 2
-  },
-  {
-    "ID": 17,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [19, 53],
-    "route": 2
-  },
-  {
-    "ID": 27,
-    "type": "handgrip",
-    "handgriptype": "Undercling",
-    "point": [18, 56],
-    "route": 2
-  },
-  {
-    "ID": 37,
-    "type": "handgrip",
-    "handgriptype": "Bidoigt",
-    "point": [17, 59],
-    "route": 2
-  },
-  {
-    "ID": 63,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [18, 62],
-    "route": 2
-  },
-  {
-    "ID": 45,
-    "type": "handgrip",
-    "handgriptype": "Pocket",
-    "point": [19, 65],
-    "route": 2
-  },
-  {
-    "ID": 9,
-    "type": "handgrip",
-    "handgriptype": "Jug",
-    "point": [17, 68],
-    "route": 2
-  },
-  {
-    "ID": 54,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [16, 69],
-    "route": 2
-  },
-  {
-    "ID": 65,
-    "type": "handgrip",
-    "handgriptype": "Undercling",
-    "point": [7, 2],
-    "route": 3
-  },
-  {
-    "ID": 92,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [9, 4],
-    "route": 3
-  },
-  {
-    "ID": 34,
-    "type": "handgrip",
-    "handgriptype": "Crimp",
-    "point": [9, 8],
-    "route": 3
-  },
-  {
-    "ID": 3,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [8, 11],
-    "route": 3
-  },
-  {
-    "ID": 13,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [6, 14],
-    "route": 3
-  },
-  {
-    "ID": 93,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [7, 17],
-    "route": 3
-  },
-  {
-    "ID": 32,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [3, 19],
-    "route": 3
-  },
-  {
-    "ID": 22,
-    "type": "handgrip",
-    "handgriptype": "Pocket",
-    "point": [3, 22],
-    "route": 3
-  },
-  {
-    "ID": 30,
-    "type": "handgrip",
-    "handgriptype": "Undercling",
-    "point": [4, 24],
-    "route": 3
-  },
-  {
-    "ID": 51,
-    "type": "handgrip",
-    "handgriptype": "Jug",
-    "point": [5, 26],
-    "route": 3
-  },
-  {
-    "ID": 94,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [7, 30],
-    "route": 3
-  },
-  {
-    "ID": 87,
-    "type": "handgrip",
-    "handgriptype": "Pocket",
-    "point": [6, 32],
-    "route": 3
-  },
-  {
-    "ID": 47,
-    "type": "handgrip",
-    "handgriptype": "Bidoigt",
-    "point": [4, 34],
-    "route": 3
-  },
-  {
-    "ID": 85,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [4, 39],
-    "route": 3
-  },
-  {
-    "ID": 44,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [5, 43],
-    "route": 3
-  },
-  {
-    "ID": 82,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [5, 46],
-    "route": 3
-  },
-  {
-    "ID": 93,
-    "type": "handgrip",
-    "handgriptype": "Pocket",
-    "point": [4, 49],
-    "route": 3
-  },
-  {
-    "ID": 17,
-    "type": "handgrip",
-    "handgriptype": "Crimp",
-    "point": [2, 51],
-    "route": 3
-  },
-  {
-    "ID": 27,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [3, 56],
-    "route": 3
-  },
-  {
-    "ID": 37,
-    "type": "handgrip",
-    "handgriptype": "Undercling",
-    "point": [2, 59],
-    "route": 3
-  },
-  {
-    "ID": 63,
-    "type": "handgrip",
-    "handgriptype": "Jug",
-    "point": [5, 61],
-    "route": 3
-  },
-  {
-    "ID": 45,
-    "type": "handgrip",
-    "handgriptype": "Mono",
-    "point": [6, 65],
-    "route": 3
-  },
-  {
-    "ID": 9,
-    "type": "handgrip",
-    "handgriptype": "Bak",
-    "point": [3, 68],
-    "route": 3
-  },
-  {
-    "ID": 54,
-    "type": "handgrip",
-    "handgriptype": "Pocket",
-    "point": [4, 70],
-    "route": 3
+    "routeID": 1,
+    "difficulty": "5B",
+    "rope": 1,
+    "builder": {
+      "climberID": "63a557c9-9653-11ed-b3a0-6045bd95a96d",
+      "firstname": "John",
+      "lastname": "Smith",
+      "platform": 1,
+      "nickname": "JS",
+      "rank": 0,
+      "isFirstTimer": true
+    },
+    "ratings": 1,
+    "grips": [
+      {
+        "ID": 65,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [8, 1],
+        "route": 1
+      },
+      {
+        "ID": 92,
+        "type": "handgrip",
+        "handgriptype": "Undercling",
+        "point": [11, 4],
+        "route": 1
+      },
+      {
+        "ID": 34,
+        "type": "handgrip",
+        "handgriptype": "Jug",
+        "point": [10, 7],
+        "route": 1
+      },
+      {
+        "ID": 3,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [13, 10],
+        "route": 1
+      },
+      {
+        "ID": 13,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [9, 13],
+        "route": 1
+      },
+      {
+        "ID": 93,
+        "type": "handgrip",
+        "handgriptype": "Pocket",
+        "point": [10, 16],
+        "route": 1
+      },
+      {
+        "ID": 32,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [9, 19],
+        "route": 1
+      },
+      {
+        "ID": 22,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [10, 22],
+        "route": 1
+      },
+      {
+        "ID": 30,
+        "type": "handgrip",
+        "handgriptype": "Undercling",
+        "point": [10, 25],
+        "route": 1
+      },
+      {
+        "ID": 51,
+        "type": "handgrip",
+        "handgriptype": "Crimp",
+        "point": [11, 28],
+        "route": 1
+      },
+      {
+        "ID": 94,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [8, 31],
+        "route": 1
+      },
+      {
+        "ID": 87,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [12, 34],
+        "route": 1
+      },
+      {
+        "ID": 47,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [13, 37],
+        "route": 1
+      },
+      {
+        "ID": 85,
+        "type": "handgrip",
+        "handgriptype": "Jug",
+        "point": [9, 40],
+        "route": 1
+      },
+      {
+        "ID": 44,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [12, 43],
+        "route": 1
+      },
+      {
+        "ID": 82,
+        "type": "handgrip",
+        "handgriptype": "Pocket",
+        "point": [12, 46],
+        "route": 1
+      },
+      {
+        "ID": 93,
+        "type": "handgrip",
+        "handgriptype": "Crimp",
+        "point": [10, 49],
+        "route": 1
+      },
+      {
+        "ID": 17,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [11, 52],
+        "route": 1
+      },
+      {
+        "ID": 27,
+        "type": "handgrip",
+        "handgriptype": "Undercling",
+        "point": [12, 55],
+        "route": 1
+      },
+      {
+        "ID": 37,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [10, 58],
+        "route": 1
+      },
+      {
+        "ID": 63,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [11, 61],
+        "route": 1
+      },
+      {
+        "ID": 45,
+        "type": "handgrip",
+        "handgriptype": "Crimp",
+        "point": [10, 64],
+        "route": 1
+      },
+      {
+        "ID": 9,
+        "type": "handgrip",
+        "handgriptype": "Jug",
+        "point": [12, 67],
+        "route": 1
+      },
+      {
+        "ID": 54,
+        "type": "handgrip",
+        "handgriptype": "Bidoigt",
+        "point": [13, 70],
+        "route": 1
+      }
+    ]
+  },
+  {
+    "routeID": 2,
+    "difficulty": "3C",
+    "rope": 1,
+    "builder": {
+      "climberID": "63a557c9-9653-11ed-b3a0-6045bd95a96d",
+      "firstname": "Jens",
+      "lastname": "De Weerdt",
+      "platform": 1,
+      "nickname": "JDW",
+      "rank": 0,
+      "isFirstTimer": true
+    },
+    "ratings": 3,
+    "grips": [
+      {
+        "ID": 65,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [18, 2],
+        "route": 2
+      },
+      {
+        "ID": 92,
+        "type": "handgrip",
+        "handgriptype": "Pocket",
+        "point": [17, 5],
+        "route": 2
+      },
+      {
+        "ID": 34,
+        "type": "handgrip",
+        "handgriptype": "Undercling",
+        "point": [17, 8],
+        "route": 2
+      },
+      {
+        "ID": 3,
+        "type": "handgrip",
+        "handgriptype": "Bidoigt",
+        "point": [15, 11],
+        "route": 2
+      },
+      {
+        "ID": 13,
+        "type": "handgrip",
+        "handgriptype": "Crimp",
+        "point": [16, 14],
+        "route": 2
+      },
+      {
+        "ID": 93,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [17, 17],
+        "route": 2
+      },
+      {
+        "ID": 32,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [17, 20],
+        "route": 2
+      },
+      {
+        "ID": 22,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [15, 23],
+        "route": 2
+      },
+      {
+        "ID": 30,
+        "type": "handgrip",
+        "handgriptype": "Jug",
+        "point": [18, 26],
+        "route": 2
+      },
+      {
+        "ID": 51,
+        "type": "handgrip",
+        "handgriptype": "Undercling",
+        "point": [17, 29],
+        "route": 2
+      },
+      {
+        "ID": 94,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [19, 32],
+        "route": 2
+      },
+      {
+        "ID": 87,
+        "type": "handgrip",
+        "handgriptype": "Pocket",
+        "point": [17, 35],
+        "route": 2
+      },
+      {
+        "ID": 47,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [18, 38],
+        "route": 2
+      },
+      {
+        "ID": 85,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [15, 41],
+        "route": 2
+      },
+      {
+        "ID": 44,
+        "type": "handgrip",
+        "handgriptype": "Crimp",
+        "point": [16, 44],
+        "route": 2
+      },
+      {
+        "ID": 82,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [18, 47],
+        "route": 2
+      },
+      {
+        "ID": 93,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [17, 50],
+        "route": 2
+      },
+      {
+        "ID": 17,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [19, 53],
+        "route": 2
+      },
+      {
+        "ID": 27,
+        "type": "handgrip",
+        "handgriptype": "Undercling",
+        "point": [18, 56],
+        "route": 2
+      },
+      {
+        "ID": 37,
+        "type": "handgrip",
+        "handgriptype": "Bidoigt",
+        "point": [17, 59],
+        "route": 2
+      },
+      {
+        "ID": 63,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [18, 62],
+        "route": 2
+      },
+      {
+        "ID": 45,
+        "type": "handgrip",
+        "handgriptype": "Pocket",
+        "point": [19, 65],
+        "route": 2
+      },
+      {
+        "ID": 9,
+        "type": "handgrip",
+        "handgriptype": "Jug",
+        "point": [17, 68],
+        "route": 2
+      },
+      {
+        "ID": 54,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [16, 69],
+        "route": 2
+      }
+    ]
+  },
+  {
+    "routeID": 3,
+    "difficulty": "1A",
+    "rope": 1,
+    "builder": {
+      "climberID": "63a557c9-9653-11ed-b3a0-6045bd95a96d",
+      "firstname": "Warre",
+      "lastname": "Jensen",
+      "platform": 1,
+      "nickname": "WJ",
+      "rank": 0,
+      "isFirstTimer": true
+    },
+    "ratings": 3,
+    "grips": [
+      {
+        "ID": 65,
+        "type": "handgrip",
+        "handgriptype": "Undercling",
+        "point": [7, 2],
+        "route": 3
+      },
+      {
+        "ID": 92,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [9, 4],
+        "route": 3
+      },
+      {
+        "ID": 34,
+        "type": "handgrip",
+        "handgriptype": "Crimp",
+        "point": [9, 8],
+        "route": 3
+      },
+      {
+        "ID": 3,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [8, 11],
+        "route": 3
+      },
+      {
+        "ID": 13,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [6, 14],
+        "route": 3
+      },
+      {
+        "ID": 93,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [7, 17],
+        "route": 3
+      },
+      {
+        "ID": 32,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [3, 19],
+        "route": 3
+      },
+      {
+        "ID": 22,
+        "type": "handgrip",
+        "handgriptype": "Pocket",
+        "point": [3, 22],
+        "route": 3
+      },
+      {
+        "ID": 30,
+        "type": "handgrip",
+        "handgriptype": "Undercling",
+        "point": [4, 24],
+        "route": 3
+      },
+      {
+        "ID": 51,
+        "type": "handgrip",
+        "handgriptype": "Jug",
+        "point": [5, 26],
+        "route": 3
+      },
+      {
+        "ID": 94,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [7, 30],
+        "route": 3
+      },
+      {
+        "ID": 87,
+        "type": "handgrip",
+        "handgriptype": "Pocket",
+        "point": [6, 32],
+        "route": 3
+      },
+      {
+        "ID": 47,
+        "type": "handgrip",
+        "handgriptype": "Bidoigt",
+        "point": [4, 34],
+        "route": 3
+      },
+      {
+        "ID": 85,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [4, 39],
+        "route": 3
+      },
+      {
+        "ID": 44,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [5, 43],
+        "route": 3
+      },
+      {
+        "ID": 82,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [5, 46],
+        "route": 3
+      },
+      {
+        "ID": 93,
+        "type": "handgrip",
+        "handgriptype": "Pocket",
+        "point": [4, 49],
+        "route": 3
+      },
+      {
+        "ID": 17,
+        "type": "handgrip",
+        "handgriptype": "Crimp",
+        "point": [2, 51],
+        "route": 3
+      },
+      {
+        "ID": 27,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [3, 56],
+        "route": 3
+      },
+      {
+        "ID": 37,
+        "type": "handgrip",
+        "handgriptype": "Undercling",
+        "point": [2, 59],
+        "route": 3
+      },
+      {
+        "ID": 63,
+        "type": "handgrip",
+        "handgriptype": "Jug",
+        "point": [5, 61],
+        "route": 3
+      },
+      {
+        "ID": 45,
+        "type": "handgrip",
+        "handgriptype": "Mono",
+        "point": [6, 65],
+        "route": 3
+      },
+      {
+        "ID": 9,
+        "type": "handgrip",
+        "handgriptype": "Bak",
+        "point": [3, 68],
+        "route": 3
+      },
+      {
+        "ID": 54,
+        "type": "handgrip",
+        "handgriptype": "Pocket",
+        "point": [4, 70],
+        "route": 3
+      }
+    ]
   }
 ]
