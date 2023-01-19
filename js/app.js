@@ -1,6 +1,6 @@
 const fetchPromis = function (url) {
   // return fetch('https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
-  return fetch(url).then((response) => response.json().catch((error) => console.log(error)));
+  return fetch(url).then((response) => response.json().catch((error) => console.error(error)));
 };
 
 let wall,
@@ -55,8 +55,11 @@ function toggleNav() {
 
 const getWallRoutes = async function (rope_id) {
   // const url = 'http://127.0.0.1:5500/js/dummydata.json';
-  const url = 'https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json';
+  // const url = 'https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json';
+  const url = `https://func-westeur-klimapp2.azurewebsites.net/api/v1/rope/${rope_id}/routes`;
+  console.log(url);
   routes = await fetchPromis(url);
+  console.log(routes);
   showWall();
 };
 
