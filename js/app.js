@@ -1,29 +1,28 @@
 const fetchPromis = function (url) {
-  // return fetch('https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json').then((response) => response.json().catch((error) => console.log(error)));
-  return fetch(url).then((response) => response.json().catch((error) => console.error(error)));
+  return fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 let wall,
   wallItem,
   routes,
   selectedPath = 1,
-  ropeId;
+  ropeId = 1;
 
 document.addEventListener('DOMContentLoaded', function () {
   toggleNav();
   if (document.querySelector('#ropeDetail')) {
     getRopeId();
+    showWall();
     togggleStars();
     listenToWindowResize();
   }
 });
-
-const getRopeId = function () {
-  let url = window.location.search;
-  let urlParams = new URLSearchParams(url);
-  ropeId = urlParams.get('touw');
-  getWallRoutes(ropeId);
-};
 
 const listenToWindowResize = function () {
   window.addEventListener('resize', function () {
@@ -53,16 +52,6 @@ function toggleNav() {
   }
 }
 
-const getWallRoutes = async function (rope_id) {
-  // const url = 'http://127.0.0.1:5500/js/dummydata.json';
-  // const url = 'https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json';
-  const url = `https://func-westeur-klimapp2.azurewebsites.net/api/v1/rope/${rope_id}/routes`;
-  console.log(url);
-  routes = await fetchPromis(url);
-  console.log(routes);
-  showWall();
-};
-
 const showWall = function () {
   let html = '';
   for (let i = 0; i < 1420; i++) {
@@ -70,6 +59,60 @@ const showWall = function () {
   }
   html += '<svg id="gfg" width="200" height="200" class="c-wall__svg"></svg>';
   document.querySelector('.js-wall').innerHTML = html;
+  console.info('Grid loaded');
+};
+
+const getRopeId = function () {
+  let url = window.location.search;
+  let urlParams = new URLSearchParams(url);
+  ropeId = urlParams.get('touw');
+  console.log('ropeId: ' + ropeId);
+  getWallRoutes(ropeId);
+};
+
+const getWallRoutes = async function (rope_id) {
+  // const url = 'http://127.0.0.1:5500/js/dummydata.json';
+  // const url = 'https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json';
+  const url = 'https://func-westeur-klimapp2.azurewebsites.net/api/v1/rope/' + rope_id + '/routes';
+  routes = await fetchPromis(url);
+  console.log(routes);
+  showRouteButtons();
+};
+
+const showRouteButtons = function () {
+  let html = '';
+  for (let i = 0; i < routes.length; i++) {
+    let route_id = routes[i].routeID;
+    let routeName = 'Route: ' + (i + 1);
+    let difficulty = routes[i].difficulty;
+    let builder = routes[i].builder.lastname + ' ' + routes[i].builder.firstname;
+    let rating = Math.round(routes[i].rating);
+    let starSVG = '';
+    for (let j = 0; j < 5; j++) {
+      if (j < rating) {
+        starSVG += `<svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star c-wall__star--fill" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>`;
+      } else {
+        starSVG += `<svg xmlns="http://www.w3.org/2000/svg" class="c-wall__star" width="40" height="38" viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" /></svg>`;
+      }
+    }
+    let checked = '';
+    if (i == 0) {
+      checked = 'checked';
+      selectedPath = route_id;
+    }
+    html += `
+    <input class="o-hide-accessible c-options c-option--hidden js-path-select" type="radio" id="${i + 1}" name="routes" data-id="${route_id}" ${checked} /><label class="c-label c-label--options c-custom-options" for="${i + 1}">
+              <span class="u-mb-clear c-wall__rating--title">${routeName}</span><span class="u-mb-clear c-wall__rating--subtitle">Niveu: <span>${difficulty}</span></span>
+              <span class="u-mb-s c-wall__rating--subtitle">Builder: <span>${builder}</span></span>
+              <span class="u-mb-clear c-wall__rating--subtitle">Rating:</span>
+              <span>
+                ${starSVG}
+              </span>
+            </label>
+    `;
+  }
+  document.querySelector('.js-wall_route--options').innerHTML = html;
+  console.info('Route buttons loaded');
   showGrips();
 };
 
@@ -78,7 +121,7 @@ const showGrips = async function () {
   wallItem = document.querySelectorAll('.c-wall__grid--item');
   for (let i = 0; i < routes.length; i++) {
     for (let j = 0; j < routes[i].grips.length; j++) {
-      let index = routes[i].grips[j].point[0] - 1 + (routes[i].grips[j].point[1] - 1) * 20;
+      let index = routes[i].grips[j].points.x - 1 + (routes[i].grips[j].points.y - 1) * 20;
       wallItem[index].classList.add('c-wall__grid--item--grip');
       switch (routes[i].grips[j].handgriptype) {
         case 'Bak':
@@ -108,7 +151,7 @@ const showGrips = async function () {
       }
     }
   }
-  drawSelectedPath(+selectedPath);
+  drawSelectedPath(selectedPath);
   listenToRouteClick();
 };
 
@@ -117,7 +160,7 @@ const listenToRouteClick = function () {
   options.forEach((option) => {
     option.addEventListener('change', function (event) {
       selectedPath = this.dataset.id;
-      drawSelectedPath(+selectedPath);
+      drawSelectedPath(selectedPath);
     });
   });
 };
@@ -131,11 +174,11 @@ const drawSelectedPath = function (selectedPath) {
       if (routes[i].routeID !== selectedPath) {
         continue;
       }
-      let top = routes[i].grips[j].point[0] * topDiffrence - topDiffrence;
+      let top = routes[i].grips[j].points.x * topDiffrence - topDiffrence;
       if (top < 0) {
         top = 0;
       }
-      let left = routes[i].grips[j].point[1] * leftDiffrence - leftDiffrence;
+      let left = routes[i].grips[j].points.y * leftDiffrence - leftDiffrence;
       if (left < 0) {
         left = 0;
       }
