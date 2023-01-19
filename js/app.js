@@ -3,15 +3,33 @@ const fetchPromis = function (url) {
   return fetch(url).then((response) => response.json().catch((error) => console.log(error)));
 };
 
-let wall, wallItem, routes;
+let wall,
+  wallItem,
+  routes,
+  selectedPath = 1,
+  ropeId;
 
 document.addEventListener('DOMContentLoaded', function () {
   toggleNav();
   if (document.querySelector('#ropeDetail')) {
-    getWallRoutes();
+    getRopeId();
     togggleStars();
+    listenToWindowResize();
   }
 });
+
+const getRopeId = function () {
+  let url = window.location.search;
+  let urlParams = new URLSearchParams(url);
+  ropeId = urlParams.get('touw');
+  getWallRoutes(ropeId);
+};
+
+const listenToWindowResize = function () {
+  window.addEventListener('resize', function () {
+    drawSelectedPath(+selectedPath);
+  });
+};
 
 const togggleStars = function () {
   const starEls = document.querySelectorAll('.star.rating');
@@ -35,7 +53,7 @@ function toggleNav() {
   }
 }
 
-const getWallRoutes = async function () {
+const getWallRoutes = async function (rope_id) {
   // const url = 'http://127.0.0.1:5500/js/dummydata.json';
   const url = 'https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json';
   routes = await fetchPromis(url);
@@ -87,7 +105,7 @@ const showGrips = async function () {
       }
     }
   }
-  drawSelectedPath(1);
+  drawSelectedPath(+selectedPath);
   listenToRouteClick();
 };
 
@@ -95,7 +113,7 @@ const listenToRouteClick = function () {
   let options = document.querySelectorAll('.js-path-select');
   options.forEach((option) => {
     option.addEventListener('change', function (event) {
-      let selectedPath = this.dataset.id;
+      selectedPath = this.dataset.id;
       drawSelectedPath(+selectedPath);
     });
   });
