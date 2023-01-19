@@ -1,33 +1,27 @@
-const fetchPromis = function (url) {
-  return fetch(url)
-    .then((response) => {
-      return response.json();
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
-
+// #region ***  DOM references                           ***********
 let wall,
   wallItem,
   routes,
   selectedPath = 1,
   ropeId = 1;
 
-document.addEventListener('DOMContentLoaded', function () {
-  toggleNav();
-  if (document.querySelector('#ropeDetail')) {
-    getRopeId();
-    showWall();
-    togggleStars();
-    listenToWindowResize();
-  }
-});
+const fetchPromis = function (url) {
+  return fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
 
-const listenToWindowResize = function () {
-  window.addEventListener('resize', function () {
-    drawSelectedPath(+selectedPath);
-  });
+const toggleNav = function () {
+  let toggleTrigger = document.querySelectorAll('.js-toggle-nav');
+  for (let i = 0; i < toggleTrigger.length; i++) {
+    toggleTrigger[i].addEventListener('click', function () {
+      document.querySelector('body').classList.toggle('has-mobile-nav');
+    });
+  }
 };
 
 const togggleStars = function () {
@@ -42,15 +36,55 @@ const togggleStars = function () {
   });
 };
 
-function toggleNav() {
-  let toggleTrigger = document.querySelectorAll('.js-toggle-nav');
-
-  for (let i = 0; i < toggleTrigger.length; i++) {
-    toggleTrigger[i].addEventListener('click', function () {
-      document.querySelector('body').classList.toggle('has-mobile-nav');
-    });
+const drawSelectedPath = function (selectedPath) {
+  const topDiffrence = wallItem[20].getBoundingClientRect().top - wallItem[0].getBoundingClientRect().top;
+  const leftDiffrence = wallItem[1].getBoundingClientRect().left - wallItem[0].getBoundingClientRect().left;
+  let cords = [];
+  for (let i = 0; i < routes.length; i++) {
+    for (let j = 0; j < routes[i].grips.length; j++) {
+      if (routes[i].routeID !== selectedPath) {
+        continue;
+      }
+      let top = routes[i].grips[j].points.x * topDiffrence - topDiffrence;
+      if (top < 0) {
+        top = 0;
+      }
+      let left = routes[i].grips[j].points.y * leftDiffrence - leftDiffrence;
+      if (left < 0) {
+        left = 0;
+      }
+      cords.push({
+        xpoint: top,
+        ypoint: left,
+      });
+    }
   }
-}
+  var points = cords;
+  var Gen = d3
+    .line()
+    .x((p) => p.xpoint)
+    .y((p) => p.ypoint)
+    .curve(d3.curveCardinal);
+  d3.select('#gfg').selectAll('path').remove();
+  d3.select('#gfg').append('path').attr('d', Gen(points)).attr('fill', 'none').attr('stroke', '#5804f4').attr('stroke-width', '2').attr('class', 'js-path');
+  animatePath();
+};
+
+const animatePath = function () {
+  const path = document.querySelector('.js-path');
+  const length = path.getTotalLength();
+  path.style.strokeDasharray = length;
+  path.style.strokeDashoffset = 0 - length;
+};
+
+// #endregion
+
+// #region ***  Callback-Visualisation - show___         ***********
+const listenToWindowResize = function () {
+  window.addEventListener('resize', function () {
+    drawSelectedPath(+selectedPath);
+  });
+};
 
 const showWall = function () {
   let html = '';
@@ -62,23 +96,6 @@ const showWall = function () {
   console.info('Grid loaded');
 };
 
-const getRopeId = function () {
-  let url = window.location.search;
-  let urlParams = new URLSearchParams(url);
-  ropeId = urlParams.get('touw');
-  console.log('ropeId: ' + ropeId);
-  getWallRoutes(ropeId);
-};
-
-const getWallRoutes = async function (rope_id) {
-  // const url = 'http://127.0.0.1:5500/js/dummydata.json';
-  // const url = 'https://waeghexander.github.io/TeamProject_Proto/js/dummydata.json';
-  const url = 'https://func-westeur-klimapp2.azurewebsites.net/api/v1/rope/' + rope_id + '/routes';
-  routes = await fetchPromis(url);
-  console.log(routes);
-  showRouteButtons();
-};
-
 const showRouteButtons = function () {
   let html = '';
   for (let i = 0; i < routes.length; i++) {
@@ -86,7 +103,7 @@ const showRouteButtons = function () {
     let routeName = 'Route: ' + (i + 1);
     let difficulty = routes[i].difficulty;
     let builder = routes[i].builder.lastname + ' ' + routes[i].builder.firstname;
-    let rating = Math.round(routes[i].rating);
+    let rating = Math.round(routes[i].avgRating);
     let starSVG = '';
     for (let j = 0; j < 5; j++) {
       if (j < rating) {
@@ -155,6 +172,48 @@ const showGrips = async function () {
   listenToRouteClick();
 };
 
+const showRopes = function (ropes) {};
+// #endregion
+
+// #region ***  Callback-No Visualisation - callback___  ***********
+// #endregion
+
+// #region ***  Data Access - get___                     ***********
+const GetLoggin = async function () {
+  let url = 'https://func-westeur-klimapp2.azurewebsites.net/auth/login';
+  await fetch(url).then((res) => {
+    console.log(res.json());
+    if (res.status == 200) {
+      console.log('logged in');
+    } else {
+      console.log('not logged in');
+    }
+  });
+};
+
+const getRopeId = function () {
+  let url = window.location.search;
+  let urlParams = new URLSearchParams(url);
+  ropeId = urlParams.get('touw');
+  console.log('ropeId: ' + ropeId);
+  getWallRoutes(ropeId);
+};
+
+const getWallRoutes = async function (rope_id) {
+  const url = 'https://func-westeur-klimapp2.azurewebsites.net/api/rope/' + rope_id + '/routes';
+  routes = await fetchPromis(url);
+  console.log(routes);
+  showRouteButtons();
+};
+
+const getRopes = async function () {
+  // const url = 'https://func-westeur-klimapp2.azurewebsites.net/api/rope';
+  const ropes = await fetchPromis(url);
+  showRopes(ropes);
+};
+// #endregion
+
+// #region ***  Event Listeners - listenTo___            ***********
 const listenToRouteClick = function () {
   let options = document.querySelectorAll('.js-path-select');
   options.forEach((option) => {
@@ -164,44 +223,34 @@ const listenToRouteClick = function () {
     });
   });
 };
+// #endregion
 
-const drawSelectedPath = function (selectedPath) {
-  const topDiffrence = wallItem[20].getBoundingClientRect().top - wallItem[0].getBoundingClientRect().top;
-  const leftDiffrence = wallItem[1].getBoundingClientRect().left - wallItem[0].getBoundingClientRect().left;
-  let cords = [];
-  for (let i = 0; i < routes.length; i++) {
-    for (let j = 0; j < routes[i].grips.length; j++) {
-      if (routes[i].routeID !== selectedPath) {
-        continue;
-      }
-      let top = routes[i].grips[j].points.x * topDiffrence - topDiffrence;
-      if (top < 0) {
-        top = 0;
-      }
-      let left = routes[i].grips[j].points.y * leftDiffrence - leftDiffrence;
-      if (left < 0) {
-        left = 0;
-      }
-      cords.push({
-        xpoint: top,
-        ypoint: left,
-      });
-    }
+// #region ***  Init / DOMContentLoaded                  ***********
+document.addEventListener('DOMContentLoaded', function () {
+  toggleNav();
+  // GetLoggin();
+  if (document.querySelector('#ropes')) {
+    getRopes();
   }
-  var points = cords;
-  var Gen = d3
-    .line()
-    .x((p) => p.xpoint)
-    .y((p) => p.ypoint)
-    .curve(d3.curveCardinal);
-  d3.select('#gfg').selectAll('path').remove();
-  d3.select('#gfg').append('path').attr('d', Gen(points)).attr('fill', 'none').attr('stroke', '#5804f4').attr('stroke-width', '2').attr('class', 'js-path');
-  animatePath();
-};
+  if (document.querySelector('#ropeDetail')) {
+    getRopeId();
+    showWall();
+    togggleStars();
+    listenToWindowResize();
+  }
+  if (document.querySelector('#dashboard')) {
+    logout();
+  }
+});
+// #endregion
 
-const animatePath = function () {
-  const path = document.querySelector('.js-path');
-  const length = path.getTotalLength();
-  path.style.strokeDasharray = length;
-  path.style.strokeDashoffset = 0 - length;
+const logout = function () {
+  console.log('logout');
+  let url = 'https://func-westeur-klimapp2.azurewebsites.net/auth/logout';
+  fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 };
