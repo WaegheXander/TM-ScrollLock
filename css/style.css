@@ -1170,3 +1170,10 @@ input:disabled {
 .stars[data-stars="5"] .star:nth-child(5)~.star path {
   fill: #d8d8d8;
 }
+
+.c-comments {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
