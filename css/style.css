@@ -1248,3 +1248,82 @@ input:disabled {
   font-weight: 400;
   line-height: 20px;
 }
+
+/*
+
+  Dashboard
+
+*/
+.c-dashboard {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 80px 1fr;
+}
+
+.c-dashboard__logo {
+  background-color: var(--global-color-alpha-xx-dark);
+  position: sticky;
+  top: 0;
+  padding: 16px;
+}
+
+.c-dashboard__sidebar {
+  background-color: var(--global-color-alpha-xx-dark);
+  padding: 64px 0 16px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+}
+
+.c-dashboard__topbar {
+  background-color: var(--global-color-alpha-xx-light);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.c-dashboard__main {
+  background-color: var(--global-color-gray-xxxx-light);
+  padding: 32px 75px;
+}
+
+/* dashboard logo */
+.c-db-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  width: 48px;
+}
+
+.c-db-logo__symbol {
+  width: 100%;
+  height: 100%;
+}
+
+.c-db-label--options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 16px 24px 16px 12px;
+  border-radius: 50% 0 0 50%;
+}
+
+.c-db-custom-option__symbol {
+  width: 100%;
+  height: 100%;
+}
+
+.c-db-option--hidden:checked+.c-db-label--options {
+  background-color: var(--global-color-alpha-xx-light);
+  fill: var(--global-color-alpha);
+}
+
+.c-db-option--hidden:hover+.c-db-label--options,
+.c-db-option--hidden:focus+.c-db-label--options {}

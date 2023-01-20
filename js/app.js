@@ -8,8 +8,10 @@ let wall,
 const fetchPromis = function (url) {
   return fetch(url)
     .then((response) => {
-      console.log(response.json());
-      return response.json();
+      console.info('Data fetched');
+      let res = response.json();
+      console.info(res);
+      return res;
     })
     .catch((error) => {
       console.error(error);
@@ -217,7 +219,7 @@ const listenToRouteClick = function () {
 // #region ***  Init / DOMContentLoaded                  ***********
 document.addEventListener('DOMContentLoaded', function () {
   toggleNav();
-  GetLoggin();
+  GetLogin();
   if (document.querySelector('#ropes')) {
     getRopes();
   }
@@ -231,7 +233,8 @@ document.addEventListener('DOMContentLoaded', function () {
 // #endregion
 
 // region ***  User / login  ***********
-const GetLoggin = async function () {
+const GetLogin = async function () {
+  console.log('Checking login');
   let url = 'https://func-westeur-klimapp2.azurewebsites.net/auth/login';
   await fetch(url).then((res) => {
     if (res.status == 200) {
@@ -246,10 +249,10 @@ const GetLoggin = async function () {
 const getUserData = async function () {
   let url = 'https://func-westeur-klimapp2.azurewebsites.net/api/user/0';
   const userData = await fetchPromis(url);
-  showLoggin(userData);
+  showLogin(userData);
 };
 
-const showLoggin = function (userData) {
+const showLogin = function (userData) {
   console.warn(userData);
 };
 
