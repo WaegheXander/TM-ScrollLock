@@ -486,6 +486,47 @@ input:disabled {
   width: 30px;
 }
 
+.c-nav__profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.c-nav__notification {
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+
+.c-nav__notification--symbole {
+  stroke: var(--global-color-gray-xxxx-light);
+  width: 100%;
+  height: 100%;
+}
+
+.c-nav__profileimg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: cadetblue;
+  display: block;
+  border: 2px solid var(--global-color-gray-xxxxx-dark);
+  background: url(../img/svg/user.svg) no-repeat center center / cover;
+  box-shadow: 2px 2px 6px var(--global-color-transparent);
+}
+
+.has-notification::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  right: -2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--global-color-beta);
+}
+
 @media (min-width: 992px) {
   .c-nav__list {
     display: flex;
@@ -504,6 +545,27 @@ input:disabled {
 
   .is-selected:after {
     width: calc(50% - 16px);
+  }
+
+  .c-nav__profile {
+    gap: 24px;
+  }
+
+  .c-nav__notification {
+    width: 32px;
+    height: 32px;
+  }
+
+  .c-nav__profileimg {
+    width: 44px;
+    height: 44px;
+  }
+
+  .has-notification::after {
+    top: -4px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
   }
 }
 
@@ -1303,8 +1365,6 @@ input:disabled {
 
 .c-dashboard__main {
   background-color: var(--global-color-gray-xxxx-light);
-  padding: 32px 75px;
-  /* grid-area: grid-row-start / grid-column-start / grid-row-end / grid-column-end */
   grid-area: 2 / 1 / 2 / 2 span;
 }
 
@@ -1425,17 +1485,6 @@ mobile dasboard navbar
   transform: translateX(0%);
 }
 
-.c-page {
-  opacity: 1;
-  transform: translateX(0);
-  transition: transform 0.25s ease;
-}
-
-.has-mobile-nav .c-page {
-  opacity: 0.5;
-  transform: translateX(25%);
-}
-
 @media (min-width: 992px) {
   .c-dashboard__sidebar {
     display: flex;
@@ -1455,5 +1504,37 @@ mobile dasboard navbar
 
   .c-db-label--options {
     padding: 18px 28px 18px 18px;
+  }
+}
+
+.c-db__topbar--title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 20px;
+  color: var(--global-color-gray-xxxxx-dark);
+}
+
+.c-db__topbar__profile .c-nav__notification--symbole {
+  stroke: var(--global-color-gray-xxxxx-dark);
+}
+
+@media (min-width: 768px) {
+  .c-dashboard__topbar {
+    padding: 0 20px;
+  }
+
+  .c-db__topbar--title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+}
+
+@media (min-width: 992px) {
+  .c-dashboard__topbar {
+    padding: 0 24px;
+  }
+
+  .c-db__topbar--title {
+    font-size: 28px;
   }
 }
