@@ -1538,3 +1538,12 @@ mobile dasboard navbar
     font-size: 28px;
   }
 }
+
+
+.u-opacity-half {
+  opacity: 0.5;
+}
+
+.u-opacity-full {
+  opacity: 1;
+}
