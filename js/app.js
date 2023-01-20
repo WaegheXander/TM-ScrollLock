@@ -8,6 +8,7 @@ let wall,
 const fetchPromis = function (url) {
   return fetch(url)
     .then((response) => {
+      console.log(response.json());
       return response.json();
     })
     .catch((error) => {
@@ -172,24 +173,12 @@ const showGrips = async function () {
   listenToRouteClick();
 };
 
-const showRopes = function (ropes) {};
 // #endregion
 
 // #region ***  Callback-No Visualisation - callback___  ***********
 // #endregion
 
 // #region ***  Data Access - get___                     ***********
-const GetLoggin = async function () {
-  let url = 'https://func-westeur-klimapp2.azurewebsites.net/auth/login';
-  await fetch(url).then((res) => {
-    console.log(res.json());
-    if (res.status == 200) {
-      console.log('logged in');
-    } else {
-      console.log('not logged in');
-    }
-  });
-};
 
 const getRopeId = function () {
   let url = window.location.search;
@@ -207,9 +196,9 @@ const getWallRoutes = async function (rope_id) {
 };
 
 const getRopes = async function () {
-  // const url = 'https://func-westeur-klimapp2.azurewebsites.net/api/rope';
+  const url = 'https://func-westeur-klimapp2.azurewebsites.net/api/rope';
   const ropes = await fetchPromis(url);
-  showRopes(ropes);
+  // showRopes(ropes);
 };
 // #endregion
 
@@ -228,7 +217,7 @@ const listenToRouteClick = function () {
 // #region ***  Init / DOMContentLoaded                  ***********
 document.addEventListener('DOMContentLoaded', function () {
   toggleNav();
-  // GetLoggin();
+  GetLoggin();
   if (document.querySelector('#ropes')) {
     getRopes();
   }
@@ -238,19 +227,34 @@ document.addEventListener('DOMContentLoaded', function () {
     togggleStars();
     listenToWindowResize();
   }
-  if (document.querySelector('#dashboard')) {
-    logout();
-  }
 });
 // #endregion
+
+// region ***  User / login  ***********
+const GetLoggin = async function () {
+  let url = 'https://func-westeur-klimapp2.azurewebsites.net/auth/login';
+  await fetch(url).then((res) => {
+    if (res.status == 200) {
+      console.log('logged in');
+      getUserData();
+    } else {
+      console.log('not logged in');
+    }
+  });
+};
+
+const getUserData = async function () {
+  let url = 'https://func-westeur-klimapp2.azurewebsites.net/api/user/0';
+  const userData = await fetchPromis(url);
+  showLoggin(userData);
+};
+
+const showLoggin = function (userData) {
+  console.warn(userData);
+};
 
 const logout = function () {
   console.log('logout');
   let url = 'https://func-westeur-klimapp2.azurewebsites.net/auth/logout';
-  fetch(url, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  fetch(url, { method: 'DELETE' });
 };

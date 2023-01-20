@@ -454,7 +454,6 @@ input:disabled {
 .c-nav__link:focus:after,
 .c-nav__link:hover:after {
   width: 30px;
-  max-width: 30px;
   background-color: var(--global-color-beta);
 }
 
@@ -478,7 +477,6 @@ input:disabled {
 
 .is-selected:after {
   width: 30px;
-  max-width: 30px;
 }
 
 @media (min-width: 992px) {
@@ -494,11 +492,11 @@ input:disabled {
 
   .c-nav__link:focus:after,
   .c-nav__link:hover:after {
-    max-width: 30%;
+    width: calc(50% - 16px);
   }
 
   .is-selected:after {
-    max-width: 30%;
+    width: calc(50% - 16px);
   }
 }
 
@@ -576,11 +574,6 @@ input:disabled {
 @media (min-width: 768px) {
   .c-mobile-nav__body {
     padding: 48px;
-  }
-
-  .c-nav__link:focus:after,
-  .c-nav__link:hover:after {
-    width: calc(50% - 16px);
   }
 }
 
