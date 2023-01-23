@@ -1572,13 +1572,16 @@ mobile dasboard navbar
 */
 
 .c-account {
-  width: 100%;
-  height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  padding: 32px;
   position: relative;
   top: 100px;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 90%);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width: 100%;
+  padding: 32px;
+  max-width: 400px;
+
 }
 
 .c-account__profile {
@@ -1589,17 +1592,17 @@ mobile dasboard navbar
 
 .c-account__profile--background {
   width: 100%;
-  height: 100px;
+  height: 125px;
   background-color: var(--global-color-alpha);
 }
 
 .c-account__profile--img {
   background: url(../img/Wall/huygh.jpg) no-repeat center center / cover;
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   border: 2px solid var(--global-color-alpha-xx-dark);
   margin: 0 auto;
   position: relative;
-  top: -56px;
+  top: -80px;
 }
