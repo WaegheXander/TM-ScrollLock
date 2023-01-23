@@ -43,22 +43,6 @@ const togggleStars = function () {
   });
 };
 
-const hideNonSelectedRoutes = function () {
-  wallItem = document.querySelectorAll('.c-wall__grid--item--grip');
-  for (let i = 0; i < wallItem.length; i++) {
-    let dataId = wallItem[i].getAttribute('data-id');
-    if (dataId !== selectedPath) {
-      wallItem[i].classList.add('u-opacity-half');
-      wallItem[i].classList.remove('u-opacity-full');
-      console.log('half');
-    } else {
-      wallItem[i].classList.add('u-opacity-full');
-      wallItem[i].classList.remove('u-opacity-half');
-      console.log('full');
-    }
-  }
-};
-
 const drawSelectedPath = function () {
   console.log('draw selected path: ', selectedPath);
   const topDiffrence = wallItem[20].getBoundingClientRect().top - wallItem[0].getBoundingClientRect().top;
@@ -67,8 +51,9 @@ const drawSelectedPath = function () {
 
   for (let i = 0; i < routes.length; i++) {
     for (let j = 0; j < routes[i].grips.length; j++) {
-      if (routes[i].routeID !== selectedPath) {
-        continue;
+      if (routes[i].routeID != selectedPath) {
+        console.log('break');
+        break;
       }
 
       let top = routes[i].grips[j].points.x * topDiffrence - topDiffrence;
@@ -110,18 +95,12 @@ const animatePath = function () {
 
 // #endregion
 
-// #region ***  Callback-Visualisation - show___         ***********
-const listenToWindowResize = function () {
-  window.addEventListener('resize', function () {
-    drawSelectedPath();
-  });
-};
-
+// #region ***  Visualisation - show___         ***********
 const showWall = function () {
   let html = '';
 
   for (let i = 0; i < 1420; i++) {
-    html += '<div class="c-wall__grid--item"></div>';
+    html += '<div class="c-wall__grid--item js-grid-item"></div>';
   }
 
   html += '<svg id="gfg" width="200" height="200" class="c-wall__svg"></svg>';
@@ -212,17 +191,12 @@ const showGrips = async function () {
   }
 
   drawSelectedPath();
-  hideNonSelectedRoutes();
   listenToRouteClick();
 };
 
 // #endregion
 
-// #region ***  Callback-No Visualisation - callback___  ***********
-// #endregion
-
 // #region ***  Data Access - get___                     ***********
-
 const getRopeId = function () {
   let url = window.location.search;
   let urlParams = new URLSearchParams(url);
@@ -232,7 +206,7 @@ const getRopeId = function () {
 };
 
 const getWallRoutes = async function (rope_id) {
-  const url = 'https://func-westeur-klimapp2.azurewebsites.net/api/rope/' + rope_id + '/routes';
+  const url = 'https://fa-westeur-meeclimb.azurewebsites.net/api/routes?rope=' + rope_id;
   routes = await fetchPromis(url);
   console.log(routes);
   showRouteButtons();
@@ -241,6 +215,7 @@ const getWallRoutes = async function (rope_id) {
 const getRopes = async function () {
   const url = 'https://func-westeur-klimapp2.azurewebsites.net/api/rope';
   const ropes = await fetchPromis(url);
+  console.log(ropes);
   // showRopes(ropes);
 };
 
@@ -255,11 +230,43 @@ const listenToRouteClick = function () {
       console.log('old ', selectedPath);
       selectedPath = this.getAttribute('data-id');
       drawSelectedPath();
-      hideNonSelectedRoutes();
     });
   });
 };
 
+const listenToWindowResize = function () {
+  window.addEventListener('resize', function () {
+    drawSelectedPath();
+  });
+};
+
+const listenToUIDashboard = function () {
+  let gridItemsWithGrid = document.querySelectorAll('.c-wall__grid--item--grip');
+  let gridItems = document.querySelectorAll('.c-wall__grid--item');
+
+  for (let i = 0; i < gridItemsWithGrid.length; i++) {
+    gridItemsWithGrid[i].addEventListener('ondragstart', function (ev) {
+      ev.dataTransfer.setData('Text', ev.target.id);
+    });
+  }
+
+  for (let i = 0; i < gridItems.length; i++) {
+    gridItems[i].addEventListener('ondragover', allowDrop);
+    gridItems[i].addEventListener('ondrop', drop);
+  }
+};
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {}
+
+function drop(ev) {
+  var data = ev.dataTransfer.getData('Text');
+  ev.target.appendChild(document.getElementById(data));
+  ev.preventDefault();
+}
 // #endregion
 
 // #region ***  Init / DOMContentLoaded                  ***********
@@ -272,8 +279,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (document.querySelector('#ropeDetail')) {
-    getRopeId();
     showWall();
+    getRopeId();
     togggleStars();
     listenToWindowResize();
   }

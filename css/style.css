@@ -1339,6 +1339,7 @@ input:disabled {
   align-items: center;
   justify-content: center;
   height: 100%;
+  z-index: 1;
 }
 
 .c-dashboard__sidebar {
@@ -1350,6 +1351,7 @@ input:disabled {
   justify-content: space-between;
   position: sticky;
   top: 0;
+  z-index: 1;
 }
 
 .c-dashboard__topbar {
@@ -1361,9 +1363,11 @@ input:disabled {
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
+  z-index: 1;
 }
 
 .c-dashboard__main {
+  padding: 64px;
   background-color: var(--global-color-gray-xxxx-light);
   grid-area: 2 / 1 / 2 / 2 span;
 }
@@ -1512,6 +1516,7 @@ mobile dasboard navbar
   font-weight: 700;
   line-height: 20px;
   color: var(--global-color-gray-xxxxx-dark);
+  width: 175px;
 }
 
 .c-db__topbar__profile .c-nav__notification--symbole {
@@ -1526,6 +1531,7 @@ mobile dasboard navbar
   .c-db__topbar--title {
     font-size: 24px;
     line-height: 32px;
+    width: fit-content;
   }
 }
 
@@ -1536,6 +1542,7 @@ mobile dasboard navbar
 
   .c-db__topbar--title {
     font-size: 28px;
+
   }
 }
 
@@ -1546,4 +1553,53 @@ mobile dasboard navbar
 
 .u-opacity-full {
   opacity: 1;
+}
+
+/* dashboard */
+.c-db-wall {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+/*
+
+  Account page
+
+*/
+
+.c-account {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  position: relative;
+  top: 100px;
+}
+
+.c-account__profile {
+  background-color: var(--global-color-alpha-xx-light);
+  height: 300px;
+  border-radius: 3px;
+}
+
+.c-account__profile--background {
+  width: 100%;
+  height: 100px;
+  background-color: var(--global-color-alpha);
+}
+
+.c-account__profile--img {
+  background: url(../img/Wall/huygh.jpg) no-repeat center center / cover;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--global-color-alpha-xx-dark);
+  margin: 0 auto;
+  position: relative;
+  top: -56px;
 }
