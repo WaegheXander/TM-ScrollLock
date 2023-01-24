@@ -1392,8 +1392,9 @@ input:disabled {
   align-items: flex-end;
   justify-content: space-between;
   position: sticky;
-  top: 0;
+  top: 80px;
   z-index: 1;
+  height: calc(100dvh - 80px);
 }
 
 .c-dashboard__topbar {
@@ -1409,9 +1410,20 @@ input:disabled {
 }
 
 .c-dashboard__main {
-  padding: 64px;
+  padding: 16px;
   background-color: var(--global-color-gray-xxxx-light);
   grid-area: 2 / 1 / 2 / 2 span;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 48px;
+}
+
+@media (min-width: 992px) {
+  .c-dashboard__main {
+    flex-direction: row;
+    padding: 64px;
+  }
 }
 
 /* dashboard logo */
@@ -1600,11 +1612,10 @@ mobile dasboard navbar
 /* dashboard */
 .c-db-wall {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   gap: 32px;
-  width: 100%;
 }
 
 /*
@@ -1952,4 +1963,199 @@ mobile dasboard navbar
 
 .c-nav__profileimg--meta:hover {
   border-color: var(--global-color-beta);
+}
+
+.c-dashboard__grips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+  gap: 16px;
+  align-items: center;
+  max-width: 302px;
+  margin: 0 auto;
+}
+
+.c-grip-add {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background-color: var(--global-color-alpha-xx-light);
+  border-radius: 3px;
+  flex-basis: auto;
+  min-width: 75px;
+  box-shadow: 2px 2px 6px 0px var(--global-color-gray-xx-light);
+}
+
+.c-grip-add__title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.c-grip-add__label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+}
+
+.c-grip-add__symbol {
+  padding: 8px;
+  width: 100%;
+  height: 100%;
+}
+
+.c-grip-add__button {
+  border: none;
+  outline: none;
+  padding: 4px 8px;
+  background-color: transparent;
+  font-size: 12px;
+  border: 2px solid var(--global-color-beta);
+}
+
+.c-grip-add__button:hover {
+  background-color: var(--global-color-beta-x-light);
+}
+
+.c-grip-add__button:active {
+  background-color: var(--global-color-beta);
+}
+
+.c-form__setting {
+  height: fit-content;
+  padding: 24px;
+  background-color: var(--global-color-alpha-xx-light);
+  position: relative;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 2px 2px 6px 0px var(--global-color-gray-xx-light);
+}
+
+.c-form__setting--title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.c-form__inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.c-form__input {
+  font-family: inherit;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border: none;
+  border-radius: 3px;
+  background-color: var(--global-color-gray-xxxx-light);
+  outline: none;
+}
+
+.c-form__input::placeholder {
+  color: var(--global-color-gray-xxx-dark);
+}
+
+.c-form__input:hover {
+  box-shadow: 0 0 0 2px var(--global-color-beta);
+}
+
+.c-form__input--label {
+  position: relative;
+  left: 8px;
+}
+
+.c-form__input--color {
+  width: 33%;
+  height: 40px;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  padding: 0;
+  background: none;
+  margin-bottom: 0;
+}
+
+.c-form__input--buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.c-form__input--button {
+  border: none;
+  outline: none;
+  padding: 4px 8px;
+  background-color: transparent;
+  font-size: 12px;
+  border: 2px solid var(--global-color-beta);
+  width: 100%;
+}
+
+.c-form__input--button:nth-child(2) {
+  border: none;
+}
+
+.c-form__input--button:hover,
+.c-form__input--button:focus {
+  background: var(--global-color-beta-x-light);
+}
+
+.c-form__input--button:active {
+  background: var(--global-color-beta);
+}
+
+.c-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 302px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.c-custom-select {
+  position: relative;
+}
+
+.c-input {
+  appearance: none;
+  outline: 0;
+  border: 0;
+  box-shadow: none;
+  /* Personalize */
+  padding: 8px;
+  color: #fff;
+  background-color: var(--global-color-alpha-x-dark);
+  background-image: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.c-custom-select__symbol {
+  position: absolute;
+  top: 50%;
+  right: 1em;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.c-label__select {
+  margin-bottom: 4px;
+}
+
+.c-custom-select__symbol {
+  width: calc(var(--global-baseline) * 3);
+  height: calc(var(--global-baseline) * 3);
+  fill: var(--global-color-gray-xxxx-light);
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  pointer-events: none;
 }

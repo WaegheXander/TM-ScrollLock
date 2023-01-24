@@ -272,48 +272,102 @@ const showDashboard = async function () {
   showGripsDashboard(data);
   listenToUIDashboard();
 };
+
+const addGrip = function (event) {
+  let type = event.target.getAttribute('data-id');
+  let items = document.querySelectorAll('.c-wall__grid--item');
+  let index = 0;
+  while (index != 'stop') {
+    if (items[index].draggable == false) {
+      items[index].classList.add('c-wall__grid--item--grip--' + type);
+      items[index].classList.add('draggable');
+      items[index].setAttribute('draggable', true);
+      index = 'stop';
+    } else {
+      index++;
+    }
+  }
+
+  removeEventListeners();
+  listenToUIDashboard();
+};
+
+const dragstart = function (event) {
+  event.dataTransfer.setData('text', event.target.id);
+};
+
+const dragover = function (event) {
+  event.preventDefault();
+};
+
+const drop = function (event) {
+  event.preventDefault();
+  var data = event.dataTransfer.getData('text');
+  var movable = document.getElementById(data);
+  console.log(movable);
+  var oldclassList = movable.classList;
+  console.log(event.target);
+  event.target.classList = oldclassList;
+  event.target.setAttribute('draggable', true);
+  event.target.setAttribute('id', 'draggable');
+
+  movable.removeAttribute('id');
+  movable.removeAttribute('draggable');
+  movable.removeAttribute('data-id');
+  movable.classList = 'c-wall__grid--item dropzone';
+  console.log('remove event listeners');
+  removeEventListeners();
+  console.log('add event listeners');
+  listenToUIDashboard();
+};
+
 const listenToUIDashboard = async function () {
   let draggable = document.querySelectorAll('.draggable');
   let dropzone = document.querySelectorAll('.dropzone');
 
   draggable.forEach(function (movable) {
-    movable.setAttribute('draggable', true);
-    movable.addEventListener('dragstart', function (event) {
-      event.dataTransfer.setData('text', event.target.id);
-    });
+    movable.addEventListener('dragstart', dragstart);
   });
 
   dropzone.forEach(function (dropZone) {
-    dropZone.addEventListener('dragover', function (event) {
-      event.preventDefault();
-    });
+    dropZone.addEventListener('dragover', dragover);
   });
 
   dropzone.forEach(function (dropZone) {
-    dropZone.addEventListener('drop', function (event) {
-      event.preventDefault();
-      var data = event.dataTransfer.getData('text');
-      var movable = document.getElementById(data);
-      console.log(movable);
-      var oldclassList = movable.classList;
-      console.log(event.target);
-      event.target.classList = oldclassList;
-      event.target.setAttribute('draggable', true);
-      event.target.setAttribute('id', 'draggable');
+    dropZone.addEventListener('drop', drop);
+  });
 
-      movable.removeAttribute('id');
-      movable.removeAttribute('draggable');
-      movable.removeAttribute('data-id');
-      movable.classList = 'c-wall__grid--item dropzone';
-
-      listenToUIDashboard();
-    });
+  let typeGrip = document.querySelectorAll('.js-add__grip');
+  typeGrip.forEach((type) => {
+    type.addEventListener('click', addGrip);
   });
 };
+const removeEventListeners = function () {
+  let draggable = document.querySelectorAll('.draggable');
+  let dropzone = document.querySelectorAll('.dropzone');
+
+  draggable.forEach(function (movable) {
+    movable.removeEventListener('dragstart', dragstart);
+  });
+
+  dropzone.forEach(function (dropZone) {
+    dropZone.removeEventListener('dragover', dragover);
+  });
+
+  dropzone.forEach(function (dropZone) {
+    dropZone.removeEventListener('drop', drop);
+  });
+
+  let typeGrip = document.querySelectorAll('.js-add__grip');
+  typeGrip.forEach(function (type) {
+    type.removeEventListener('click', addGrip);
+  });
+};
+
 const showWallDashboard = function () {
   let html = '';
   for (let i = 0; i < 1420; i++) {
-    html += `<div class="c-wall__grid--item dropzone draggable" id=${i}></div>`;
+    html += `<div class="c-wall__grid--item dropzone " id=${i}></div>`;
   }
   document.querySelector('.js-wall').innerHTML = html;
   console.info('Grid loaded');
@@ -328,6 +382,7 @@ const showGripsDashboard = async function (data) {
       let index = data[i].grips[j].points.x - 1 + (data[i].grips[j].points.y - 1) * 20;
       wallItem[index].setAttribute('data-id', data[i].routeID);
       wallItem[index].setAttribute('draggable', 'true');
+      wallItem[index].classList.add('draggable');
 
       switch (data[i].grips[j].handgriptype) {
         case 'Bak':
