@@ -240,33 +240,6 @@ const listenToWindowResize = function () {
   });
 };
 
-const listenToUIDashboard = function () {
-  let gridItemsWithGrid = document.querySelectorAll('.c-wall__grid--item--grip');
-  let gridItems = document.querySelectorAll('.c-wall__grid--item');
-
-  for (let i = 0; i < gridItemsWithGrid.length; i++) {
-    gridItemsWithGrid[i].addEventListener('ondragstart', function (ev) {
-      ev.dataTransfer.setData('Text', ev.target.id);
-    });
-  }
-
-  for (let i = 0; i < gridItems.length; i++) {
-    gridItems[i].addEventListener('ondragover', allowDrop);
-    gridItems[i].addEventListener('ondrop', drop);
-  }
-};
-
-function allowDrop(ev) {
-  ev.preventDefault();
-}
-
-function drag(ev) {}
-
-function drop(ev) {
-  var data = ev.dataTransfer.getData('Text');
-  ev.target.appendChild(document.getElementById(data));
-  ev.preventDefault();
-}
 // #endregion
 
 // #region ***  Init / DOMContentLoaded                  ***********
@@ -284,7 +257,109 @@ document.addEventListener('DOMContentLoaded', function () {
     togggleStars();
     listenToWindowResize();
   }
+  if (document.querySelector('#dashboard')) {
+    showDashboard();
+  }
 });
+// #endregion
+
+// #region ***  Dashboard  ***********
+const showDashboard = async function () {
+  let url = 'https://fa-westeur-meeclimb.azurewebsites.net/api/routes?rope=1';
+  const data = await fetchPromis(url);
+  console.log(data);
+  showWallDashboard(); // showing wall
+  showGripsDashboard(data);
+  listenToUIDashboard();
+};
+const listenToUIDashboard = async function () {
+  let draggable = document.querySelectorAll('.draggable');
+  let dropzone = document.querySelectorAll('.dropzone');
+
+  draggable.forEach(function (movable) {
+    movable.setAttribute('draggable', true);
+    movable.addEventListener('dragstart', function (event) {
+      event.dataTransfer.setData('text', event.target.id);
+    });
+  });
+
+  dropzone.forEach(function (dropZone) {
+    dropZone.addEventListener('dragover', function (event) {
+      event.preventDefault();
+    });
+  });
+
+  dropzone.forEach(function (dropZone) {
+    dropZone.addEventListener('drop', function (event) {
+      event.preventDefault();
+      var data = event.dataTransfer.getData('text');
+      var movable = document.getElementById(data);
+      console.log(movable);
+      var oldclassList = movable.classList;
+      console.log(event.target);
+      event.target.classList = oldclassList;
+      event.target.setAttribute('draggable', true);
+      event.target.setAttribute('id', 'draggable');
+
+      movable.removeAttribute('id');
+      movable.removeAttribute('draggable');
+      movable.removeAttribute('data-id');
+      movable.classList = 'c-wall__grid--item dropzone';
+
+      listenToUIDashboard();
+    });
+  });
+};
+const showWallDashboard = function () {
+  let html = '';
+  for (let i = 0; i < 1420; i++) {
+    html += `<div class="c-wall__grid--item dropzone draggable" id=${i}></div>`;
+  }
+  document.querySelector('.js-wall').innerHTML = html;
+  console.info('Grid loaded');
+};
+
+const showGripsDashboard = async function (data) {
+  wall = document.querySelectorAll('.c-wall');
+  wallItem = document.querySelectorAll('.c-wall__grid--item');
+
+  for (let i = 0; i < data.length; i++) {
+    for (let j = 0; j < data[i].grips.length; j++) {
+      let index = data[i].grips[j].points.x - 1 + (data[i].grips[j].points.y - 1) * 20;
+      wallItem[index].setAttribute('data-id', data[i].routeID);
+      wallItem[index].setAttribute('draggable', 'true');
+
+      switch (data[i].grips[j].handgriptype) {
+        case 'Bak':
+          wallItem[index].classList.add('c-wall__grid--item--grip--bak');
+          break;
+        case 'Sloper':
+          wallItem[index].classList.add('c-wall__grid--item--grip--sloper');
+          break;
+        case 'Crimp':
+          wallItem[index].classList.add('c-wall__grid--item--grip--crimp');
+          break;
+        case 'Pocket':
+          wallItem[index].classList.add('c-wall__grid--item--grip--pocket');
+          break;
+        case 'Jug':
+          wallItem[index].classList.add('c-wall__grid--item--grip--jug');
+          break;
+        case 'Undercling':
+          wallItem[index].classList.add('c-wall__grid--item--grip--undercling');
+          break;
+        case 'Mono':
+          wallItem[index].classList.add('c-wall__grid--item--grip--mono');
+          break;
+        case 'Bidoigt':
+          wallItem[index].classList.add('c-wall__grid--item--grip--bidoigt');
+          break;
+      }
+    }
+  }
+  console.log('Grips loaded');
+};
+
 // #endregion
 
 // #region ***  User / login  ***********
