@@ -207,6 +207,7 @@ const getRopeId = function () {
 
 const getWallRoutes = async function (rope_id) {
   const url = 'https://fa-westeur-meeclimb.azurewebsites.net/api/routes?rope=' + rope_id;
+  console.log(url);
   routes = await fetchPromis(url);
   console.log(routes);
   showRouteButtons();
@@ -341,7 +342,9 @@ const listenToUIDashboard = async function () {
   typeGrip.forEach((type) => {
     type.addEventListener('click', addGrip);
   });
+  let;
 };
+
 const removeEventListeners = function () {
   let draggable = document.querySelectorAll('.draggable');
   let dropzone = document.querySelectorAll('.dropzone');

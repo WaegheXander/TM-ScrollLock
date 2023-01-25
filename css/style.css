@@ -2034,6 +2034,7 @@ mobile dasboard navbar
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
   box-shadow: 2px 2px 6px 0px var(--global-color-gray-xx-light);
 }
 
@@ -2158,4 +2159,10 @@ mobile dasboard navbar
   right: 12px;
   top: 12px;
   pointer-events: none;
+}
+
+@media (min-width: 992px) {
+  .c-form {
+    max-width: 100%;
+  }
 }
