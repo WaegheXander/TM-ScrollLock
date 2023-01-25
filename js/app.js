@@ -194,6 +194,21 @@ const showGrips = async function () {
   listenToRouteClick();
 };
 
+const showRopes = function (ropes) {
+  let wall = document.querySelector('.c-Routes__touw');
+  let html = ``;
+  for (let i = 0; i < ropes.length; i++) {
+    html += `<<div class="c-touw">
+        <div class="c-touw__backgouround" style="position: absolute; top: 0; width: 100%; height: 100%; background: url(${ropes[i].image}) no-repeat center center / cover; filter: sepia(50%) saturate(350%) hue-rotate(210deg) brightness(50%) blur(1px); transform: scale(1.05); z-index: -1"></div>
+        <div class="c-touw__content">
+          <h1 class="c-touw__content--title">Touw ${ropes[i].ropeNumber}</h1>
+          <a href="touwDetail.html?touw=${ropes[i].ropeNumber}" class="c-touw__content--button">Bekijk routes</a>
+        </div>
+      </div>`;
+  }
+  wall.innerHTML = html;
+};
+
 // #endregion
 
 // #region ***  Data Access - get___                     ***********
@@ -206,7 +221,7 @@ const getRopeId = function () {
 };
 
 const getWallRoutes = async function (rope_id) {
-  const url = 'https://fa-westeur-meeclimb.azurewebsites.net/api/routes?rope=' + rope_id;
+  const url = 'https://meeclimb.be/api/routes?rope=' + rope_id;
   console.log(url);
   routes = await fetchPromis(url);
   console.log(routes);
@@ -214,10 +229,10 @@ const getWallRoutes = async function (rope_id) {
 };
 
 const getRopes = async function () {
-  const url = 'https://func-westeur-klimapp2.azurewebsites.net/api/rope';
+  const url = 'https://meeclimb.be/api/ropes';
   const ropes = await fetchPromis(url);
   console.log(ropes);
-  // showRopes(ropes);
+  showRopes(ropes);
 };
 
 // #endregion
@@ -266,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // #region ***  Dashboard  ***********
 const showDashboard = async function () {
-  let url = 'https://fa-westeur-meeclimb.azurewebsites.net/api/routes?rope=1';
+  let url = 'https://meeclimb.be/api/routes?rope=1';
   const data = await fetchPromis(url);
   console.log(data);
   showWallDashboard(); // showing wall
@@ -422,7 +437,7 @@ const showGripsDashboard = async function (data) {
 // #region ***  User / login  ***********
 const GetLogin = async function () {
   console.log('Checking login');
-  let url = 'https://func-westeur-klimapp2.azurewebsites.net/auth/login';
+  let url = 'https://meeclimb.be/auth/login';
 
   await fetch(url).then((res) => {
     if (res.status == 200) {
@@ -435,7 +450,7 @@ const GetLogin = async function () {
 };
 
 const getUserData = async function () {
-  let url = 'https://func-westeur-klimapp2.azurewebsites.net/api/user/0';
+  let url = 'https://meeclimb.be/api/user/0';
   const userData = await fetchPromis(url);
   showLogin(userData);
 };
@@ -446,7 +461,7 @@ const showLogin = function (userData) {
 
 const logout = function () {
   console.log('logout');
-  let url = 'https://func-westeur-klimapp2.azurewebsites.net/auth/logout';
+  let url = 'https://meeclimb.be/auth/logout';
 
   fetch(url, {
     method: 'DELETE',
