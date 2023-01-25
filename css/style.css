@@ -2133,6 +2133,7 @@ mobile dasboard navbar
   /* Personalize */
   padding: 8px;
   color: #fff;
+  font-family: inherit;
   background-color: var(--global-color-alpha-x-dark);
   background-image: none;
   cursor: pointer;
@@ -2170,7 +2171,8 @@ mobile dasboard navbar
 .c-ranking {
   display: flex;
   flex-direction: column;
-  max-width: 700px;
+  gap: 32px;
+  max-width: 600px;
   width: 100%;
   margin: 0 auto;
   position: relative;
@@ -2181,7 +2183,6 @@ mobile dasboard navbar
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  margin-bottom: 16px;
 }
 
 .c-ranking__podium--place {
@@ -2307,6 +2308,53 @@ mobile dasboard navbar
 
 .u-pr {
   position: relative;
+}
+
+.c-ranking__select {
+  display: flex;
+  gap: 16px;
+}
+
+.c-ranking__item {
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+  width: 100%;
+  background-color: var(--global-color-alpha-xx-light);
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.c-ranking__item div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.c-ranking__item p {
+  padding: 8px 16px;
+}
+
+.c-ranking__item--sec {
+  position: relative;
+  right: 40px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+
+}
+
+.c-ranking__item--nummer {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.c-ranking__item--name {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
 }
 
 @media print {
