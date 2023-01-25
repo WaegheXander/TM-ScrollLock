@@ -2166,3 +2166,216 @@ mobile dasboard navbar
     max-width: 100%;
   }
 }
+
+.c-ranking {
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  top: 275px;
+}
+
+.c-ranking__podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+
+.c-ranking__podium--place {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  background-color: var(--global-color-alpha-xx-light);
+  position: relative;
+  box-shadow: 2px 2px 6px 0px var(--global-color-gray-xx-light);
+}
+
+.c-ranking__podium--place:nth-child(1) {
+  background: #c8c1eba6;
+}
+
+.c-ranking__podium--place:nth-child(2) {
+  background: #c8c1eb;
+}
+
+.c-ranking__podium--place:nth-child(3) {
+  background: #c8c1eb53;
+}
+
+.c-ranking__second {
+  height: 225px;
+}
+
+.c-ranking__first {
+  height: 300px;
+}
+
+.c-ranking__third {
+  height: 150px;
+}
+
+.c-ranking__podium--place {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.c-ranking__podium--place p {
+  position: relative;
+  top: 20px;
+}
+
+.c-ranking__podium--img {
+  position: absolute;
+  top: -91px;
+  left: 62.5px;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.c-ranking__podium--img--crown {
+  top: -166px;
+  border-radius: 0;
+  animation: crown 1s linear infinite;
+  fill: var(--global-color-beta);
+}
+
+@keyframes crown {
+  0% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+
+  25% {
+    transform: rotate(10deg) translate(10px, -5px);
+  }
+
+  50% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+
+  75% {
+    transform: rotate(-10deg) translate(-10px, -5px);
+  }
+
+  100% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+}
+
+.c-ranking__podium-de {
+  position: absolute;
+  top: -8px;
+  right: -16px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.c-ranking__podium-ste {
+  position: absolute;
+  top: -8px;
+  right: -24px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.c-ranking__podium--nummer {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 48px;
+  margin-bottom: 16px;
+}
+
+.c-ranking__podium--name {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.c-ranking__podium--sec {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.u-pr {
+  position: relative;
+}
+
+@media print {
+
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster:
+        http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]:after {
+    content: ' ('attr(href) ')';
+  }
+
+  abbr[title]:after {
+    content: ' ('attr(title) ')';
+  }
+
+  /*
+    * Don't show links that are fragment identifiers,
+    * or use the `javascript:` pseudo protocol
+    */
+  a[href^='#']:after,
+  a[href^='javascript:']:after {
+    content: '';
+  }
+
+  pre {
+    white-space: pre-wrap !important;
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  /*
+    * Printing Tables:
+    * http://css-discuss.incutio.com/wiki/Printing_Tables
+    */
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
