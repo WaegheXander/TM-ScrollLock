@@ -78,6 +78,21 @@
   font-weight: 700;
 }
 
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--global-color-beta);
+  border: 8px solid var(--global-color-alpha-xx-dark);
+  border-radius: 999px;
+  max-height: 100px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--global-color-alpha-xx-dark);
+}
+
 html {
   line-height: calc(1rem * 1.5);
   font-family: 'Urbanist', sans-serif;

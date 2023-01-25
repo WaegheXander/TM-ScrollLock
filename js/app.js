@@ -308,7 +308,7 @@ const drop = function (event) {
   var movable = document.getElementById(data);
   console.log('movable: ', movable);
   console.log('event.target: ', event.target);
-  if (movable == null || event.target.classList == movable.classList || event.target.classList[3] == null) return;
+  if (movable == null || event.target.classList == movable.classList || event.target.classList[3]) return;
   console.log('not the same');
   event.target.setAttribute('draggable', true);
   event.target.setAttribute('data-id', movable.getAttribute('data-id'));
