@@ -303,16 +303,16 @@ const dragover = function (event) {
 
 const drop = function (event) {
   event.preventDefault();
+
   var data = event.dataTransfer.getData('text');
   var movable = document.getElementById(data);
-  console.log(movable);
-  var oldclassList = movable.classList;
-  console.log(event.target);
-  event.target.classList = oldclassList;
+  console.log('movable: ', movable);
+  console.log('event.target: ', event.target);
+  if (movable == null || event.target.classList == movable.classList || event.target.classList[3] == null) return;
+  console.log('not the same');
   event.target.setAttribute('draggable', true);
-  event.target.setAttribute('id', 'draggable');
-
-  movable.removeAttribute('id');
+  event.target.setAttribute('data-id', movable.getAttribute('data-id'));
+  event.target.classList = movable.classList;
   movable.removeAttribute('draggable');
   movable.removeAttribute('data-id');
   movable.classList = 'c-wall__grid--item dropzone';
@@ -342,7 +342,6 @@ const listenToUIDashboard = async function () {
   typeGrip.forEach((type) => {
     type.addEventListener('click', addGrip);
   });
-  let;
 };
 
 const removeEventListeners = function () {
