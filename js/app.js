@@ -198,13 +198,13 @@ const showRopes = function (ropes) {
   let wall = document.querySelector('.c-Routes__touw');
   let html = ``;
   for (let i = 0; i < ropes.length; i++) {
-    html += `<<div class="c-touw">
-        <div class="c-touw__backgouround" style="position: absolute; top: 0; width: 100%; height: 100%; background: url(${ropes[i].image}) no-repeat center center / cover; filter: sepia(50%) saturate(350%) hue-rotate(210deg) brightness(50%) blur(1px); transform: scale(1.05); z-index: -1"></div>
-        <div class="c-touw__content">
-          <h1 class="c-touw__content--title">Touw ${ropes[i].ropeNumber}</h1>
-          <a href="touwDetail.html?touw=${ropes[i].ropeNumber}" class="c-touw__content--button">Bekijk routes</a>
-        </div>
-      </div>`;
+    html += `<div class="c-touw">
+    <img src="${ropes[i].image}" class="c-touw__backgouround" alt="rope achtergrond" />
+    <div class="c-touw__content">
+      <h1 class="c-touw__content--title">Touw ${ropes[i].rope}</h1>
+      <a href="touwDetail.html?touw=${ropes[i].rope}" class="c-touw__content--button">Bekijk routes</a>
+    </div>
+    </div>`;
   }
   wall.innerHTML = html;
 };
@@ -280,13 +280,22 @@ document.addEventListener('DOMContentLoaded', function () {
 // #endregion
 
 // #region ***  Dashboard  ***********
+let selectedRope = 1;
+let selectedRoute = 1;
 const showDashboard = async function () {
   let url = 'https://meeclimb.be/api/routes?rope=1';
   const data = await fetchPromis(url);
   console.log(data);
+  getRopesDashboard();
   showWallDashboard(); // showing wall
   showGripsDashboard(data);
   listenToUIDashboard();
+};
+
+const getRopesDashboard = async function () {
+  let url = 'https://meeclimb.be/api/ropes';
+  const data = await fetchPromis(url);
+  console.log(data);
 };
 
 const addGrip = function (event) {
