@@ -388,7 +388,7 @@
             <div>
               <label class="c-label__select" for="select1"> Selecteer het touw </label>
               <span class="c-custom-select">
-                <select class="c-input c-custom-select__input" class="" name="select1" id="select1">
+                <select class="c-input c-custom-select__input js-select-rope" class="" name="select1" id="select1">
                   <option value="touw 1">Touw 1</option>
                   <option value="touw 2">Touw 2</option>
                 </select>
@@ -400,7 +400,7 @@
             <div>
               <label class="c-label__select" for="select1"> Selecteer het touw </label>
               <span class="c-custom-select">
-                <select class="c-input c-custom-select__input" class="" name="select1" id="select1">
+                <select class="c-input c-custom-select__input js-select-route" class="" name="select1" id="select1">
                   <option value="route 1">Route 1</option>
                   <option value="route 2">Route 2</option>
                   <option value="route 3">Route 3</option>
@@ -416,17 +416,56 @@
             <h1 class="c-form__setting--title">Instelling</h1>
             <div class="c-form__inputs">
               <label for="name" class="c-form__input--label">Name</label>
-              <input required placeholder="naam van de route" type="input" id="name" class="c-form__input" />
+              <input placeholder="naam van de route" type="input" id="name" class="c-form__input js-route-name" />
               <label for="niveau" class="c-form__input--label">Niveau</label>
-              <input required placeholder="route niveau" type="input" id="niveau" class="c-form__input" />
+              <input placeholder="route niveau" type="input" id="niveau" class="c-form__input js-route-niveau" />
               <label for="color" class="c-form__input--label">Kleur</label>
-              <input type="color" id="color" class="c-form__input c-form__input--color" />
+              <input type="color" id="color" class="c-form__input c-form__input--color js-route-color" />
             </div>
             <div class="c-form__input--buttons">
-              <input type="submit" value="Update" class="c-form__input--button" />
-              <input type="submit" value="Annuleren" class="c-form__input--button" />
+              <input type="button" value="Update" class="c-form__input--button js-save-settings" />
+              <input type="button" value="Annuleren" class="c-form__input--button c-form__input--button--meta js-cancel-settings" />
             </div>
           </div>
+          <div class="c-form__setting">
+            <h1 class="c-form__setting--title">Delete geselecteerde</h1>
+            <div class="c-form__input--buttons">
+              <input type="button" value="Touw" class="c-form__input--button js-delete-rope" />
+              <input type="button" value="Route" class="c-form__input--button js-delete-route" />
+            </div>
+          </div>
+          <div class="c-form__setting">
+            <h1 class="c-form__setting--title">Toevoegen Van</h1>
+            <div class="c-form__input--buttons">
+              <input type="button" value="Touw" class="c-form__input--button js-add-rope" />
+              <input type="button" value="Route" class="c-form__input--button js-add-route" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-overlay js-overlay--addrope">
+      <div class="c-form__inputs c-overlay--rope">
+        <label for="name" class="c-form__input--label">Cijfer van de rope</label>
+        <input placeholder="1, 2, 3 ..." type="input" id="name" class="c-form__input js-route-nummer" />
+        <div class="c-form__input--buttons">
+          <input type="button" value="Toevoegen" class="c-form__input--button c-form__input--button--delete js-toevoegen-rope" />
+          <input type="button" value="Annuleren" class="c-form__input--button c-form__input--button--delete js-annuleren-rope" />
+        </div>
+      </div>
+    </div>
+    <div class="c-overlay js-overlay--addroute">
+      <div class="c-form__inputs c-overlay--rope">
+        <label for="name" class="c-form__input--label">Name</label>
+        <input placeholder="naam van de route" type="input" id="name" class="c-form__input js-route-name" />
+        <label for="niveau" class="c-form__input--label">Niveau</label>
+        <input placeholder="route niveau" type="input" id="niveau" class="c-form__input js-route-niveau" />
+        <label for="color" class="c-form__input--label">Kleur</label>
+        <input type="color" id="color" class="c-form__input c-form__input--color js-route-color" />
+        <div class="c-form__input--buttons">
+          <input type="button" value="Toevoegen" class="c-form__input--button js-add-add-route" />
+          <input type="button" value="Annuleren" class="c-form__input--button js-annuleren-route" />
         </div>
       </div>
     </div>

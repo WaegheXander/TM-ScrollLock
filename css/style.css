@@ -2113,7 +2113,7 @@ mobile dasboard navbar
   width: 100%;
 }
 
-.c-form__input--button:nth-child(2) {
+.c-form__input--button--meta {
   border: none;
 }
 
@@ -2124,6 +2124,11 @@ mobile dasboard navbar
 
 .c-form__input--button:active {
   background: var(--global-color-beta);
+}
+
+.c-form__input--button--delete:hover,
+.c-form__input--button--delete:focus {
+  background: var(--global-color-alpha-x-light);
 }
 
 .c-form {
@@ -2596,4 +2601,27 @@ mobile dasboard navbar
   font-size: 16px;
   font-weight: 700;
   line-height: 25px;
+}
+
+.c-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.c-overlay--rope {
+  background-color: var(--global-color-alpha-xx-light);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  padding: 32px;
+  border-radius: 3px;
+  border: 2px solid var(--global-color-alpha-xx-dark);
+
 }

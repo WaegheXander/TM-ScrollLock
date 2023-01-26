@@ -10,8 +10,12 @@ let wall,
   ropeId = 1,
   currentuser;
 
-const fetchPromis = function (url) {
-  return fetch(url)
+const fetchPromis = function (url, method = 'GET', body = null) {
+  console.info(url);
+  return fetch(url, {
+    method: method,
+    body: body,
+  })
     .then((response) => {
       console.info('Data fetched');
       let res = response.json();
@@ -281,9 +285,7 @@ document.addEventListener('DOMContentLoaded', function () {
     listenToWindowResize();
   }
   if (document.querySelector('#dashboard')) {
-    showWallDashboard(); // showing wall
-    showGripsDashboard(data);
-    listenToUIDashboard();
+    getRopesSelect();
   }
   if (document.querySelector('#account')) {
     getActivityUser();
@@ -293,14 +295,58 @@ document.addEventListener('DOMContentLoaded', function () {
 // #endregion
 
 // #region ***  Dashboard  ***********
-let selectedRope = 1;
-let selectedRoute = 1;
+let selectedRope, selectedRoute;
 
-const getRopesDashboard = async function () {
+const getRopesSelect = async function () {
   let url = 'https://meeclimb.be/api/ropes';
   const data = await fetchPromis(url);
   console.log(data);
-  // showRopesDashboard(data);
+  selectedRope = data[0].rope;
+  showRopesDashboard(data);
+};
+
+const showRopesDashboard = function (ropes) {
+  let html = ``;
+  for (let i = 0; i < ropes.length; i++) {
+    html += `<option value="${ropes[i].rope}">Touw ${ropes[i].rope}</option>`;
+  }
+  document.querySelector('.js-select-rope').innerHTML = html;
+  console.log('ropes loaded');
+
+  getRouteSelect();
+};
+
+const getRouteSelect = async function () {
+  let url = 'https://meeclimb.be/api/routes?rope=' + selectedRope;
+  const data = await fetchPromis(url);
+  console.log(data);
+  selectedRoute = data[0].routeID;
+  showRoutesDashboard(data);
+};
+
+const showRoutesDashboard = function (data) {
+  let html = ``;
+  for (let i = 0; i < data.length; i++) {
+    html += `<option value="${data[i].routeID}">${i + 1} | ${data[i].name == null ? 'geen naam' : data[i].name}</option>`;
+  }
+  document.querySelector('.js-select-route').innerHTML = html;
+  console.log('routes loaded');
+  getDetailRouteSelect();
+};
+
+const getDetailRouteSelect = async function () {
+  let url = 'https://meeclimb.be/api/routes?routeID=' + selectedRoute;
+  const data = await fetchPromis(url);
+  console.log(data);
+  showDetailRouteDashboard(data);
+};
+
+const showDetailRouteDashboard = function (data) {
+  document.querySelector('.js-route-name').value = data.name;
+  document.querySelector('.js-route-niveau').value = data.difficulty;
+  document.querySelector('.js-route-color').value = data.color;
+  console.log('route setting loaded');
+  showGripsDashboard(data);
 };
 
 const addGrip = function (event) {
@@ -345,20 +391,17 @@ const drop = function (event) {
   movable.removeAttribute('draggable');
   movable.removeAttribute('data-id');
   movable.classList = 'c-wall__grid--item dropzone';
-  console.log('remove event listeners');
   removeEventListeners();
-  console.log('add event listeners');
   listenToUIDashboard();
 };
 
 const listenToUIDashboard = async function () {
   let draggable = document.querySelectorAll('.draggable');
-  let dropzone = document.querySelectorAll('.dropzone');
-
   draggable.forEach(function (movable) {
     movable.addEventListener('dragstart', dragstart);
   });
 
+  let dropzone = document.querySelectorAll('.dropzone');
   dropzone.forEach(function (dropZone) {
     dropZone.addEventListener('dragover', dragover);
   });
@@ -368,9 +411,160 @@ const listenToUIDashboard = async function () {
   });
 
   let typeGrip = document.querySelectorAll('.js-add__grip');
-  typeGrip.forEach((type) => {
+  typeGrip.forEach(function (type) {
     type.addEventListener('click', addGrip);
   });
+
+  let selectRopeElement = document.querySelector('.js-select-rope');
+  selectRopeElement.addEventListener('change', ropeSelectChange);
+
+  let selectRouteElement = document.querySelector('.js-select-route');
+  selectRouteElement.addEventListener('change', routeSelectChange);
+
+  let saveSettingsElement = document.querySelector('.js-save-settings');
+  saveSettingsElement.addEventListener('click', saveSettings);
+
+  let cancelSettingsElement = document.querySelector('.js-cancel-settings');
+  cancelSettingsElement.addEventListener('click', cancelSettings);
+
+  let deleteTouwElement = document.querySelector('.js-delete-rope');
+  deleteTouwElement.addEventListener('click', deleteTouw);
+
+  let deleteRouteElement = document.querySelector('.js-delete-route');
+  deleteRouteElement.addEventListener('click', deleteRoute);
+
+  let addRopeElement = document.querySelector('.js-add-rope');
+  addRopeElement.addEventListener('click', addRope);
+
+  let addRouteElement = document.querySelector('.js-add-route');
+  addRouteElement.addEventListener('click', addRoute);
+};
+
+const addRope = function () {
+  document.querySelector('.js-overlay--addrope').style.display = 'flex';
+  listenToAddRope();
+};
+
+const listenToAddRope = function () {
+  document.querySelector('.js-annuleren-rope').addEventListener('click', cancelAddRope);
+  document.querySelector('.js-toevoegen-rope').addEventListener('click', toevoegenRope);
+};
+
+const cancelAddRope = function () {
+  document.querySelector('.js-overlay--addrope').style.display = 'none';
+  document.querySelector('.js-annuleren-rope').removeEventListener('click', cancelAddRope);
+};
+
+const toevoegenRope = async function () {
+  let nummer = document.querySelector('.js-route-nummer').value;
+  let res = fetch('/api/v1/touwen', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      number: nummer,
+    }),
+  });
+  console.log(res);
+  if (res.ok) {
+    console.log('touw toegevoegd');
+    getRopeSelect();
+    cancelAddRope();
+  } else {
+    alert('Er is iets misgegaan');
+  }
+};
+
+const addRoute = function () {
+  document.querySelector('.js-overlay--addroute').style.display = 'flex';
+  listenToAddRoute();
+};
+
+const listenToAddRoute = function () {
+  document.querySelector('.js-annuleren-route').addEventListener('click', cancelAddRoute);
+};
+
+const cancelAddRoute = function () {
+  document.querySelector('.js-overlay--addroute').style.display = 'none';
+  document.querySelector('.js-annuleren-route').removeEventListener('click', cancelAddRoute);
+};
+
+const ropeSelectChange = function (event) {
+  selectedRope = event.target.value;
+  getRouteSelect();
+};
+
+const routeSelectChange = function (event) {
+  selectedRoute = event.target.value;
+  getDetailRouteSelect();
+};
+
+const deleteRoute = async function () {
+  let url = 'https://meeclimb.be/api/route/' + selectedRoute;
+  const response = await fetch(url, {
+    method: 'DELETE',
+  });
+  console.log(response.status);
+};
+
+const deleteTouw = async function () {
+  let url = 'https://meeclimb.be/api/rope/' + selectedRoute;
+  const response = await fetch(url, {
+    method: 'DELETE',
+  });
+  console.log(response.status);
+};
+
+const saveSettings = async function () {
+  let routeName = document.querySelector('.js-route-name').value;
+  let routeNiveau = document.querySelector('.js-route-niveau').value;
+  let routeColor = document.querySelector('.js-route-color').value;
+  let coords = await getGripsCoords();
+
+  let data = {
+    routeID: selectedRoute,
+    Name: routeName,
+    difficulty: routeNiveau,
+    color: routeColor,
+    rope: selectedRope,
+    grips: coords,
+  };
+  console.log(data);
+  let url = 'https://meeclimb.be/api/routes';
+  const response = await fetchPromis(url, 'PUT', data);
+  console.log(response);
+  removeEventListeners();
+  listenToUIDashboard();
+};
+
+const getGripsCoords = function () {
+  const items = document.getElementsByClassName('c-wall__grid--item');
+  let data = [];
+  for (let i = 0; i < items.length; i++) {
+    let classes = items[i].classList;
+    if (classes.length > 3) {
+      let stone = classes[3].split('--');
+      let id = items[i].getAttribute('id');
+      let x = id % 20;
+      let y = (id - x) / 20;
+      let grip = {
+        type: 'handgrip',
+        handgriptype: stone[3],
+        points: {
+          x: x + 1,
+          y: y + 1,
+        },
+      };
+      data.push(grip);
+    }
+  }
+  console.log(data);
+  return data;
+};
+
+const cancelSettings = function () {
+  getDetailRouteSelect();
 };
 
 const removeEventListeners = function () {
@@ -393,6 +587,24 @@ const removeEventListeners = function () {
   typeGrip.forEach(function (type) {
     type.removeEventListener('click', addGrip);
   });
+
+  let selectRopeElement = document.querySelector('.js-select-rope');
+  selectRopeElement.removeEventListener('change', ropeSelectChange);
+
+  let selectRouteElement = document.querySelector('.js-select-route');
+  selectRouteElement.removeEventListener('change', routeSelectChange);
+
+  let saveSettingsElement = document.querySelector('.js-save-settings');
+  saveSettingsElement.removeEventListener('click', saveSettings);
+
+  let cancelSettingsElement = document.querySelector('.js-cancel-settings');
+  cancelSettingsElement.removeEventListener('click', cancelSettings);
+
+  let deleteTouwElement = document.querySelector('.js-delete-rope');
+  deleteTouwElement.removeEventListener('click', deleteTouw);
+
+  let deleteRouteElement = document.querySelector('.js-delete-route');
+  deleteRouteElement.removeEventListener('click', deleteRoute);
 };
 
 const showWallDashboard = function () {
@@ -404,46 +616,48 @@ const showWallDashboard = function () {
   console.info('Grid loaded');
 };
 
-const showGripsDashboard = async function (data) {
+const showGripsDashboard = function (data) {
+  showWallDashboard();
   wall = document.querySelectorAll('.c-wall');
   wallItem = document.querySelectorAll('.c-wall__grid--item');
 
-  for (let i = 0; i < data.length; i++) {
-    for (let j = 0; j < data[i].grips.length; j++) {
-      let index = data[i].grips[j].points.x - 1 + (data[i].grips[j].points.y - 1) * 20;
-      wallItem[index].setAttribute('data-id', data[i].routeID);
-      wallItem[index].setAttribute('draggable', 'true');
-      wallItem[index].classList.add('draggable');
+  for (let j = 0; j < data.grips.length; j++) {
+    let index = data.grips[j].points.x - 1 + (data.grips[j].points.y - 1) * 20;
+    wallItem[index].setAttribute('data-id', data.routeID);
+    wallItem[index].setAttribute('draggable', 'true');
+    wallItem[index].classList.add('draggable');
 
-      switch (data[i].grips[j].handgriptype) {
-        case 'Bak':
-          wallItem[index].classList.add('c-wall__grid--item--grip--bak');
-          break;
-        case 'Sloper':
-          wallItem[index].classList.add('c-wall__grid--item--grip--sloper');
-          break;
-        case 'Crimp':
-          wallItem[index].classList.add('c-wall__grid--item--grip--crimp');
-          break;
-        case 'Pocket':
-          wallItem[index].classList.add('c-wall__grid--item--grip--pocket');
-          break;
-        case 'Jug':
-          wallItem[index].classList.add('c-wall__grid--item--grip--jug');
-          break;
-        case 'Undercling':
-          wallItem[index].classList.add('c-wall__grid--item--grip--undercling');
-          break;
-        case 'Mono':
-          wallItem[index].classList.add('c-wall__grid--item--grip--mono');
-          break;
-        case 'Bidoigt':
-          wallItem[index].classList.add('c-wall__grid--item--grip--bidoigt');
-          break;
-      }
+    switch (data.grips[j].handgriptype) {
+      case 'Bak':
+        wallItem[index].classList.add('c-wall__grid--item--grip--bak');
+
+        break;
+      case 'Sloper':
+        wallItem[index].classList.add('c-wall__grid--item--grip--sloper');
+        break;
+      case 'Crimp':
+        wallItem[index].classList.add('c-wall__grid--item--grip--crimp');
+        break;
+      case 'Pocket':
+        wallItem[index].classList.add('c-wall__grid--item--grip--pocket');
+        break;
+      case 'Jug':
+        wallItem[index].classList.add('c-wall__grid--item--grip--jug');
+        break;
+      case 'Undercling':
+        wallItem[index].classList.add('c-wall__grid--item--grip--undercling');
+        break;
+      case 'Mono':
+        wallItem[index].classList.add('c-wall__grid--item--grip--mono');
+        break;
+      case 'Bidoigt':
+        wallItem[index].classList.add('c-wall__grid--item--grip--bidoigt');
+        break;
     }
   }
   console.log('Grips loaded');
+  removeEventListeners();
+  listenToUIDashboard();
 };
 
 // #endregion
@@ -580,14 +794,3 @@ const logout = function () {
   });
 };
 // #endregion
-/*
-
-get index out of x and y
-
-let index = 14;
-let x = index % 4;
-let y = (index - x) / 4;
-console.log(x); // 2
-console.log(y); // 3
-
-*/
