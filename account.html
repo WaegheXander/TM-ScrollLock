@@ -46,14 +46,16 @@
         </nav>
       </div>
       <div class="c-header__nav">
-        <div class="c-nav__profile c-nav__profile--meta">
+        <div class="c-nav__profile c-nav__profile--meta js-profile">
           <a href="#notifications" class="c-nav__notification has-notification" tabindex="0">
             <svg xmlns="http://www.w3.org/2000/svg" class="c-nav__notification--symbole" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
               <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
             </svg>
           </a>
-          <a href="account.html" class="c-nav__profileimg c-nav__profileimg--meta"></a>
+          <a href="account.html" class="c-nav__profileimg--meta">
+            <img src="img/aman.jpg" alt="" class="c-nav__profileimg" />
+          </a>
         </div>
       </div>
       <div class="c-header__mobile-nav-trigger">
@@ -100,14 +102,16 @@
           </nav>
         </div>
         <div class="c-mobile-nav__nav">
-          <div class="c-nav__profile c-nav__profile--account">
+          <div class="c-nav__profile">
             <a href="#notifications" class="c-nav__notification has-notification">
               <svg xmlns="http://www.w3.org/2000/svg" class="c-nav__notification--symbole" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                 <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
               </svg>
             </a>
-            <a href="account.html" class="c-nav__profileimg c-nav__profileimg--account"></a>
+            <a href="account.html" class="c-nav__profileimg c-nav__profileimg--account">
+              <img src="img/aman.jpg" alt="" />
+            </a>
           </div>
         </div>
       </div>
@@ -116,23 +120,24 @@
       <div class="c-account">
         <section class="c-account__profile">
           <div class="c-account__profile--background"></div>
-          <div class="c-account__profile--img">
-            <a href="#logout" class="c-account__logout"></a>
+          <div class="c-account__profile--meta">
+            <img src="img/aman.jpg" alt="" class="c-account__profile--img js-profile-img" />
+            <a href="#logout" class="c-account__logout js-logout"></a>
           </div>
           <div class="c-account__content">
-            <h2 class="c-account__profile--name u-mb-clear">Jhon Seed</h2>
-            <h4 class="c-account__profile--nickname u-mb-clear">JhonS123</h4>
+            <h2 class="c-account__profile--name u-mb-clear js-profile-name">Jhon Seed</h2>
+            <h4 class="c-account__profile--nickname u-mb-clear js-profile-nickname">JhonS123</h4>
             <div class="c-account__friends">
               <div class="c-account__friends--text u-mb-clear">
-                <p class="c-account__friends--aantal u-mb-clear">23</p>
+                <p class="c-account__friends--aantal u-mb-clear js-profile-friends">23</p>
                 KlimmerParteners
               </div>
               <div class="c-account__friends--text u-mb-clear">
-                <p class="c-account__friends--aantal u-mb-clear">12</p>
+                <p class="c-account__friends--aantal u-mb-clear js-profile-likes">12</p>
                 Likes
               </div>
               <div class="c-account__friends--text u-mb-clear">
-                <p class="c-account__friends--aantal u-mb-clear">57</p>
+                <p class="c-account__friends--aantal u-mb-clear js-profile-climbs">57</p>
                 x Geklommen
               </div>
             </div>
@@ -141,7 +146,7 @@
               <button href="#invite klimmer" class="c-account__friend--search" value="Zoek klimmer">Klimmer Uitnodigen</button>
             </div>
             <h3 class="c-account__profile--biotitel u-mb-clear">Mijn bio:</h3>
-            <p class="c-account__profile--bio">
+            <p class="c-account__profile--bio js-profile-bio">
               Name: Jhon Seed Age: 27 Hometown: Denver, CO Jhon seed is a professional climber from Denver, Colorado. She has been climbing for 15 years and has climbed some of the most challenging routes in North America, Europe and Asia. Emma is known for her determination and grit.
               <a href="#edit bio" class="c-account__profile--edit">
                 <svg xmlns="http://www.w3.org/2000/svg" class="c-account__profile--edit--symbol" width="22" height="22" viewBox="0 0 22 22">
@@ -157,7 +162,7 @@
       </div>
       <div class="c-account__activities">
         <h1 class="c-account__activities--title">Recente activiteiten</h1>
-        <div class="c-activities">
+        <div class="c-activities js-activity">
           <div class="c-activity">
             <div class="c-activity__top">
               <div class="c-activity__top--left">
@@ -195,6 +200,7 @@
                 </svg>
               </label>
               <input type="submit" name="send_comment" id="send_comment" class="o-hide-accessible" />
+              <div></div>
             </div>
           </div>
         </div>

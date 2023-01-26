@@ -7,7 +7,8 @@ let wall,
   wallItem,
   routes,
   selectedPath = '',
-  ropeId = 1;
+  ropeId = 1,
+  currentuser;
 
 const fetchPromis = function (url) {
   return fetch(url)
@@ -256,6 +257,12 @@ const listenToWindowResize = function () {
   });
 };
 
+const listenToLogout = function () {
+  document.querySelector('.js-logout').addEventListener('click', function () {
+    logout();
+  });
+};
+
 // #endregion
 
 // #region ***  Init / DOMContentLoaded                  ***********
@@ -274,7 +281,13 @@ document.addEventListener('DOMContentLoaded', function () {
     listenToWindowResize();
   }
   if (document.querySelector('#dashboard')) {
-    showDashboard();
+    showWallDashboard(); // showing wall
+    showGripsDashboard(data);
+    listenToUIDashboard();
+  }
+  if (document.querySelector('#account')) {
+    getActivityUser();
+    listenToLogout();
   }
 });
 // #endregion
@@ -282,20 +295,12 @@ document.addEventListener('DOMContentLoaded', function () {
 // #region ***  Dashboard  ***********
 let selectedRope = 1;
 let selectedRoute = 1;
-const showDashboard = async function () {
-  let url = 'https://meeclimb.be/api/routes?rope=1';
-  const data = await fetchPromis(url);
-  console.log(data);
-  getRopesDashboard();
-  showWallDashboard(); // showing wall
-  showGripsDashboard(data);
-  listenToUIDashboard();
-};
 
 const getRopesDashboard = async function () {
   let url = 'https://meeclimb.be/api/ropes';
   const data = await fetchPromis(url);
   console.log(data);
+  // showRopesDashboard(data);
 };
 
 const addGrip = function (event) {
@@ -459,13 +464,111 @@ const GetLogin = async function () {
 };
 
 const getUserData = async function () {
-  let url = 'https://meeclimb.be/api/user/0';
-  const userData = await fetchPromis(url);
-  showLogin(userData);
+  let url = 'https://meeclimb.be/api/user';
+  currentuser = await fetchPromis(url);
+  showLogin();
 };
 
-const showLogin = function (userData) {
-  console.warn(userData);
+const showLogin = function () {
+  let htmlDesktop = `<a href="#notifications" class="c-nav__notification has-notification" tabindex="0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="c-nav__notification--symbole" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </a>
+          <a href="account.html" class="c-nav__profileimg--meta">
+            <img src="${currentuser.image}" alt="profile image form ${currentuser.lastname} ${currentuser.firstname}" class="c-nav__profileimg" />
+          </a>`;
+  let htmlMobile = `<a href="#notifications" class="c-nav__notification has-notification" tabindex="0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="c-nav__notification--symbole" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </a>
+          <a href="account.html" class="c-nav__profileimg--meta">
+            <img src="${currentuser.image}" alt="profile image form ${currentuser.lastname} ${currentuser.firstname}" class="c-nav__profileimg" />
+          </a>`;
+  let profile = document.querySelectorAll('.js-profile');
+  profile[0].innerHTML = htmlDesktop;
+  profile[1].innerHTML = htmlMobile;
+
+  if (document.querySelector('.account')) {
+    document.querySelector('.js-profile-name').innerHTML = `${currentuser.firstname} ${currentuser.lastname}`;
+    document.querySelector('.js-profile-nickname').innerHTML = `${currentuser.nickname}`;
+    document.querySelector('.js-profile-img').innerHTML = `${currentuser.image}`;
+    document.querySelector('.js-profile-friends').innerHTML = `${currentuser.friends}`;
+    document.querySelector('.js-profile-climbs').innerHTML = `${currentuser.climbs}`;
+    document.querySelector('.js-profile-likes').innerHTML = `${currentuser.likes}`;
+  }
+};
+
+const getActivityUser = async function () {
+  let url = 'https://meeclimb.be/api/activities';
+  const activity = await fetchPromis(url);
+  showActivityUser(activity);
+};
+
+const showActivityUser = function (activity) {
+  let html = '';
+  for (let i = 0; i < activity.length; i++) {
+    let comments = activity[i].comments;
+    let length;
+    length = comments.length > 3 ? 3 : comments.length;
+    for (let j = 0; j < lengte; j++) {
+      commentshmtl += `<div class="c-comments">
+            <div class="c-comment">
+              <div class="c-comment-top">
+                <img src="${comments[j].commentedby.image}" alt="profiel foto van ${comments[j].firstname} ${comments[j].lastname}" class="c-comment__img" />
+                <div>
+                  <p class="c-comment__name u-mb-xs">${comments[j].firstname} ${comments[j].lastname}</p>
+                  <p class="c-comment__date u-mb-clear">${comments[j].timestsamp}</p>
+                </div>
+              </div>
+              <div class="c-comment__text">${comments[j].comment}</div>
+            </div>
+          </div>`;
+    }
+    html += `<div class="c-activity">
+            <div class="c-activity__top">
+              <div class="c-activity__top--left">
+                <img src="${currentuser.image}" alt="profiel foto van ${currentuser.firstname} ${currentuser.lastname}" class="c-activity__top--img" />
+                <div>
+                  <p class="u-mb-clear c-activity__top--naam">${currentuser.firstname} ${currentuser.lastname}</p>
+                  <p class="u-mb-clear c-activity__top--date">${new Date(currentuser.startTime)}</p>
+                </div>
+              </div>
+              <input type="checkbox" name="heart" id="heart" class="o-hide-accessible c-heart-checkbox" />
+              <label for="heart" class="c-activity__heart">
+                <svg xmlns="http://www.w3.org/2000/svg" class="c-activity__heart--symbol" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                <span>${activity.amountLikes}</span>
+              </label>
+            </div>
+            <h5 class="u-mb-clear c-activity__intro">Heeft beklommen:</h5>
+            <div class="c-activity__stats">
+              <div>
+                <div>Touw: <span class="c-activity__stats--meta">${activity.rope}</span></div>
+                <div>Route: <span class="c-activity__stats--meta">${activity.route}</span></div>
+              </div>
+              <div>
+                <div>Niveau: <span class="c-activity__stats--meta">${activity.Niveau}</span></div>
+                <div>Snelheid: <span class="c-activity__stats--meta">${activity.prestation}</span>m/s</div>
+              </div>
+            </div>
+            <span class="c-activity__line"></span>
+            <div class="c-activity__comment--add">
+              <textarea name="comment" id="comment" class="c-comment__area" rows="1" placeholder="Voeg een reactie toe"></textarea>
+              <label for="send_comment" class="c-commen__button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </label>
+              <input type="submit" name="send_comment" id="send_comment" class="o-hide-accessible" />
+              ${commentshmtl}
+            </div>
+          </div>`;
+  }
+  document.querySelector('.js-activity').innerHTML = html;
 };
 
 const logout = function () {
@@ -477,3 +580,14 @@ const logout = function () {
   });
 };
 // #endregion
+/*
+
+get index out of x and y
+
+let index = 14;
+let x = index % 4;
+let y = (index - x) / 4;
+console.log(x); // 2
+console.log(y); // 3
+
+*/

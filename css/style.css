@@ -526,9 +526,15 @@ input:disabled {
   border-radius: 50%;
   background: cadetblue;
   display: block;
-  border: 2px solid var(--global-color-gray-xxxxx-dark);
-  background: url(https://klimapp2b47b.blob.core.windows.net/meeclimbimage/aman.jpg) no-repeat center center / cover;
+  border: 2px solid var(--global-color-gray-xxxx-light);
+  /* background: url(https://klimapp2b47b.blob.core.windows.net/meeclimbimage/aman.jpg) no-repeat center center / cover; */
   box-shadow: 2px 2px 6px var(--global-color-transparent);
+  object-fit: cover;
+}
+
+.c-nav__profileimg:hover {
+  border-color: var(--global-color-beta);
+
 }
 
 .has-notification::after {
@@ -1360,7 +1366,8 @@ input:disabled {
   border-radius: 50%;
   margin-right: 16px;
   background-color: var(--global-color-beta);
-  background: url(https://www.dmarge.com/wp-content/uploads/2021/01/dwayne-the-rock-.jpg) no-repeat center center / cover;
+  /* background: url(https://www.dmarge.com/wp-content/uploads/2021/01/dwayne-the-rock-.jpg) no-repeat center center / cover; */
+  object-fit: cover;
 }
 
 .c-comment__stars {
@@ -1672,24 +1679,30 @@ mobile dasboard navbar
 }
 
 .c-account__profile--img {
-  background: url(https://klimapp2b47b.blob.core.windows.net/meeclimbimage/huygh.jpg) no-repeat center center / cover;
+  /* background: url(https://klimapp2b47b.blob.core.windows.net/meeclimbimage/huygh.jpg) no-repeat center center / cover; */
   width: 120px;
   height: 120px;
+  display: block;
   border-radius: 50%;
   border: 2px solid var(--global-color-alpha-xx-dark);
   margin: 0 auto;
   position: relative;
   top: -80px;
+  object-fit: cover;
 }
 
 .c-account__logout {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  top: -10%;
+  right: 20%;
   width: 36px;
   height: 36px;
   background-color: var(--global-color-alpha-x-light);
   border-radius: 50%;
+}
+
+.c-account__profile--meta {
+  position: relative;
 }
 
 .c-account__logout::after {
@@ -1730,6 +1743,7 @@ mobile dasboard navbar
   font-weight: 500;
   line-height: 20px;
   color: var(--global-color-gray-xxxxx-dark);
+  margin-bottom: 4px;
 }
 
 .c-account__profile--bio {
@@ -1743,7 +1757,6 @@ mobile dasboard navbar
 
 .c-account__friends {
   display: block;
-  line-height: 1px;
   margin-bottom: 16px;
 }
 
