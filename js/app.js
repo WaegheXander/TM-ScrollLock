@@ -11,13 +11,11 @@ let wall,
   currentuser;
 
 const fetchPromis = function (url, method = 'GET', body = null) {
-  console.info(url);
   return fetch(url, {
     method: method,
     body: body,
   })
     .then((response) => {
-      console.info('Data fetched');
       let res = response.json();
       return res;
     })
@@ -49,7 +47,6 @@ const togggleStars = function () {
 };
 
 const drawSelectedPath = function () {
-  console.log('draw selected path: ', selectedPath);
   const topDiffrence = wallItem[20].getBoundingClientRect().top - wallItem[0].getBoundingClientRect().top;
   const leftDiffrence = wallItem[1].getBoundingClientRect().left - wallItem[0].getBoundingClientRect().left;
   let cords = [];
@@ -57,7 +54,6 @@ const drawSelectedPath = function () {
   for (let i = 0; i < routes.length; i++) {
     for (let j = 0; j < routes[i].grips.length; j++) {
       if (routes[i].routeID != selectedPath) {
-        console.log('break');
         break;
       }
 
@@ -110,7 +106,6 @@ const showWall = function () {
 
   html += '<svg id="gfg" width="200" height="200" class="c-wall__svg"></svg>';
   document.querySelector('.js-wall').innerHTML = html;
-  console.info('Grid loaded');
 };
 
 const showRouteButtons = function () {
@@ -137,7 +132,6 @@ const showRouteButtons = function () {
     if (i == 0) {
       checked = 'checked';
       selectedPath = route_id;
-      console.log('selected path: ', selectedPath);
     }
 
     html += `
@@ -152,7 +146,6 @@ const showRouteButtons = function () {
   }
 
   document.querySelector('.js-wall_route--options').innerHTML = html;
-  console.info('Route buttons loaded');
   showGrips();
 };
 
@@ -221,22 +214,18 @@ const getRopeId = function () {
   let url = window.location.search;
   let urlParams = new URLSearchParams(url);
   ropeId = urlParams.get('touw');
-  console.log('ropeId: ' + ropeId);
   getWallRoutes(ropeId);
 };
 
 const getWallRoutes = async function (rope_id) {
   const url = 'https://meeclimb.be/api/routes?rope=' + rope_id;
-  console.log(url);
   routes = await fetchPromis(url);
-  console.log(routes);
   showRouteButtons();
 };
 
 const getRopes = async function () {
   const url = 'https://meeclimb.be/api/ropes';
   const ropes = await fetchPromis(url);
-  console.log(ropes);
   showRopes(ropes);
 };
 
@@ -248,7 +237,6 @@ const listenToRouteClick = function () {
 
   options.forEach((option) => {
     option.addEventListener('change', function (event) {
-      console.log('old ', selectedPath);
       selectedPath = this.getAttribute('data-id');
       drawSelectedPath();
     });
@@ -295,49 +283,49 @@ document.addEventListener('DOMContentLoaded', function () {
 // #endregion
 
 // #region ***  Dashboard  ***********
-let selectedRope, selectedRoute;
+let selectedRope, selectedRoute, selectedBuidler;
 
+// #region get dashboard data
 const getRopesSelect = async function () {
   let url = 'https://meeclimb.be/api/ropes';
   const data = await fetchPromis(url);
-  console.log(data);
   selectedRope = data[0].rope;
   showRopesDashboard(data);
 };
 
 const showRopesDashboard = function (ropes) {
   let html = ``;
-  for (let i = 0; i < ropes.length; i++) {
+  for (let i = 0; i < ropes.length; -i++) {
     html += `<option value="${ropes[i].rope}">Touw ${ropes[i].rope}</option>`;
   }
   document.querySelector('.js-select-rope').innerHTML = html;
-  console.log('ropes loaded');
-
   getRouteSelect();
 };
 
 const getRouteSelect = async function () {
   let url = 'https://meeclimb.be/api/routes?rope=' + selectedRope;
   const data = await fetchPromis(url);
-  console.log(data);
-  selectedRoute = data[0].routeID;
-  showRoutesDashboard(data);
+  if (data.length > 0) {
+    selectedRoute = data[0].routeID;
+    selectedBuidler = data[0].builder.climberID;
+    showRoutesDashboard(data);
+  } else {
+    document.querySelector('.js-select-route').innerHTML = `<option value="0" data-builder="0">Geen routes</option>`;
+  }
 };
 
 const showRoutesDashboard = function (data) {
   let html = ``;
   for (let i = 0; i < data.length; i++) {
-    html += `<option value="${data[i].routeID}">${i + 1} | ${data[i].name == null ? 'geen naam' : data[i].name}</option>`;
+    html += `<option value="${data[i].routeID}" data-builder="${data[i].builder.climberID}">${i + 1} | ${data[i].name == null ? 'geen naam' : data[i].name}</option>`;
   }
   document.querySelector('.js-select-route').innerHTML = html;
-  console.log('routes loaded');
   getDetailRouteSelect();
 };
 
 const getDetailRouteSelect = async function () {
   let url = 'https://meeclimb.be/api/routes?routeID=' + selectedRoute;
   const data = await fetchPromis(url);
-  console.log(data);
   showDetailRouteDashboard(data);
 };
 
@@ -345,18 +333,19 @@ const showDetailRouteDashboard = function (data) {
   document.querySelector('.js-route-name').value = data.name;
   document.querySelector('.js-route-niveau').value = data.difficulty;
   document.querySelector('.js-route-color').value = data.color;
-  console.log('route setting loaded');
   showGripsDashboard(data);
 };
+// #endregion
 
+// #region add grips
 const addGrip = function (event) {
   let type = event.target.getAttribute('data-id');
   let items = document.querySelectorAll('.c-wall__grid--item');
   let index = 0;
   while (index != 'stop') {
     if (items[index].draggable == false) {
-      items[index].classList.add('c-wall__grid--item--grip--' + type);
       items[index].classList.add('draggable');
+      items[index].classList.add('c-wall__grid--item--grip--' + type);
       items[index].setAttribute('draggable', true);
       index = 'stop';
     } else {
@@ -367,7 +356,9 @@ const addGrip = function (event) {
   removeEventListeners();
   listenToUIDashboard();
 };
+// #endregion
 
+// #region drag and drop functions
 const dragstart = function (event) {
   event.dataTransfer.setData('text', event.target.id);
 };
@@ -381,10 +372,7 @@ const drop = function (event) {
 
   var data = event.dataTransfer.getData('text');
   var movable = document.getElementById(data);
-  console.log('movable: ', movable);
-  console.log('event.target: ', event.target);
   if (movable == null || event.target.classList == movable.classList || event.target.classList[3]) return;
-  console.log('not the same');
   event.target.setAttribute('draggable', true);
   event.target.setAttribute('data-id', movable.getAttribute('data-id'));
   event.target.classList = movable.classList;
@@ -394,7 +382,9 @@ const drop = function (event) {
   removeEventListeners();
   listenToUIDashboard();
 };
+// #endregion
 
+// #region eventlisteners
 const listenToUIDashboard = async function () {
   let draggable = document.querySelectorAll('.draggable');
   draggable.forEach(function (movable) {
@@ -440,132 +430,6 @@ const listenToUIDashboard = async function () {
   addRouteElement.addEventListener('click', addRoute);
 };
 
-const addRope = function () {
-  document.querySelector('.js-overlay--addrope').style.display = 'flex';
-  listenToAddRope();
-};
-
-const listenToAddRope = function () {
-  document.querySelector('.js-annuleren-rope').addEventListener('click', cancelAddRope);
-  document.querySelector('.js-toevoegen-rope').addEventListener('click', toevoegenRope);
-};
-
-const cancelAddRope = function () {
-  document.querySelector('.js-overlay--addrope').style.display = 'none';
-  document.querySelector('.js-annuleren-rope').removeEventListener('click', cancelAddRope);
-};
-
-const toevoegenRope = async function () {
-  let nummer = document.querySelector('.js-route-nummer').value;
-  let res = await fetch('/api/rope', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      number: nummer,
-    }),
-  });
-  console.log(res);
-};
-
-const addRoute = function () {
-  document.querySelector('.js-overlay--addroute').style.display = 'flex';
-  listenToAddRoute();
-};
-
-const listenToAddRoute = function () {
-  document.querySelector('.js-annuleren-route').addEventListener('click', cancelAddRoute);
-};
-
-const cancelAddRoute = function () {
-  document.querySelector('.js-overlay--addroute').style.display = 'none';
-  document.querySelector('.js-annuleren-route').removeEventListener('click', cancelAddRoute);
-};
-
-const ropeSelectChange = function (event) {
-  selectedRope = event.target.value;
-  getRouteSelect();
-};
-
-const routeSelectChange = function (event) {
-  selectedRoute = event.target.value;
-  getDetailRouteSelect();
-};
-
-const deleteRoute = async function () {
-  let url = 'https://meeclimb.be/api/route/' + selectedRoute;
-  const response = await fetch(url, {
-    method: 'DELETE',
-  });
-  console.log(response.status);
-};
-
-const deleteTouw = async function () {
-  let url = 'https://meeclimb.be/api/rope/' + selectedRoute;
-  const response = await fetch(url, {
-    method: 'DELETE',
-  });
-  console.log(response.status);
-};
-
-const saveSettings = async function () {
-  let routeName = document.querySelector('.js-route-name').value;
-  let routeNiveau = document.querySelector('.js-route-niveau').value;
-  let routeColor = document.querySelector('.js-route-color').value;
-  let coords = await getGripsCoords();
-
-  let data = {
-    routeID: selectedRoute,
-    Name: routeName,
-    difficulty: routeNiveau,
-    color: routeColor,
-    rope: selectedRope,
-    grips: coords,
-  };
-  console.log(data);
-  let url = 'https://meeclimb.be/api/route';
-  const response = await fetch(url, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-  console.log(response);
-  removeEventListeners();
-  listenToUIDashboard();
-};
-
-const getGripsCoords = function () {
-  const items = document.getElementsByClassName('c-wall__grid--item');
-  let data = [];
-  for (let i = 0; i < items.length; i++) {
-    let classes = items[i].classList;
-    if (classes.length > 3) {
-      let stone = classes[3].split('--');
-      let id = items[i].getAttribute('id');
-      let x = id % 20;
-      let y = (id - x) / 20;
-      let grip = {
-        type: 'handgrip',
-        handgriptype: stone[3],
-        points: {
-          x: x + 1,
-          y: y + 1,
-        },
-      };
-      data.push(grip);
-    }
-  }
-  console.log(data);
-  return data;
-};
-
-const cancelSettings = function () {
-  getDetailRouteSelect();
-};
-
 const removeEventListeners = function () {
   let draggable = document.querySelectorAll('.draggable');
   let dropzone = document.querySelectorAll('.dropzone');
@@ -605,65 +469,265 @@ const removeEventListeners = function () {
   let deleteRouteElement = document.querySelector('.js-delete-route');
   deleteRouteElement.removeEventListener('click', deleteRoute);
 };
+// #endregion
 
+// #region add rope
+const addRope = function () {
+  document.querySelector('.js-overlay--addrope').style.display = 'flex';
+  listenToAddRope();
+};
+
+const listenToAddRope = function () {
+  document.querySelector('.js-annuleren-rope').addEventListener('click', cancelAddRope);
+  document.querySelector('.js-toevoegen-rope').addEventListener('click', toevoegenRope);
+};
+
+const cancelAddRope = function () {
+  document.querySelector('.js-overlay--addrope').style.display = 'none';
+  document.querySelector('.js-annuleren-rope').removeEventListener('click', cancelAddRope);
+  document.querySelector('.js-annuleren-rope').removeEventListener('click', toevoegenRope);
+};
+
+const toevoegenRope = async function () {
+  let nummer = document.querySelector('.js-route-nummer').value;
+  let res = await fetch('https://meeclimb.be/api/rope', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      rope: nummer,
+      image: 'https://klimapp2b47b.blob.core.windows.net/meeclimbimage/huygh.jpg',
+    }),
+  });
+  console.log(res);
+  if (res.status == 200) {
+    document.querySelector('.js-annuleren-rope').removeEventListener('click', cancelAddRope);
+    document.querySelector('.js-annuleren-rope').removeEventListener('click', toevoegenRope);
+    getRopesSelect();
+  }
+
+  // removeEventListeners();
+  // listenToUIDashboard();
+};
+// #endregion
+
+// #region add route
+const addRoute = function () {
+  document.querySelector('.js-overlay--addroute').style.display = 'flex';
+  listenToAddRoute();
+};
+
+const listenToAddRoute = function () {
+  document.querySelector('.js-annuleren-route').addEventListener('click', cancelAddRoute);
+  document.querySelector('.js-toevoegen-route').addEventListener('click', toevoegenRoute);
+};
+
+const cancelAddRoute = function () {
+  document.querySelector('.js-overlay--addroute').style.display = 'none';
+  document.querySelector('.js-annuleren-route').removeEventListener('click', cancelAddRoute);
+  document.querySelector('.js-annuleren-route').removeEventListener('click', toevoegenRoute);
+};
+
+const toevoegenRoute = async function () {
+  let routeName = document.querySelector('.js-add-route-name').value;
+  let routeNiveau = document.querySelector('.js-add-route-niveau').value;
+  let routeColor = document.querySelector('.js-add-route-color').value;
+
+  let data = {
+    name: routeName,
+    difficulty: routeNiveau,
+    builder: selectedBuidler,
+    color: routeColor,
+    rope: selectedRope,
+    grips: [],
+  };
+
+  let res = await fetch('https://meeclimb.be/api/route', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  if (res.status == 201) {
+    document.querySelector('.js-annuleren-route').removeEventListener('click', cancelAddRoute);
+    document.querySelector('.js-annuleren-route').removeEventListener('click', toevoegenRoute);
+    getRouteSelect();
+  }
+};
+// #endregion
+
+// #region select change
+const ropeSelectChange = function (event) {
+  if (event.target.value != 0) {
+    selectedRope = event.target.value;
+    getRouteSelect();
+  }
+};
+
+const routeSelectChange = function (event) {
+  if (event.target.value != 0) {
+    selectedRoute = event.target.value;
+    selectedBuidler = event.target.options[event.target.selectedIndex].getAttribute('data-builder');
+    getDetailRouteSelect();
+  }
+};
+// #endregion
+
+// #region delete
+const deleteRoute = async function () {
+  let url = 'https://meeclimb.be/api/route/' + selectedRoute;
+  const response = await fetch(url, {
+    method: 'DELETE',
+  });
+  console.log(response);
+  if (response.status == 200) {
+    getRopesSelect();
+  }
+};
+
+const deleteTouw = async function () {
+  let url = 'https://meeclimb.be/api/rope/' + selectedRoute;
+  const response = await fetch(url, {
+    method: 'DELETE',
+  });
+  console.log(response);
+  if (response.status == 200) {
+    getRopesSelect();
+  }
+};
+// #endregion
+
+// #region save settings
+const saveSettings = async function () {
+  let routeName = document.querySelector('.js-route-name').value;
+  let routeNiveau = document.querySelector('.js-route-niveau').value;
+  let routeColor = document.querySelector('.js-route-color').value;
+  let coords = await getGripsCoords();
+
+  let data = {
+    routeID: selectedRoute,
+    name: routeName,
+    difficulty: routeNiveau,
+    builder: selectedBuidler,
+    color: routeColor,
+    rope: selectedRope,
+    grips: coords,
+  };
+  let url = 'https://meeclimb.be/api/route';
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  if (response.status == 201) {
+    getDetailRouteSelect();
+  } else {
+    alert('er is iets misgelopen');
+  }
+  removeEventListeners();
+  listenToUIDashboard();
+};
+
+const cancelSettings = function () {
+  getDetailRouteSelect();
+};
+// #endregion
+
+// #region show dashboard data
 const showWallDashboard = function () {
   let html = '';
   for (let i = 0; i < 1420; i++) {
     html += `<div class="c-wall__grid--item dropzone " id=${i}></div>`;
   }
   document.querySelector('.js-wall').innerHTML = html;
-  console.info('Grid loaded');
 };
 
 const showGripsDashboard = function (data) {
   showWallDashboard();
+  console.log(data.grips.length);
+  if (data.grips.length == 0) {
+    removeEventListeners();
+    listenToUIDashboard();
+    return;
+  }
   wall = document.querySelectorAll('.c-wall');
   wallItem = document.querySelectorAll('.c-wall__grid--item');
-
   for (let j = 0; j < data.grips.length; j++) {
-    let index = data.grips[j].points.x - 1 + (data.grips[j].points.y - 1) * 20;
-    wallItem[index].setAttribute('data-id', data.routeID);
-    wallItem[index].setAttribute('draggable', 'true');
-    wallItem[index].classList.add('draggable');
+    try {
+      let index = data.grips[j].points.x - 1 + (data.grips[j].points.y - 1) * 20;
+      wallItem[index].setAttribute('data-id', data.routeID);
+      wallItem[index].setAttribute('draggable', 'true');
+      wallItem[index].classList.add('draggable');
 
-    switch (data.grips[j].handgriptype) {
-      case 'Bak':
-        wallItem[index].classList.add('c-wall__grid--item--grip--bak');
-
-        break;
-      case 'Sloper':
-        wallItem[index].classList.add('c-wall__grid--item--grip--sloper');
-        break;
-      case 'Crimp':
-        wallItem[index].classList.add('c-wall__grid--item--grip--crimp');
-        break;
-      case 'Pocket':
-        wallItem[index].classList.add('c-wall__grid--item--grip--pocket');
-        break;
-      case 'Jug':
-        wallItem[index].classList.add('c-wall__grid--item--grip--jug');
-        break;
-      case 'Undercling':
-        wallItem[index].classList.add('c-wall__grid--item--grip--undercling');
-        break;
-      case 'Mono':
-        wallItem[index].classList.add('c-wall__grid--item--grip--mono');
-        break;
-      case 'Bidoigt':
-        wallItem[index].classList.add('c-wall__grid--item--grip--bidoigt');
-        break;
+      switch (data.grips[j].handgriptype) {
+        case 'Bak':
+          wallItem[index].classList.add('c-wall__grid--item--grip--bak');
+          break;
+        case 'Sloper':
+          wallItem[index].classList.add('c-wall__grid--item--grip--sloper');
+          break;
+        case 'Crimp':
+          wallItem[index].classList.add('c-wall__grid--item--grip--crimp');
+          break;
+        case 'Pocket':
+          wallItem[index].classList.add('c-wall__grid--item--grip--pocket');
+          break;
+        case 'Jug':
+          wallItem[index].classList.add('c-wall__grid--item--grip--jug');
+          break;
+        case 'Undercling':
+          wallItem[index].classList.add('c-wall__grid--item--grip--undercling');
+          break;
+        case 'Mono':
+          wallItem[index].classList.add('c-wall__grid--item--grip--mono');
+          break;
+        case 'Bidoigt':
+          wallItem[index].classList.add('c-wall__grid--item--grip--bidoigt');
+          break;
+        default:
+          wallItem[index].classList.add('c-wall__grid--item--grip--bak');
+          break;
+      }
+    } catch (error) {
+      console.warn(error);
     }
   }
-  console.log('Grips loaded');
   removeEventListeners();
   listenToUIDashboard();
 };
 
+const getGripsCoords = function () {
+  const items = document.getElementsByClassName('c-wall__grid--item');
+  let data = [];
+  for (let i = 0; i < items.length; i++) {
+    let classes = items[i].classList;
+    if (classes.length > 3) {
+      let stone = classes[3].split('--');
+      let id = items[i].getAttribute('id');
+      let x = id % 20;
+      let y = (id - x) / 20;
+      let grip = {
+        type: 'handgrip',
+        handgriptype: stone[3],
+        points: {
+          x: x + 1,
+          y: y + 1,
+        },
+      };
+      data.push(grip);
+    }
+  }
+  return data;
+};
 // #endregion
 
+// #endregion
 // #region ***  User / login  ***********
 const GetLogin = async function () {
-  console.log('Checking login');
   let url = 'https://meeclimb.be/auth/login';
 
   await fetch(url).then((res) => {
@@ -785,7 +849,6 @@ const showActivityUser = function (activity) {
 };
 
 const logout = function () {
-  console.log('logout');
   let url = 'https://meeclimb.be/auth/logout';
 
   fetch(url, {

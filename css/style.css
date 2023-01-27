@@ -2137,7 +2137,6 @@ mobile dasboard navbar
   gap: 16px;
   max-width: 302px;
   width: 100%;
-  margin: 0 auto;
 }
 
 .c-custom-select {
@@ -2179,12 +2178,6 @@ mobile dasboard navbar
   right: 12px;
   top: 12px;
   pointer-events: none;
-}
-
-@media (min-width: 992px) {
-  .c-form {
-    max-width: 100%;
-  }
 }
 
 .c-ranking {
