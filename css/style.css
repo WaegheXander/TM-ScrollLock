@@ -2195,7 +2195,7 @@ mobile dasboard navbar
   width: 100%;
   margin: 0 auto;
   position: relative;
-  top: 275px;
+  top: 220px;
 }
 
 .c-ranking__podium {
@@ -2209,10 +2209,12 @@ mobile dasboard navbar
   justify-content: center;
   align-items: center;
   width: 200px;
+  max-width: 100px;
   background-color: var(--global-color-alpha-xx-light);
   position: relative;
   box-shadow: 2px 2px 6px 0px var(--global-color-gray-xx-light);
 }
+
 
 .c-ranking__podium--place:nth-child(1) {
   background: #c8c1eba6;
@@ -2251,16 +2253,16 @@ mobile dasboard navbar
 
 .c-ranking__podium--img {
   position: absolute;
-  top: -91px;
-  left: 62.5px;
-  width: 75px;
-  height: 75px;
+  top: -71px;
+  left: 31.25px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   object-fit: cover;
 }
 
 .c-ranking__podium--img--crown {
-  top: -166px;
+  top: -116px;
   border-radius: 0;
   animation: crown 1s linear infinite;
   fill: var(--global-color-beta);
@@ -2307,22 +2309,60 @@ mobile dasboard navbar
 }
 
 .c-ranking__podium--nummer {
-  font-size: 48px;
+  font-size: 32px;
   font-weight: 700;
-  line-height: 48px;
+  line-height: 32px;
   margin-bottom: 16px;
 }
 
 .c-ranking__podium--name {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 24px;
 }
 
 .c-ranking__podium--sec {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 18px;
+}
+
+
+@media (min-width: 992px) {
+  .c-ranking {
+    top: 275px;
+  }
+
+  .c-ranking__podium--place {
+    max-width: 200px;
+  }
+
+  .c-ranking__podium--img {
+    top: -91px;
+    left: 62.5px;
+    width: 75px;
+    height: 75px;
+  }
+
+  .c-ranking__podium--img--crown {
+    top: -166px;
+  }
+
+  .c-ranking__podium--nummer {
+    font-size: 48px;
+    line-height: 48px;
+    margin-bottom: 16px;
+  }
+
+  .c-ranking__podium--name {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .c-ranking__podium--sec {
+    font-size: 18px;
+    line-height: 24px;
+  }
 }
 
 .u-pr {

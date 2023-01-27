@@ -457,7 +457,7 @@ const cancelAddRope = function () {
 
 const toevoegenRope = async function () {
   let nummer = document.querySelector('.js-route-nummer').value;
-  let res = fetch('/api/v1/touwen', {
+  let res = await fetch('/api/rope', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -467,13 +467,6 @@ const toevoegenRope = async function () {
     }),
   });
   console.log(res);
-  if (res.ok) {
-    console.log('touw toegevoegd');
-    getRopeSelect();
-    cancelAddRope();
-  } else {
-    alert('Er is iets misgegaan');
-  }
 };
 
 const addRoute = function () {
@@ -531,8 +524,14 @@ const saveSettings = async function () {
     grips: coords,
   };
   console.log(data);
-  let url = 'https://meeclimb.be/api/routes';
-  const response = await fetchPromis(url, 'PUT', data);
+  let url = 'https://meeclimb.be/api/route';
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
   console.log(response);
   removeEventListeners();
   listenToUIDashboard();
