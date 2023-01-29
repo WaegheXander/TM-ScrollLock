@@ -15,7 +15,7 @@
 
     <script src="js/app.js"></script>
   </head>
-  <body>
+  <body id="ranking">
     <header class="c-header">
       <div class="c-header__logo">
         <a href="index.html" class="c-logo u-mb-clear"
@@ -48,7 +48,7 @@
           </ul>
         </nav>
       </div>
-      <div class="c-header__nav">
+      <div class="c-header__nav js-profile">
         <div class="c-nav__profile c-nav__profile--meta">
           <a href="#notifications" class="c-nav__notification has-notification" tabindex="0">
             <svg xmlns="http://www.w3.org/2000/svg" class="c-nav__notification--symbole" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
@@ -102,7 +102,7 @@
             </ul>
           </nav>
         </div>
-        <div class="c-mobile-nav__nav">
+        <div class="c-mobile-nav__nav js-profile">
           <div class="c-nav__profile c-nav__profile--account">
             <a href="#notifications" class="c-nav__notification has-notification">
               <svg xmlns="http://www.w3.org/2000/svg" class="c-nav__notification--symbole" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
@@ -157,7 +157,7 @@
         <div>
           <label class="c-label__select" for="select1"> Selecteer het touw </label>
           <span class="c-custom-select">
-            <select class="c-input c-custom-select__input js-select" class="" name="select1" id="select1">
+            <select class="c-input c-custom-select__input js-select-rope" class="" name="select1" id="select1">
               <option value="route 1">Route 1</option>
               <option value="route 2">Route 2</option>
               <option value="route 3">Route 3</option>
@@ -170,7 +170,7 @@
         <div>
           <label class="c-label__select" for="select1"> Selecteer het de route </label>
           <span class="c-custom-select">
-            <select class="c-input c-custom-select__input js-select" class="" name="select1" id="select1">
+            <select class="c-input c-custom-select__input js-select-route" class="" name="select1" id="select1">
               <option value="route 1">Route 1</option>
               <option value="route 2">Route 2</option>
               <option value="route 3">Route 3</option>
@@ -181,7 +181,7 @@
           </span>
         </div>
       </div>
-      <ul class="o-list">
+      <ul class="o-list js-ranking-list">
         <li class="c-ranking__item">
           <div>
             <p class="u-mb-clear c-ranking__item--nummer">4.</p>

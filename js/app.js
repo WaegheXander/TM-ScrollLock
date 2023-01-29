@@ -1,14 +1,11 @@
-// TODO - add a comment to explain what this file does
-// TODO - add a comment to explain how this file is structured
-// TODO - fix draw with non selected routes
-
-// #region ***  DOM references                           ***********
+// #region ***  other                           ***********
 let wall,
   wallItem,
   routes,
   selectedPath = '',
   ropeId = 1,
-  currentuser;
+  currentuser,
+  loggedinUser;
 
 const fetchPromis = function (url, method = 'GET', body = null) {
   return fetch(url, {
@@ -207,6 +204,57 @@ const showRopes = function (ropes) {
   wall.innerHTML = html;
 };
 
+const showRopesRanking = function (ropes) {
+  let wall = document.querySelector('.js-select-rope');
+  let html = ``;
+  for (let i = 0; i < ropes.length; i++) {
+    html += `<option value="${ropes[i].rope}">Touw ${ropes[i].rope}</option>`;
+  }
+  wall.innerHTML = html;
+  getSelectedRopeRoutes();
+};
+
+const getSelectedRopeRoutes = async function () {
+  const url = 'https://meeclimb.be/api/routes?rope=' + selectedRope;
+  routes = await fetchPromis(url);
+  if (routes.length != 0) {
+    selectedRoute = routes[0].routeID;
+    showRouteRanking(routes);
+  } else {
+    document.querySelector('.js-select-route').innerHTML = `<option value="0">Geen routes op dit touw</option>`;
+  }
+};
+
+const showRouteRanking = function (routes) {
+  let wall = document.querySelector('.js-select-route');
+  let html = ``;
+  for (let i = 0; i < routes.length; i++) {
+    html += `<option value="${routes[i].routeID}">${i + 1} | ${routes[i].name}</option>`;
+  }
+  wall.innerHTML = html;
+  getRankingOfRoute();
+  listenToSelectchange();
+};
+
+const listenToSelectchange = function () {
+  document.querySelector('.js-select-rope').addEventListener('change', function (event) {
+    selectedRope = event.target.value;
+    getSelectedRopeRoutes();
+  });
+
+  document.querySelector('.js-select-route').addEventListener('change', function (event) {
+    selectedRoute = event.target.value;
+    if (selectedRoute != 0) {
+      getRankingOfRoute();
+    }
+  });
+};
+
+const getRankingOfRoute = async function () {
+  // const url = 'https://meeclimb.be/api/ranking?route=' + selectedRoute;
+  // ranking = await fetchPromis(url);
+  // showRanking(ranking);
+};
 // #endregion
 
 // #region ***  Data Access - get___                     ***********
@@ -227,6 +275,14 @@ const getRopes = async function () {
   const url = 'https://meeclimb.be/api/ropes';
   const ropes = await fetchPromis(url);
   showRopes(ropes);
+};
+
+const getRopesRanking = async function () {
+  const url = 'https://meeclimb.be/api/ropes';
+  const ropes = await fetchPromis(url);
+  console.log(ropes);
+  selectedRope = ropes[0].rope;
+  showRopesRanking(ropes);
 };
 
 // #endregion
@@ -255,12 +311,65 @@ const listenToLogout = function () {
   });
 };
 
+const listenToSeachFriend = function () {
+  document.querySelector('.js-search-climber').addEventListener('click', function (event) {
+    console.log('click');
+    document.querySelector('.js-overlay--addfriend').style.display = 'flex';
+    document.querySelector('.js-cancel-friend').addEventListener('click', cancelFriend);
+    document.querySelector('.js-add-friend-name').addEventListener('input', addFriendsearch);
+  });
+};
+
+const cancelFriend = function () {
+  document.querySelector('.js-overlay--addfriend').style.display = 'none';
+  document.querySelector('.js-cancel-friend').removeEventListener('click', cancelFriend);
+};
+
+const addFriendsearch = async function (event) {
+  console.log('search');
+  let search = event.target.value;
+  let url = 'https://meeclimb.be/api/user?nickname=' + search;
+  let data = await fetchPromis(url);
+
+  let html = ``;
+  for (let i = 0; i < data.length; i++) {
+    console.log(data[i]);
+    html += `<div class="c-overlay--friend-sug">
+          <p class="u-mb-clear">${data[i].firstname} ${data[i].lastname}</p>
+          <input type="button" value="toevoegen" data-id=${data[i].climberID} class="js-add-fried-button"/>
+        </div>`;
+  }
+
+  document.querySelector('.js-friend-sug').innerHTML = html;
+  let buttons = document.querySelectorAll('.js-add-fried-button');
+  buttons.forEach((button) => {
+    button.addEventListener('click', function () {
+      let id = this.getAttribute('data-id');
+      addFriend(id);
+    });
+  });
+};
+
+const addFriend = async function (id) {
+  let url = 'https://meeclimb.be/api/friend/request';
+  let data = {
+    climberID: id,
+  };
+  let response = await fetchPromis(url, 'POST', data);
+  console.log(response);
+  if (response.status == 200) {
+    document.querySelector('.js-overlay--addfriend').style.display = 'none';
+    document.querySelector('.js-cancel-friend').removeEventListener('click', cancelFriend);
+  }
+};
+
 // #endregion
 
 // #region ***  Init / DOMContentLoaded                  ***********
 document.addEventListener('DOMContentLoaded', function () {
   toggleNav();
   GetLogin();
+  checkNotification();
 
   if (document.querySelector('#ropes')) {
     getRopes();
@@ -276,13 +385,22 @@ document.addEventListener('DOMContentLoaded', function () {
     getRopesSelect();
   }
   if (document.querySelector('#account')) {
-    getActivityUser();
-    listenToLogout();
+    // getActivityUser();
+    // listenToLogout();
+    listenToSeachFriend();
+  }
+
+  if (document.querySelector('#ranking')) {
+    getRopesRanking();
   }
 });
+
+const checkNotification = function () {
+  // let url = 'https://meeclimb.be/api/notification';
+  // fetchPromis(url)
+};
 // #endregion
 
-// #region ***  Dashboard  ***********
 let selectedRope, selectedRoute, selectedBuidler;
 
 // #region get dashboard data
@@ -489,14 +607,12 @@ const cancelAddRope = function () {
 };
 
 const toevoegenRope = async function () {
-  let nummer = document.querySelector('.js-route-nummer').value;
   let res = await fetch('https://meeclimb.be/api/rope', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      rope: nummer,
       image: 'https://klimapp2b47b.blob.core.windows.net/meeclimbimage/huygh.jpg',
     }),
   });
@@ -506,9 +622,6 @@ const toevoegenRope = async function () {
     document.querySelector('.js-annuleren-rope').removeEventListener('click', toevoegenRope);
     getRopesSelect();
   }
-
-  // removeEventListeners();
-  // listenToUIDashboard();
 };
 // #endregion
 
@@ -725,58 +838,58 @@ const getGripsCoords = function () {
 };
 // #endregion
 
-// #endregion
 // #region ***  User / login  ***********
 const GetLogin = async function () {
-  let url = 'https://meeclimb.be/auth/login';
-
-  await fetch(url).then((res) => {
-    if (res.status == 200) {
-      console.log('logged in');
-      getUserData();
-    } else {
-      console.log('not logged in');
-    }
-  });
-};
-
-const getUserData = async function () {
-  let url = 'https://meeclimb.be/api/user';
-  currentuser = await fetchPromis(url);
-  showLogin();
+  // let url = 'https://meeclimb.be/auth/login';
+  let url = 'http://127.0.0.1:5500/js/dummy.json';
+  try {
+    currentuser = await fetchPromis(url);
+    console.log(currentuser);
+    showLogin();
+  } catch (error) {
+    console.log('not logged in');
+  }
 };
 
 const showLogin = function () {
-  let htmlDesktop = `<a href="#notifications" class="c-nav__notification has-notification" tabindex="0">
-            <svg xmlns="http://www.w3.org/2000/svg" class="c-nav__notification--symbole" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-            </svg>
-          </a>
-          <a href="account.html" class="c-nav__profileimg--meta">
-            <img src="${currentuser.image}" alt="profile image form ${currentuser.lastname} ${currentuser.firstname}" class="c-nav__profileimg" />
-          </a>`;
-  let htmlMobile = `<a href="#notifications" class="c-nav__notification has-notification" tabindex="0">
-            <svg xmlns="http://www.w3.org/2000/svg" class="c-nav__notification--symbole" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-            </svg>
-          </a>
-          <a href="account.html" class="c-nav__profileimg--meta">
-            <img src="${currentuser.image}" alt="profile image form ${currentuser.lastname} ${currentuser.firstname}" class="c-nav__profileimg" />
-          </a>`;
+  let html = `<div class="c-nav__profile js-profile">
+            <a href="#notifications" class="c-nav__notification"
+              ><svg xmlns="http://www.w3.org/2000/svg" class="c-nav__notification--symbole" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></a
+            ><a href="account.html"><img src="${currentuser.image}" class="c-nav__profileimg c-nav__profileimg--account" alt="profile image form ${currentuser.lastname} ${currentuser.firstname}" /></a>
+          </div>`;
+  let htmlmobile = `<div class="c-nav__profile js-profile">
+            <a href="#notifications" class="c-nav__notification"
+              ><svg xmlns="http://www.w3.org/2000/svg" class="c-nav__notification--symbole" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></a
+            ><a href="account.html"><img src="${currentuser.image}" class="c-nav__profileimg c-nav__profileimg--account" alt="profile image form ${currentuser.lastname} ${currentuser.firstname}" /></a>
+          </div>`;
   let profile = document.querySelectorAll('.js-profile');
-  profile[0].innerHTML = htmlDesktop;
-  profile[1].innerHTML = htmlMobile;
+  console.log(profile);
+  profile[0].innerHTML = html;
+  profile[1].innerHTML = htmlmobile;
 
-  if (document.querySelector('.account')) {
-    document.querySelector('.js-profile-name').innerHTML = `${currentuser.firstname} ${currentuser.lastname}`;
-    document.querySelector('.js-profile-nickname').innerHTML = `${currentuser.nickname}`;
-    document.querySelector('.js-profile-img').innerHTML = `${currentuser.image}`;
-    document.querySelector('.js-profile-friends').innerHTML = `${currentuser.friends}`;
-    document.querySelector('.js-profile-climbs').innerHTML = `${currentuser.climbs}`;
-    document.querySelector('.js-profile-likes').innerHTML = `${currentuser.likes}`;
+  if (document.querySelector('#account')) {
+    getDetailUser();
   }
+};
+
+const getDetailUser = async function () {
+  let url = 'https://meeclimb.be/api/user/' + currentuser.climberID;
+  const user = await fetchPromis(url);
+  console.log(user);
+  showDetailUser(user);
+};
+
+const showDetailUser = function (user) {
+  document.querySelector('.js-profile-name').innerHTML = `${currentuser.firstname} ${currentuser.lastname}`;
+  document.querySelector('.js-profile-nickname').innerHTML = `${currentuser.nickname}`;
+  document.querySelector('.js-profile-img').innerHTML = `${currentuser.image}`;
+  document.querySelector('.js-profile-friends').innerHTML = `${currentuser.friends}`;
+  document.querySelector('.js-profile-climbs').innerHTML = `${currentuser.climbs}`;
+  document.querySelector('.js-profile-likes').innerHTML = `${currentuser.likes}`;
 };
 
 const getActivityUser = async function () {
