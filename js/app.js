@@ -631,6 +631,15 @@ const listenToNotification = function () {
     document.querySelector('.js-close-notification').addEventListener('click', function () {
       document.querySelector('.js-notification-item').classList.toggle('u-display--none');
     });
+
+    document.querySelector('.js-notification-accept').addEventListener('click', async function () {
+      let url = 'https://meeclimb.be/api/friend/request/accept';
+      await fetchPromis(url);
+    });
+    document.querySelector('.js-notification-ignore').addEventListener('click', function () {
+      document.querySelector('.js-notification-item').classList.toggle('u-display--none');
+      document.querySelector('.js-notification-text').innerHTML = 'Je hebt geen notificaties';
+    });
   }
 };
 // #endregion
