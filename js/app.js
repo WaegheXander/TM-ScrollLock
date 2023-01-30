@@ -338,7 +338,7 @@ const showComments = function (comments) {
 };
 
 const showCommunity = function (data) {
-  let html = '';
+  let html = '<h1 class="c-community--title">Recente activiteiten</h1>';
   for (let i = 0; i < data.length; i++) {
     let liked;
     for (let j = 0; j < data[i].likedby.length; j++) {
@@ -357,7 +357,7 @@ const showCommunity = function (data) {
                 <img src="${comments[j].commentedby.image}" alt="profiel foto van ${comments[j].commentedby.firstname} ${comments[j].commentedby.lastname}" class="c-comment__img" />
                 <div>
                   <p class="c-comment__name u-mb-xs">${comments[j].commentedby.firstname} ${comments[j].commentedby.lastname}</p>
-                  <p class="c-comment__date u-mb-clear">${comments[j].commentedby.timestsamp}</p>
+                  <p class="c-comment__date u-mb-clear">${new Date(comments[j].timestsamp)}</p>
                 </div>
               </div>
               <div class="c-comment__text">${comments[j].comment}</div>
@@ -409,6 +409,39 @@ const showCommunity = function (data) {
         </div>
           ${commentshmtl}
       </div>`;
+  }
+  document.querySelector('.js-ommunity').innerHTML = html;
+  listenToLikeButton();
+};
+
+const listenToLikeButton = function () {
+  const likeButtons = document.querySelectorAll('.js-like-button');
+  for (let i = 0; i < likeButtons.length; i++) {
+    likeButtons[i].addEventListener('click', likeActivitie);
+  }
+};
+
+const likeActivitie = async function (event) {
+  const id = event.target.dataset.id;
+  const liked = event.target.checked;
+
+  if (liked) {
+    let url = 'https://meeclimb.be/api/activity/like';
+    const data = {
+      activityID: id,
+    };
+    const response = await fetchPromis(url, 'POST', data);
+  } else {
+    let url = 'https://meeclimb.be/api/activity/like/' + id;
+    const response = await fetchPromis(url, 'DELETE');
+  }
+  removeEventListenerLikes();
+};
+
+const removeEventListenerLikes = function () {
+  const likeButtons = document.querySelectorAll('.js-like-button');
+  for (let i = 0; i < likeButtons.length; i++) {
+    likeButtons[i].removeEventListener('click', likeActivitie);
   }
 };
 
