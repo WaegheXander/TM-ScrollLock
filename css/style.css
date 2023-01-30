@@ -680,7 +680,7 @@ input:disabled {
 }
 
 .c-home__background {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background: url(https://klimapp2b47b.blob.core.windows.net/meeclimbimage/Background.jpg) no-repeat center center / cover;
@@ -690,7 +690,7 @@ input:disabled {
 }
 
 .c-home__background-gradiant {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background: linear-gradient(to left, rgba(0, 0, 0, 0) 50%, rgb(255, 255, 255) 80%);
@@ -2717,4 +2717,29 @@ mobile dasboard navbar
   color: var(--global-color-gray-xxx-light);
   border-radius: 3px;
   margin-bottom: 8px;
+}
+
+.c-notification {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 8px;
+  background: var(--global-color-alpha-x-dark);
+  color: var(--global-color-gray-xxx-light);
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.c-notification--text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.c-notification--title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
 }

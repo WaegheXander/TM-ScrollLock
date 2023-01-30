@@ -144,6 +144,36 @@ const showRouteButtons = function () {
 
   document.querySelector('.js-wall_route--options').innerHTML = html;
   showGrips();
+
+  if (currentuser !== null) {
+    showComments();
+  }
+};
+
+const showComments = function () {
+  let html = '';
+
+  for (let i = 0; i < comments.length; i++) {
+    let comment = comments[i].comment;
+    let rating = comments[i].rating;
+    let starSVG = '';
+
+    for (let j = 0; j < 5; j++) {
+      if (j < rating) {
+        starSVG += `<svg xmlns="http://www.w3.org/2000/svg"class="c-wall__star c-wall__star--fill"width="40"height="38"viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"transform="translate(-4 -6)"/></svg>`;
+      } else {
+        starSVG += `<svg xmlns="http://www.w3.org/2000/svg"class="c-wall__star"width="40"height="38"viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"transform="translate(-4 -6)"/></svg>`;
+      }
+    }
+
+    html += `
+    <div class="c-wall__comment">
+    <p class="c-wall__comment--text">${comment}</p>
+    <p class="c-wall__comment--rating">${starSVG}</p>
+    </div>`;
+  }
+
+  document.querySelector('.js-wall_comments').innerHTML = html;
 };
 
 const showGrips = async function () {
@@ -366,9 +396,9 @@ const addFriend = async function (id) {
 // #endregion
 
 // #region ***  Init / DOMContentLoaded                  ***********
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
   toggleNav();
-  GetLogin();
+  await GetLogin();
   checkNotification();
 
   if (document.querySelector('#ropes')) {
@@ -701,11 +731,12 @@ const deleteRoute = async function () {
 };
 
 const deleteTouw = async function () {
-  let url = 'https://meeclimb.be/api/rope/' + selectedRoute;
+  let url = 'https://meeclimb.be/api/rope/' + selectedRope;
   const response = await fetch(url, {
     method: 'DELETE',
   });
   console.log(response);
+  console.log(response.status);
   if (response.status == 200) {
     getRopesSelect();
   }
@@ -848,29 +879,45 @@ const GetLogin = async function () {
     showLogin();
   } catch (error) {
     console.log('not logged in');
+    currentuser = null;
   }
 };
 
 const showLogin = function () {
-  let html = `<div class="c-nav__profile js-profile">
-            <a href="#notifications" class="c-nav__notification"
+  let htmladmin = currentuser.isAdmin == true ? '<a class="c-nav__link" href="dashboard.html">Dashboard</a>' : '';
+
+  let htmlDesktop = `<div class="c-nav__profile c-nav__profile--meta js-profile">
+  ${htmladmin}
+            <a href="#notifications" class="c-nav__notification js-notification"
               ><svg xmlns="http://www.w3.org/2000/svg" class="c-nav__notification--symbole" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                 <path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></a
             ><a href="account.html"><img src="${currentuser.image}" class="c-nav__profileimg c-nav__profileimg--account" alt="profile image form ${currentuser.lastname} ${currentuser.firstname}" /></a>
           </div>`;
-  let htmlmobile = `<div class="c-nav__profile js-profile">
-            <a href="#notifications" class="c-nav__notification"
+  let htmlMobile = `<div class="c-nav__profile js-profile">
+  ${htmladmin}
+            <a href="#notifications" class="c-nav__notification js-notification"
               ><svg xmlns="http://www.w3.org/2000/svg" class="c-nav__notification--symbole" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                 <path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></a
             ><a href="account.html"><img src="${currentuser.image}" class="c-nav__profileimg c-nav__profileimg--account" alt="profile image form ${currentuser.lastname} ${currentuser.firstname}" /></a>
           </div>`;
+  let htmlDashboard = `<div class="c-nav__profile js-profile">
+            <a href="#notifications" class="c-nav__notification js-notification"
+              ><svg xmlns="http://www.w3.org/2000/svg" class="c-nav__notification--symbole" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></a
+            ><a href="account.html"><img src="${currentuser.image}" class="c-nav__profileimg c-nav__profileimg--account" alt="profile image form ${currentuser.lastname} ${currentuser.firstname}" /></a>
+          </div>`;
+
   let profile = document.querySelectorAll('.js-profile');
   console.log(profile);
-  profile[0].innerHTML = html;
-  profile[1].innerHTML = htmlmobile;
-
+  if (document.querySelector('#dashboard')) {
+    profile[0].innerHTML = htmlDashboard;
+  } else {
+    profile[0].innerHTML = htmlDesktop;
+    profile[1].innerHTML = htmlMobile;
+  }
   if (document.querySelector('#account')) {
     getDetailUser();
   }
