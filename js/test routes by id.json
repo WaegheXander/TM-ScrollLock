@@ -1,0 +1,275 @@
+{
+  "routeID": "9fc27613-9cb7-11ed-9f35-6045bd95a96d",
+  "difficulty": "6b",
+  "rope": 1,
+  "builder": {
+    "climberID": "google-oauth2|109217319756357145443",
+    "firstname": "Jane",
+    "lastname": "Doe",
+    "platform": "Email",
+    "nickname": "JD",
+    "rank": 0,
+    "isFirstTimer": true,
+    "image": "https://meeclimb.be",
+    "rfid": "03b69208",
+    "bio": "...",
+    "isAdmin": false
+  },
+  "ratings": [
+    {
+      "routeID": "00000000-0000-0000-0000-000000000000",
+      "ratedBy": {
+        "climberID": "facebook|5818212331566457",
+        "firstname": "Jonas",
+        "lastname": "Cap",
+        "platform": "Facebook",
+        "nickname": "Jonas.Cap",
+        "rank": 0,
+        "isFirstTimer": true,
+        "image": "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=5818212331566457&height=50&width=50&ext=1677422693&hash=AeQpi4UOReQPoHE2wJQ",
+        "rfid": "00000",
+        "bio": "...",
+        "isAdmin": false
+      },
+      "rating": 2.0,
+      "comment": "",
+      "timestamp": "2023-01-29T13:59:10"
+    },
+    {
+      "routeID": "00000000-0000-0000-0000-000000000000",
+      "ratedBy": {
+        "climberID": "google-oauth2|109217319756357145442",
+        "firstname": "John",
+        "lastname": "Smith",
+        "platform": "Facebook",
+        "nickname": "JS",
+        "rank": 0,
+        "isFirstTimer": true,
+        "image": "https://meeclimb.be",
+        "rfid": "00000000",
+        "bio": "...",
+        "isAdmin": false
+      },
+      "rating": 4.8,
+      "comment": "",
+      "timestamp": "2023-01-29T11:48:30"
+    },
+    {
+      "routeID": "00000000-0000-0000-0000-000000000000",
+      "ratedBy": {
+        "climberID": "google-oauth2|109217319756357145443",
+        "firstname": "Jane",
+        "lastname": "Doe",
+        "platform": "Email",
+        "nickname": "JD",
+        "rank": 0,
+        "isFirstTimer": true,
+        "image": "https://meeclimb.be",
+        "rfid": "03b69208",
+        "bio": "...",
+        "isAdmin": false
+      },
+      "rating": 3.5,
+      "comment": "",
+      "timestamp": "2023-01-29T11:48:30"
+    }
+  ],
+  "grips": [
+    {
+      "type": "handgrip",
+      "handgriptype": "Mono",
+      "points": {
+        "x": 8,
+        "y": 1
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Undercling",
+      "points": {
+        "x": 11,
+        "y": 4
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Jug",
+      "points": {
+        "x": 10,
+        "y": 7
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Bak",
+      "points": {
+        "x": 13,
+        "y": 10
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Mono",
+      "points": {
+        "x": 9,
+        "y": 13
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Pocket",
+      "points": {
+        "x": 10,
+        "y": 16
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Bak",
+      "points": {
+        "x": 9,
+        "y": 19
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Bak",
+      "points": {
+        "x": 10,
+        "y": 22
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Undercling",
+      "points": {
+        "x": 10,
+        "y": 25
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Crimp",
+      "points": {
+        "x": 11,
+        "y": 28
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Bak",
+      "points": {
+        "x": 8,
+        "y": 31
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Mono",
+      "points": {
+        "x": 12,
+        "y": 34
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Bak",
+      "points": {
+        "x": 13,
+        "y": 37
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Jug",
+      "points": {
+        "x": 9,
+        "y": 40
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Bak",
+      "points": {
+        "x": 12,
+        "y": 43
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Pocket",
+      "points": {
+        "x": 12,
+        "y": 46
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Crimp",
+      "points": {
+        "x": 10,
+        "y": 49
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Bak",
+      "points": {
+        "x": 11,
+        "y": 52
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Undercling",
+      "points": {
+        "x": 12,
+        "y": 55
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Mono",
+      "points": {
+        "x": 10,
+        "y": 58
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Bak",
+      "points": {
+        "x": 11,
+        "y": 61
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Crimp",
+      "points": {
+        "x": 10,
+        "y": 64
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Jug",
+      "points": {
+        "x": 12,
+        "y": 67
+      }
+    },
+    {
+      "type": "handgrip",
+      "handgriptype": "Bidoigt",
+      "points": {
+        "x": 13,
+        "y": 70
+      }
+    }
+  ],
+  "color": "#303030",
+  "avgRating": 3.4,
+  "buildDate": "2023-01-27T10:09:22",
+  "name": "route1"
+}

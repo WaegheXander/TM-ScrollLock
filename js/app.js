@@ -2,7 +2,7 @@
 let wall,
   wallItem,
   routes,
-  selectedPath = '',
+  selectedPath,
   ropeId = 1,
   currentuser,
   loggedinUser;
@@ -146,34 +146,8 @@ const showRouteButtons = function () {
   showGrips();
 
   if (currentuser !== null) {
-    showComments();
+    getRouteDetailsByID();
   }
-};
-
-const showComments = function () {
-  let html = '';
-
-  for (let i = 0; i < comments.length; i++) {
-    let comment = comments[i].comment;
-    let rating = comments[i].rating;
-    let starSVG = '';
-
-    for (let j = 0; j < 5; j++) {
-      if (j < rating) {
-        starSVG += `<svg xmlns="http://www.w3.org/2000/svg"class="c-wall__star c-wall__star--fill"width="40"height="38"viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"transform="translate(-4 -6)"/></svg>`;
-      } else {
-        starSVG += `<svg xmlns="http://www.w3.org/2000/svg"class="c-wall__star"width="40"height="38"viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"transform="translate(-4 -6)"/></svg>`;
-      }
-    }
-
-    html += `
-    <div class="c-wall__comment">
-    <p class="c-wall__comment--text">${comment}</p>
-    <p class="c-wall__comment--rating">${starSVG}</p>
-    </div>`;
-  }
-
-  document.querySelector('.js-wall_comments').innerHTML = html;
 };
 
 const showGrips = async function () {
@@ -220,7 +194,7 @@ const showGrips = async function () {
 };
 
 const showRopes = function (ropes) {
-  let wall = document.querySelector('.c-Routes__touw');
+  let wall = document.querySelector('.js-route-touw');
   let html = ``;
   for (let i = 0; i < ropes.length; i++) {
     html += `<div class="c-touw">
@@ -285,6 +259,73 @@ const getRankingOfRoute = async function () {
   // ranking = await fetchPromis(url);
   // showRanking(ranking);
 };
+
+const showComments = function (comments) {
+  // if (comments.length != 0) {
+  let html = `<div class="c-commend__add" title="je moet ingelogd zijn om comments achter te laten" aria-disabled="TFrue">
+    <label for="cocmment">Voeg een comment toe:</label>
+    <textarea name="comment" id="comment" class="c-comment__area js-comment" rows="4" placeholder="Wat vind u van deze route?"></textarea>
+    <div class="stars js-star-rating" data-stars="1">
+      <svg xmlns="http://www.w3.org/2000/svg" class="star rating" data-rating="1" width="24" height="24" viewBox="0 0 40 38">
+        <path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" />
+      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" class="star rating" data-rating="2" width="24" height="24" viewBox="0 0 40 38">
+        <path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" />
+      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" class="star rating" data-rating="3" width="24" height="24" viewBox="0 0 40 38">
+        <path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" />
+      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" class="star rating" data-rating="4" width="24" height="24" viewBox="0 0 40 38">
+        <path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" />
+      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" class="star rating" data-rating="5" width="24" height="24" viewBox="0 0 40 38">
+        <path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" />
+      </svg>
+    </div>
+    <label for="send_comment" class="c-commen__button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+      Verstuur
+    </label>
+    <input type="button" name="send_comment" id="send_comment" class="o-hide-accessible js-add-comment" />
+  </div>;`;
+  html += `<h3 class="c-comment__header u-mb-clear">Recente reacties:</h3>`;
+  html += `<div class="c-comments">`;
+  let lengte = comments.ratings.length > 5 ? 5 : comments.ratings.length;
+  for (let i = 0; i < lengte; i++) {
+    let rating = Math.round(comments.avgRating);
+    let starSVG = '';
+    for (let j = 0; j < 5; j++) {
+      if (j < rating) {
+        starSVG += `<svg xmlns="http://www.w3.org/2000/svg"class="c-wall__star c-wall__star--fill"width="40"height="38"viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"transform="translate(-4 -6)"/></svg>`;
+      } else {
+        starSVG += `<svg xmlns="http://www.w3.org/2000/svg"class="c-wall__star"width="40"height="38"viewBox="0 0 40 38"><path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z"transform="translate(-4 -6)"/></svg>`;
+      }
+    }
+    html += `<div class="c-comment">
+              <div class="c-comment-top">
+                <img src="${comments.ratings[i].ratedBy.image}" alt="profile picture from ${comments.ratings[i].ratedBy.firstname} ${comments.ratings[i].ratedBy.lastname}" class="c-comment__img" />
+                <div>
+                  <p class="c-comment__name u-mb-xs">${comments.ratings[i].ratedBy.firstname} ${comments.ratings[i].ratedBy.lastname}</p>
+                  <p class="c-comment__date u-mb-clear">${new Date(comments.ratings[i].timestamp).toLocaleString('nl-be', {
+                    weekday: 'long',
+                    month: 'short',
+                    year: 'numeric',
+                  })}</p>
+                </div>
+              </div>
+              <div class="c-comment__stars">${starSVG}</div>
+              <div class="c-comment__text">${comments.ratings[i].comment}</div>
+            </div>`;
+  }
+  html += `</div>`;
+
+  document.querySelector('.js-comments').innerHTML = html;
+  togggleStars();
+  listenToAddComment();
+};
 // #endregion
 
 // #region ***  Data Access - get___                     ***********
@@ -315,6 +356,12 @@ const getRopesRanking = async function () {
   showRopesRanking(ropes);
 };
 
+const getRouteDetailsByID = async function () {
+  const url = 'https://meeclimb.be/api/routes?routeID=' + selectedPath;
+  const response = await fetchPromis(url);
+  showComments(response);
+};
+
 // #endregion
 
 // #region ***  Event Listeners - listenTo___            ***********
@@ -325,6 +372,7 @@ const listenToRouteClick = function () {
     option.addEventListener('change', function (event) {
       selectedPath = this.getAttribute('data-id');
       drawSelectedPath();
+      getRouteDetailsByID();
     });
   });
 };
@@ -393,6 +441,31 @@ const addFriend = async function (id) {
   }
 };
 
+const listenToAddComment = function () {
+  console.log(document.querySelector('.js-add-comment'));
+  document.querySelector('.js-add-comment').addEventListener('click', addComment);
+};
+
+const addComment = async function () {
+  let url = 'https://meeclimb.be/api/route/rate';
+  let data = {
+    routeID: selectedPath,
+    comment: document.querySelector('.js-comment').value,
+    rating: document.querySelector('.js-star-rating').getAttribute('data-stars'),
+  };
+  console.log(data);
+  let response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  if (response.status == 201) {
+    document.querySelector('.js-add-comment').removeEventListener('click', addComment);
+    getSelectedRopeRoutes();
+  }
+};
 // #endregion
 
 // #region ***  Init / DOMContentLoaded                  ***********
@@ -408,7 +481,6 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (document.querySelector('#ropeDetail')) {
     showWall();
     getRopeId();
-    togggleStars();
     listenToWindowResize();
   }
   if (document.querySelector('#dashboard')) {
@@ -911,7 +983,6 @@ const showLogin = function () {
           </div>`;
 
   let profile = document.querySelectorAll('.js-profile');
-  console.log(profile);
   if (document.querySelector('#dashboard')) {
     profile[0].innerHTML = htmlDashboard;
   } else {
