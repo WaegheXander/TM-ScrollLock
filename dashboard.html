@@ -447,8 +447,8 @@
 
     <div class="c-overlay js-overlay--addrope">
       <div class="c-form__inputs c-overlay--rope">
-        <label for="name" class="c-form__input--label">Cijfer van de rope</label>
-        <input placeholder="1, 2, 3 ..." type="input" id="name" class="c-form__input js-route-nummer" />
+        <label for="name" class="c-form__input--label">Image URL</label>
+        <input placeholder="geef een image url" type="input" id="name" class="c-form__input js-route-image" />
         <div class="c-form__input--buttons">
           <input type="button" value="Toevoegen" class="c-form__input--button c-form__input--button--delete js-toevoegen-rope" />
           <input type="button" value="Annuleren" class="c-form__input--button c-form__input--button--delete js-annuleren-rope" />
@@ -470,15 +470,18 @@
       </div>
     </div>
 
-    <div class="c-notifivation">
-      <div>
-        <p class="c-notifivation--title"></p>
-        <div class="c-notifivation--close"></div>
-      </div>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, consequuntur ullam mollitia assumenda saepe veniam facilis aliquid sunt,</p>
-      <div>
-        <input type="button" value="accept" />
-        <input type="button" value="ignore" />
+    <div class="c-notification js-notification-item u-display--none">
+      <div class="c-notification--topbar"></div>
+      <div class="c-notification--content">
+        <div class="c-notification--top">
+          <p class="c-notification--title u-mb-clear">Info</p>
+          <a class="c-notification--close u-mb-clear js-close-notification" href="#close">X</a>
+        </div>
+        <p class="c-notification--text u-mb-clear js-notification-text">Er zijn geen medlingen</p>
+        <div class="c-notification--buttons">
+          <input type="button" value="accept" class="c-notification--button js-notification-accept" />
+          <input type="button" value="ignore" class="c-notification--button js-notification-ignore" />
+        </div>
       </div>
     </div>
 

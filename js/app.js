@@ -409,8 +409,10 @@ const addFriendsearch = async function (event) {
   let url = 'https://meeclimb.be/api/user?nickname=' + search;
   let data = await fetchPromis(url);
 
+  let lengte = data.length > 5 ? 5 : data.length;
+
   let html = ``;
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < lengte; i++) {
     console.log(data[i]);
     html += `<div class="c-overlay--friend-sug">
           <p class="u-mb-clear">${data[i].firstname} ${data[i].lastname}</p>
@@ -434,10 +436,10 @@ const addFriend = async function (id) {
     climberID: id,
   };
   let response = await fetchPromis(url, 'POST', data);
-  console.log(response);
-  if (response.status == 200) {
+  if (response.status == 201) {
     document.querySelector('.js-overlay--addfriend').style.display = 'none';
     document.querySelector('.js-cancel-friend').removeEventListener('click', cancelFriend);
+    document.querySelector('.js-add-friend-name').removeEventListener('input', addFriendsearch);
   }
 };
 
@@ -466,30 +468,44 @@ const addComment = async function () {
     getSelectedRopeRoutes();
   }
 };
+
+const listenToNotification = function () {
+  let buttons = document.querySelectorAll('.js-notification');
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', function () {
+      document.querySelector('.js-notification-item').classList.toggle('u-display--none');
+      console.log(document.querySelector('.js-notification-item'));
+    });
+  }
+  document.querySelector('.js-close-notification').addEventListener('click', function () {
+    document.querySelector('.js-notification-item').classList.toggle('u-display--none');
+  });
+};
 // #endregion
 
 // #region ***  Init / DOMContentLoaded                  ***********
 document.addEventListener('DOMContentLoaded', async function () {
   toggleNav();
   await GetLogin();
-  checkNotification();
+  createSocketConnection();
+  listenToNotification();
 
   if (document.querySelector('#ropes')) {
     getRopes();
   }
-
   if (document.querySelector('#ropeDetail')) {
     showWall();
     getRopeId();
     listenToWindowResize();
   }
+
   if (document.querySelector('#dashboard')) {
     getRopesSelect();
   }
   if (document.querySelector('#account')) {
-    // getActivityUser();
-    // listenToLogout();
     listenToSeachFriend();
+    listenToLogout();
+    getActivityUser();
   }
 
   if (document.querySelector('#ranking')) {
@@ -497,10 +513,6 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 });
 
-const checkNotification = function () {
-  // let url = 'https://meeclimb.be/api/notification';
-  // fetchPromis(url)
-};
 // #endregion
 
 let selectedRope, selectedRoute, selectedBuidler;
@@ -715,11 +727,11 @@ const toevoegenRope = async function () {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      image: 'https://klimapp2b47b.blob.core.windows.net/meeclimbimage/huygh.jpg',
+      image: document.querySelector('.js-route-image').value,
     }),
   });
   console.log(res);
-  if (res.status == 200) {
+  if (res.status == 201) {
     document.querySelector('.js-annuleren-rope').removeEventListener('click', cancelAddRope);
     document.querySelector('.js-annuleren-rope').removeEventListener('click', toevoegenRope);
     getRopesSelect();
@@ -990,29 +1002,30 @@ const showLogin = function () {
     profile[1].innerHTML = htmlMobile;
   }
   if (document.querySelector('#account')) {
-    getDetailUser();
+    showDetailUser();
   }
-};
-
-const getDetailUser = async function () {
-  let url = 'https://meeclimb.be/api/user/' + currentuser.climberID;
-  const user = await fetchPromis(url);
-  console.log(user);
-  showDetailUser(user);
 };
 
 const showDetailUser = function (user) {
   document.querySelector('.js-profile-name').innerHTML = `${currentuser.firstname} ${currentuser.lastname}`;
   document.querySelector('.js-profile-nickname').innerHTML = `${currentuser.nickname}`;
-  document.querySelector('.js-profile-img').innerHTML = `${currentuser.image}`;
-  document.querySelector('.js-profile-friends').innerHTML = `${currentuser.friends}`;
-  document.querySelector('.js-profile-climbs').innerHTML = `${currentuser.climbs}`;
-  document.querySelector('.js-profile-likes').innerHTML = `${currentuser.likes}`;
+  document.querySelector('.js-profile-img').src = `${currentuser.image}`;
+  document.querySelector('.js-profile-friends').innerHTML = `${currentuser.amountFriends}`;
+  document.querySelector('.js-profile-climbs').innerHTML = `${currentuser.amountClimbs}`;
+  document.querySelector('.js-profile-likes').innerHTML = `${currentuser.amoutLikes}`;
+  document.querySelector('.js-profile-bio').innderHTML = `${currentuser.bio} <a href="#edit bio" class="c-account__profile--edit js-edit-profile"
+                ><svg xmlns="http://www.w3.org/2000/svg" class="c-account__profile--edit--symbol" width="22" height="22" viewBox="0 0 22 22">
+                  <g id="edit" transform="translate(-1 -0.879)">
+                    <path id="Path_63" data-name="Path 63" d="M10.939,4H3.987A1.987,1.987,0,0,0,2,5.987V19.892a1.987,1.987,0,0,0,1.987,1.987H17.892a1.987,1.987,0,0,0,1.987-1.987V12.939" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                    <path id="Path_64" data-name="Path 64" d="M18.5,2.5a2.121,2.121,0,0,1,3,3L12,15,8,16l1-4Z" transform="translate(-0.121)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                  </g></svg
+              ></a>`;
 };
 
 const getActivityUser = async function () {
   let url = 'https://meeclimb.be/api/activities';
   const activity = await fetchPromis(url);
+  console.log(activity);
   showActivityUser(activity);
 };
 
@@ -1020,45 +1033,45 @@ const showActivityUser = function (activity) {
   let html = '';
   for (let i = 0; i < activity.length; i++) {
     let comments = activity[i].comments;
-    let length;
-    length = comments.length > 3 ? 3 : comments.length;
-    for (let j = 0; j < lengte; j++) {
-      commentshmtl += `<div class="c-comments">
-            <div class="c-comment">
+    let length = comments.length > 3 ? 3 : comments.length;
+    let commentshmtl = '<div class="c-comments">';
+    for (let j = 0; j < length; j++) {
+      commentshmtl += `<div class="c-comment">
               <div class="c-comment-top">
-                <img src="${comments[j].commentedby.image}" alt="profiel foto van ${comments[j].firstname} ${comments[j].lastname}" class="c-comment__img" />
+                <img src="${comments[j].commentedby.image}" alt="profiel foto van ${comments[j].commentedby.firstname} ${comments[j].commentedby.lastname}" class="c-comment__img" />
                 <div>
-                  <p class="c-comment__name u-mb-xs">${comments[j].firstname} ${comments[j].lastname}</p>
-                  <p class="c-comment__date u-mb-clear">${comments[j].timestsamp}</p>
+                  <p class="c-comment__name u-mb-xs">${comments[j].commentedby.firstname} ${comments[j].commentedby.lastname}</p>
+                  <p class="c-comment__date u-mb-clear">${comments[j].commentedby.timestsamp}</p>
                 </div>
               </div>
               <div class="c-comment__text">${comments[j].comment}</div>
             </div>
-          </div>`;
+          `;
     }
+    commentshmtl += '</div>';
     html += `<div class="c-activity">
             <div class="c-activity__top">
               <div class="c-activity__top--left">
-                <img src="${currentuser.image}" alt="profiel foto van ${currentuser.firstname} ${currentuser.lastname}" class="c-activity__top--img" />
+                <img src="${currentuser.climber.image}" alt="profiel foto van ${currentuser.climber.firstname} ${currentuser.climber.lastname}" class="c-activity__top--img" />
                 <div>
-                  <p class="u-mb-clear c-activity__top--naam">${currentuser.firstname} ${currentuser.lastname}</p>
-                  <p class="u-mb-clear c-activity__top--date">${new Date(currentuser.startTime)}</p>
+                  <p class="u-mb-clear c-activity__top--naam">${currentuser.climber.firstname} ${currentuser.climber.lastname}</p>
+                  <p class="u-mb-clear c-activity__top--date">${new Date(currentuser.climber.startTime)}</p>
                 </div>
               </div>
               <input type="checkbox" name="heart" id="heart" class="o-hide-accessible c-heart-checkbox" />
               <label for="heart" class="c-activity__heart">
                 <svg xmlns="http://www.w3.org/2000/svg" class="c-activity__heart--symbol" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-                <span>${activity.amountLikes}</span>
+                <span>${activity.climber.amountLikes}</span>
               </label>
             </div>
             <h5 class="u-mb-clear c-activity__intro">Heeft beklommen:</h5>
             <div class="c-activity__stats">
               <div>
-                <div>Touw: <span class="c-activity__stats--meta">${activity.rope}</span></div>
-                <div>Route: <span class="c-activity__stats--meta">${activity.route}</span></div>
+                <div>Touw: <span class="c-activity__stats--meta">${activity.route.rope}</span></div>
+                <div>Route: <span class="c-activity__stats--meta">${activity.route.route}</span></div>
               </div>
               <div>
-                <div>Niveau: <span class="c-activity__stats--meta">${activity.Niveau}</span></div>
+                <div>Niveau: <span class="c-activity__stats--meta">${activity.route.Niveau}</span></div>
                 <div>Snelheid: <span class="c-activity__stats--meta">${activity.prestation}</span>m/s</div>
               </div>
             </div>
@@ -1085,5 +1098,26 @@ const logout = function () {
   fetch(url, {
     method: 'DELETE',
   });
+};
+// #endregion
+
+// #region Socket
+const createSocketConnection = async function () {
+  let res = await fetch(`https://meeclimb.be/api/negotiate`);
+  let url = await res.text();
+  let ws = new WebSocket(url);
+
+  ws.onopen = () => {
+    console.log('[Connected to server]');
+  };
+
+  ws.onmessage = (event) => {
+    console.log(`[Server] ${event.data}`);
+  };
+
+  ws.onclose = () => {
+    console.log('[Disconnected]');
+    setTimeout(createSocketConnection, 1000);
+  };
 };
 // #endregion

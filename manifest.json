@@ -1,9 +1,9 @@
 {
-  "name": "MCT",
-  "short_name": "MCT",
+  "name": "Sport inovatie Howest",
+  "short_name": "Sport inovatie Howest",
   "icons": [
     {
-      "src": "google-touch-icon.png",
+      "src": "apple-touch-icon.png",
       "sizes": "512x512"
     }
   ],

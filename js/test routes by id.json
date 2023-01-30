@@ -272,4 +272,73 @@
   "avgRating": 3.4,
   "buildDate": "2023-01-27T10:09:22",
   "name": "route1"
-}
+},
+
+[
+  {
+    "activityID": "91ddbd09-9f2c-11ed-9f35-6045bd95a96d",
+    "route": {
+      "routeID": "a67b8453-2d9e-ed11-9f35-6045bd95a96d",
+      "difficulty": "6a",
+      "rope": 2,
+      "ratings": [],
+      "grips": [],
+      "avgRating": 0.0,
+      "buildDate": "0001-01-01T00:00:00",
+      "name": "test4000"
+    },
+    "climber": {
+      "climberID": "facebook|5818212331566457",
+      "firstname": "Jonas",
+      "lastname": "Cap",
+      "platform": "Facebook",
+      "nickname": "Jonas.Cap",
+      "rank": 0,
+      "isFirstTimer": true,
+      "image": "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=5818212331566457&height=50&width=50&ext=1677422693&hash=AeQpi4UOReQPoHE2wJQ",
+      "rfid": "00000",
+      "bio": "...",
+      "isAdmin": false
+    },
+    "startTime": "0001-01-01T00:00:00",
+    "stopTime": "0001-01-01T00:00:00",
+    "likedby": [],
+    "comments": [],
+    "amountLikes": 0,
+    "amountcomments": 0,
+    "prestation": "00:00:00"
+  },
+  {
+    "activityID": "91ddbed0-9f2c-11ed-9f35-6045bd95a96d",
+    "route": {
+      "routeID": "a67b8453-2d9e-ed11-9f35-6045bd95a96d",
+      "difficulty": "6a",
+      "rope": 2,
+      "ratings": [],
+      "grips": [],
+      "avgRating": 0.0,
+      "buildDate": "0001-01-01T00:00:00",
+      "name": "test4000"
+    },
+    "climber": {
+      "climberID": "facebook|5818212331566457",
+      "firstname": "Jonas",
+      "lastname": "Cap",
+      "platform": "Facebook",
+      "nickname": "Jonas.Cap",
+      "rank": 0,
+      "isFirstTimer": true,
+      "image": "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=5818212331566457&height=50&width=50&ext=1677422693&hash=AeQpi4UOReQPoHE2wJQ",
+      "rfid": "00000",
+      "bio": "...",
+      "isAdmin": false
+    },
+    "startTime": "0001-01-01T00:00:00",
+    "stopTime": "0001-01-01T00:00:00",
+    "likedby": [],
+    "comments": [],
+    "amountLikes": 0,
+    "amountcomments": 0,
+    "prestation": "00:00:00"
+  }
+]
