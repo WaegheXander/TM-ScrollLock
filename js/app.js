@@ -11,9 +11,7 @@ let wall,
 // fix ignore on notification
 // fix accept on notification
 // fix ranklijst loading in
-// fix activity comments
 // fix naming
-// fix logo in html css
 
 const fetchPromis = function (url, method = 'GET', body = null) {
   return fetch(url, {

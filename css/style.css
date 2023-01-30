@@ -374,7 +374,7 @@ input:disabled {
 */
 
 .c-logo {
-  height: 32px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -395,13 +395,11 @@ input:disabled {
 
 @media (min-width: 768px) {
   .c-logo {
-    height: 58px;
-    width: 58px;
+    height: 60px;
   }
 
   .c-db-mobile-nav__header>.c-logo {
-    height: 32px;
-    width: 32px;
+    height: 40px;
   }
 }
 
