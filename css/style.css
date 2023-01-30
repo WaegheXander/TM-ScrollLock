@@ -1965,8 +1965,7 @@ mobile dasboard navbar
   animation: heart 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-.c-heart-checkbox:hover+.c-activity__heart .c-activity__heart--symbol,
-.c-heart-checkbox:focus+.c-activity__heart .c-activity__heart--symbol {
+.c-heart-checkbox:hover+.c-activity__heart .c-activity__heart--symbol {
   stroke: var(--global-color-beta-x-dark);
 }
 
@@ -2147,7 +2146,7 @@ mobile dasboard navbar
 
 @media (min-width: 768px) {
   .c-form {
-    margin: 0 auto;
+    margin: 0;
   }
 }
 

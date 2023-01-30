@@ -5,7 +5,17 @@ let wall,
   selectedPath,
   ropeId = 1,
   currentuser,
-  loggedinUser;
+  loggedinUser,
+  notification;
+
+// fix ignore on notification
+// fix accept on notification
+// fix ranklijst loading in
+// fix community page in load
+// fix activity likes
+// fix activity comments
+// fix naming
+// fix logo in html css
 
 const fetchPromis = function (url, method = 'GET', body = null) {
   return fetch(url, {
@@ -326,6 +336,82 @@ const showComments = function (comments) {
   togggleStars();
   listenToAddComment();
 };
+
+const showCommunity = function (data) {
+  let html = '';
+  for (let i = 0; i < data.length; i++) {
+    let liked;
+    for (let j = 0; j < data[i].likedby.length; j++) {
+      if (data[i].likes[j].climberId === currentUser.climberID) {
+        liked = 'checked';
+      } else {
+        liked = '';
+      }
+    }
+    let comments = data[i].comments;
+    let length = comments.length > 3 ? 3 : comments.length;
+    let commentshmtl = '<div class="c-comments">';
+    for (let j = 0; j < length; j++) {
+      commentshmtl += `<div class="c-comment">
+              <div class="c-comment-top">
+                <img src="${comments[j].commentedby.image}" alt="profiel foto van ${comments[j].commentedby.firstname} ${comments[j].commentedby.lastname}" class="c-comment__img" />
+                <div>
+                  <p class="c-comment__name u-mb-xs">${comments[j].commentedby.firstname} ${comments[j].commentedby.lastname}</p>
+                  <p class="c-comment__date u-mb-clear">${comments[j].commentedby.timestsamp}</p>
+                </div>
+              </div>
+              <div class="c-comment__text">${comments[j].comment}</div>
+            </div>
+          `;
+    }
+    commentshmtl += '</div>';
+
+    html += `<div class="c-community__item">
+        <div class="c-community__item--topbar">
+          <div class="c-community__item--topbar--left">
+            <img src="${data[i].climber.image}" alt="profile picture of ${data[i].climber.firstname} ${data[i].climber.lastname}" class="c-community__item--avatar" />
+            <div>
+              <p class="c-community__item--topbar--name u-mb-clear">${data[i].climber.firstname} ${data[i].climber.lastname}</p>
+              <p class="c-community__item--topbar--date u-mb-clear">${new Date(data[i].startTime).toLocaleString('nl-be', {
+                weekday: 'long',
+                month: 'short',
+                year: 'numeric',
+              })}</p>
+            </div>
+          </div>
+          <input type="checkbox" name="like" id="like" class="o-hide-accessible c-heart-checkbox js-like-button" ${liked} data-id="${data[i].activityID}" />
+          <label for="like" class="c-community__heart">
+            <svg xmlns="http://www.w3.org/2000/svg" class="c-community__heart--symbol" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+            <span>${data[i].amountLikes}</span>
+          </label>
+        </div>
+        <div class="c-community__stats">
+          <div class="c-community__stat">
+            <span class="c-community__stat--titel">Route</span
+            ><span class="c-community__stat--value"
+              >Touw ${data[i].route.rope} <br />
+              Route ${data[i].route.naam}</span
+            >
+          </div>
+          <div class="c-community__stat"><span class="c-community__stat--titel">Niveau</span><span class="c-community__stat--value">${data[i].route.difficulty}</span></div>
+          <div class="c-community__stat"><span class="c-community__stat--titel">Tijd</span><span class="c-community__stat--value">${data[i].prestation}</span></div>
+        </div>
+        <hr class="c-community--bar" />
+        <div class="c-activity__comment--add">
+          <textarea name="comment" id="comment" class="c-comment__area js-add-comment-activitie--text" rows="1" placeholder="Voeg een reactie toe"></textarea>
+          <label for="send_comment" class="c-commen__button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </label>
+          <input type="submit" name="send_comment" id="send_comment" class="o-hide-accessible js-add-comment-activitie" data-id="${data[i].activityID}" />
+        </div>
+          ${commentshmtl}
+      </div>`;
+  }
+};
+
 // #endregion
 
 // #region ***  Data Access - get___                     ***********
@@ -333,6 +419,9 @@ const getRopeId = function () {
   let url = window.location.search;
   let urlParams = new URLSearchParams(url);
   ropeId = urlParams.get('touw');
+  if (ropeId == null) {
+    ropeId = 1;
+  }
   getWallRoutes(ropeId);
 };
 
@@ -362,6 +451,11 @@ const getRouteDetailsByID = async function () {
   showComments(response);
 };
 
+const getCommunity = async function () {
+  const url = 'https://meeclimb.be/api/friends/activities';
+  const response = await fetchPromis(url);
+  showCommunity(response);
+};
 // #endregion
 
 // #region ***  Event Listeners - listenTo___            ***********
@@ -465,21 +559,30 @@ const addComment = async function () {
   });
   if (response.status == 201) {
     document.querySelector('.js-add-comment').removeEventListener('click', addComment);
-    getSelectedRopeRoutes();
+    getWallRoutes(ropeId);
   }
 };
 
 const listenToNotification = function () {
-  let buttons = document.querySelectorAll('.js-notification');
-  for (let i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', function () {
+  if (currentuser != null) {
+    let buttons = document.querySelectorAll('.js-notification');
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener('click', function () {
+        document.querySelector('.js-notification-item').classList.toggle('u-display--none');
+        if (notification != null) {
+          updateNotification();
+          document.querySelector('.js-notification-ignore').style.display = 'block';
+          document.querySelector('.js-notification-ignore').style.display = 'block';
+        } else {
+          document.querySelector('.js-notification-accept').style.display = 'none';
+          document.querySelector('.js-notification-ignore').style.display = 'none';
+        }
+      });
+    }
+    document.querySelector('.js-close-notification').addEventListener('click', function () {
       document.querySelector('.js-notification-item').classList.toggle('u-display--none');
-      console.log(document.querySelector('.js-notification-item'));
     });
   }
-  document.querySelector('.js-close-notification').addEventListener('click', function () {
-    document.querySelector('.js-notification-item').classList.toggle('u-display--none');
-  });
 };
 // #endregion
 
@@ -510,6 +613,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   if (document.querySelector('#ranking')) {
     getRopesRanking();
+  }
+  if (document.querySelector('#community')) {
+    getCommunity();
   }
 });
 
@@ -732,6 +838,7 @@ const toevoegenRope = async function () {
   });
   console.log(res);
   if (res.status == 201) {
+    document.querySelector('.js-overlay--addrope').style.display = 'none';
     document.querySelector('.js-annuleren-rope').removeEventListener('click', cancelAddRope);
     document.querySelector('.js-annuleren-rope').removeEventListener('click', toevoegenRope);
     getRopesSelect();
@@ -1003,6 +1110,13 @@ const showLogin = function () {
   }
   if (document.querySelector('#account')) {
     showDetailUser();
+    if (currentuser.rfid == '00000') {
+      document.querySelector('.js-link-rfid').addEventListener('click', function () {
+        const url = 'https://meeclimb.be/api/user/onboarding/process';
+        const data = {};
+        fetchPromis(url, 'POST', data);
+      });
+    }
   }
 };
 
@@ -1055,7 +1169,11 @@ const showActivityUser = function (activity) {
                 <img src="${currentuser.climber.image}" alt="profiel foto van ${currentuser.climber.firstname} ${currentuser.climber.lastname}" class="c-activity__top--img" />
                 <div>
                   <p class="u-mb-clear c-activity__top--naam">${currentuser.climber.firstname} ${currentuser.climber.lastname}</p>
-                  <p class="u-mb-clear c-activity__top--date">${new Date(currentuser.climber.startTime)}</p>
+                  <p class="u-mb-clear c-activity__top--date">${new Date(currentuser.climber.startTime).toLocaleString('nl-be', {
+                    weekday: 'long',
+                    month: 'short',
+                    year: 'numeric',
+                  })}</p>
                 </div>
               </div>
               <input type="checkbox" name="heart" id="heart" class="o-hide-accessible c-heart-checkbox" />
