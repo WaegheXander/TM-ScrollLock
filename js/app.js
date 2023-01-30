@@ -1194,9 +1194,17 @@ const getActivityUser = async function () {
   showActivityUser(activity);
 };
 
-const showActivityUser = function (activity) {
+const showActivityUser = function (data) {
   let html = '';
-  for (let i = 0; i < activity.length; i++) {
+  for (let i = 0; i < data.length; i++) {
+    let liked;
+    for (let j = 0; j < data[i].likedby.length; j++) {
+      if (data[i].likes[j].climberId === currentUser.climberID) {
+        liked = 'checked';
+      } else {
+        liked = '';
+      }
+    }
     let comments = activity[i].comments;
     let length = comments.length > 3 ? 3 : comments.length;
     let commentshmtl = '<div class="c-comments">';
@@ -1214,51 +1222,53 @@ const showActivityUser = function (activity) {
           `;
     }
     commentshmtl += '</div>';
-    html += `<div class="c-activity">
-            <div class="c-activity__top">
-              <div class="c-activity__top--left">
-                <img src="${currentuser.climber.image}" alt="profiel foto van ${currentuser.climber.firstname} ${currentuser.climber.lastname}" class="c-activity__top--img" />
-                <div>
-                  <p class="u-mb-clear c-activity__top--naam">${currentuser.climber.firstname} ${currentuser.climber.lastname}</p>
-                  <p class="u-mb-clear c-activity__top--date">${new Date(currentuser.climber.startTime).toLocaleString('nl-be', {
-                    weekday: 'long',
-                    month: 'short',
-                    year: 'numeric',
-                  })}</p>
-                </div>
-              </div>
-              <input type="checkbox" name="heart" id="heart" class="o-hide-accessible c-heart-checkbox" />
-              <label for="heart" class="c-activity__heart">
-                <svg xmlns="http://www.w3.org/2000/svg" class="c-activity__heart--symbol" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-                <span>${activity.climber.amountLikes}</span>
-              </label>
+    html += `<div class="c-community__item">
+        <div class="c-community__item--topbar">
+          <div class="c-community__item--topbar--left">
+            <img src="${data[i].climber.image}" alt="profile picture of ${data[i].climber.firstname} ${data[i].climber.lastname}" class="c-community__item--avatar" />
+            <div>
+              <p class="c-community__item--topbar--name u-mb-clear">${data[i].climber.firstname} ${data[i].climber.lastname}</p>
+              <p class="c-community__item--topbar--date u-mb-clear">${new Date(data[i].startTime).toLocaleString('nl-be', {
+                weekday: 'long',
+                month: 'short',
+                year: 'numeric',
+              })}</p>
             </div>
-            <h5 class="u-mb-clear c-activity__intro">Heeft beklommen:</h5>
-            <div class="c-activity__stats">
-              <div>
-                <div>Touw: <span class="c-activity__stats--meta">${activity.route.rope}</span></div>
-                <div>Route: <span class="c-activity__stats--meta">${activity.route.route}</span></div>
-              </div>
-              <div>
-                <div>Niveau: <span class="c-activity__stats--meta">${activity.route.Niveau}</span></div>
-                <div>Snelheid: <span class="c-activity__stats--meta">${activity.prestation}</span>m/s</div>
-              </div>
-            </div>
-            <span class="c-activity__line"></span>
-            <div class="c-activity__comment--add">
-              <textarea name="comment" id="comment" class="c-comment__area" rows="1" placeholder="Voeg een reactie toe"></textarea>
-              <label for="send_comment" class="c-commen__button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send">
-                  <line x1="22" y1="2" x2="11" y2="13"></line>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-              </label>
-              <input type="submit" name="send_comment" id="send_comment" class="o-hide-accessible" />
-              ${commentshmtl}
-            </div>
-          </div>`;
+          </div>
+          <input type="checkbox" name="like" id="like" class="o-hide-accessible c-heart-checkbox js-like-button" ${liked} data-id="${data[i].activityID}" />
+          <label for="like" class="c-community__heart">
+            <svg xmlns="http://www.w3.org/2000/svg" class="c-community__heart--symbol" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+            <span>${data[i].amountLikes}</span>
+          </label>
+        </div>
+        <div class="c-community__stats">
+          <div class="c-community__stat">
+            <span class="c-community__stat--titel">Route</span
+            ><span class="c-community__stat--value"
+              >Touw ${data[i].route.rope} <br />
+              Route ${data[i].route.naam}</span
+            >
+          </div>
+          <div class="c-community__stat"><span class="c-community__stat--titel">Niveau</span><span class="c-community__stat--value">${data[i].route.difficulty}</span></div>
+          <div class="c-community__stat"><span class="c-community__stat--titel">Tijd</span><span class="c-community__stat--value">${data[i].prestation}</span></div>
+        </div>
+        <hr class="c-community--bar" />
+        <div class="c-activity__comment--add">
+          <textarea name="comment" id="comment" class="c-comment__area js-add-comment-activitie--text" rows="1" placeholder="Voeg een reactie toe"></textarea>
+          <label for="send_comment" class="c-commen__button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </label>
+          <input type="submit" name="send_comment" id="send_comment" class="o-hide-accessible js-add-comment-activitie" data-id="${data[i].activityID}" />
+        </div>
+          ${commentshmtl}
+      </div>`;
   }
   document.querySelector('.js-activity').innerHTML = html;
+  listenToLikeButton();
+  listenToAddCommentButton();
 };
 
 const logout = async function () {
