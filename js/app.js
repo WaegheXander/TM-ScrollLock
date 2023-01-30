@@ -11,8 +11,6 @@ let wall,
 // fix ignore on notification
 // fix accept on notification
 // fix ranklijst loading in
-// fix community page in load
-// fix activity likes
 // fix activity comments
 // fix naming
 // fix logo in html css
@@ -412,6 +410,25 @@ const showCommunity = function (data) {
   }
   document.querySelector('.js-ommunity').innerHTML = html;
   listenToLikeButton();
+  listenToAddCommentButton();
+};
+
+const listenToAddCommentButton = function () {
+  const addCommentButton = document.querySelector('.js-add-comment-activitie');
+  addCommentButton.addEventListener('click', addCommentActivitie);
+};
+
+const addCommentActivitie = async function (event) {
+  const id = event.target.dataset.id;
+  const comment = document.querySelector('.js-add-comment-activitie--text').value;
+  const data = {
+    activityID: id,
+    comment: comment,
+  };
+  let url = 'https://meeclimb.be/api/activity/comment';
+  const response = await fetchPromis(url, 'POST', data);
+  document.querySelector('.js-add-comment-activitie').removeEventListener('click', addCommentActivitie);
+  getCommunity();
 };
 
 const listenToLikeButton = function () {
@@ -436,6 +453,7 @@ const likeActivitie = async function (event) {
     const response = await fetchPromis(url, 'DELETE');
   }
   removeEventListenerLikes();
+  getCommunity();
 };
 
 const removeEventListenerLikes = function () {
@@ -1243,12 +1261,9 @@ const showActivityUser = function (activity) {
   document.querySelector('.js-activity').innerHTML = html;
 };
 
-const logout = function () {
+const logout = async function () {
   let url = 'https://meeclimb.be/auth/logout';
-
-  fetch(url, {
-    method: 'DELETE',
-  });
+  await fetchPromis(url, 'GET');
 };
 // #endregion
 
