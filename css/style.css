@@ -2821,16 +2821,18 @@ mobile dasboard navbar
 }
 
 .c-all-db-users {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 24px;
+}
+
+.c-dashboard__main:has(.c-all-db-users) {
+  flex-direction: column;
 }
 
 .c-db-user {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -2845,15 +2847,21 @@ mobile dasboard navbar
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;
+  margin-bottom: 2px;
 }
 
 .c-db-user__email {
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
+  margin-bottom: 8px;
 }
 
 .c-db-user__button {
+  width: 100%;
+}
+
+.c-db-user__button--add {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -2865,13 +2873,9 @@ mobile dasboard navbar
   font-size: 14px;
   font-weight: 700;
   line-height: 18px;
-  color: var(--global-color-gray-xxxx-light);
-  background: var(--global-color-alpha);
+  color: var(--global-color-gray-xxxx-dark);
+  background: var(--global-color-alpha-xx-light);
   cursor: pointer;
-}
-
-.c-db-user__button--add {
-  background: var(--global-color-alpha-x-dark);
 }
 
 .c-overlay-add-friend--button {

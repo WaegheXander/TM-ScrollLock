@@ -1355,7 +1355,7 @@ const listentToSetting = function () {
 
 const getAllUsers = async function () {
   let url = 'https://meeclimb.be/api/users';
-  const response = await fetchPromise(url);
+  const responremoveUserse = await fetchPromise(url);
   showAllusers(response);
 };
 
@@ -1364,7 +1364,7 @@ const showAllusers = function (data) {
   for (let i = 0; i < data.length; i++) {
     html += `<div class="c-db-user">
       <div class="c-db-user__name">${data[i].firstname} ${data[i].lastname}</div>
-      <div class="c-db-user__email">${data[i].nickname}</div>  
+      <div class="c-db-user__email">${data[i].platform}</div>  
       <div class="c-db-user__button">
         <button class="c-db-user__button--add js-remove-user" data-id="${data[i].climberID}">User verwijderen</button>
       </div>
@@ -1383,7 +1383,9 @@ const listenToAddFriendButton = function () {
 
 const removeUser = async function (event) {
   let url = 'https://meeclimb.be/api/user/' + event.target.getAttribute('data-id');
-  const response = await fetchPromise(url, 'DELETE');
+  const response = await fetch(url, {
+    method: 'DELETE',
+  });
   if (response.status == 200) {
     getAllUsers();
   }
