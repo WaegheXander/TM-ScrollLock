@@ -1948,6 +1948,7 @@ mobile dasboard navbar
   }
 
   .c-account-content {
+    top: 150px;
     flex-direction: row;
     align-items: flex-start;
   }
@@ -2819,6 +2820,14 @@ mobile dasboard navbar
   display: none !important;
 }
 
+.c-all-db-users {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 24px;
+}
+
 .c-db-user {
   display: flex;
   flex-direction: row;
@@ -2863,4 +2872,30 @@ mobile dasboard navbar
 
 .c-db-user__button--add {
   background: var(--global-color-alpha-x-dark);
+}
+
+.c-overlay-add-friend--button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 4px;
+  border-radius: 3px;
+  border: none;
+  font-size: 14px;
+  font-weight: 200;
+  line-height: 18px;
+  color: var(--global-color-gray-xxxx-light);
+  background: var(--global-color-alpha);
+  cursor: pointer;
+}
+
+.c-overly-popup {
+  position: absolute;
+  top: 80px;
+  right: 45px;
+  max-width: 300px;
+  z-index: 100;
+  background: var(--global-color-alpha-xx-light);
 }

@@ -8,6 +8,8 @@ let wall,
   loggedinUser,
   notification;
 
+// fix al er geen activies zijn
+
 const fetchPromise = function (url, method = 'GET', body = null) {
   return fetch(url, {
     method: method,
@@ -255,27 +257,34 @@ const listenToSelectchange = function () {
 };
 
 const getRankingOfRoute = async function () {
-  const url = 'https://meeclimb.be/api/ranking';
-  const data = {
-    routeID: selectedRoute,
-  };
-  ranking = await fetchPromise(url, 'POST', data);
+  const url = 'https://meeclimb.be/api/route/ranking/' + selectedRoute;
+  ranking = await fetchPromise(url);
   showRanking(ranking);
 };
 
 const showRanking = function (ranking) {
-  let wall = document.querySelector('.js-ranking');
-  let html = ``;
-  for (let i = 0; i < ranking.length; i++) {
-    html += `<li class="c-ranking__item">
+  if (ranking.length <= 3) {
+    document.querySelector('.js-ranking').innerHTML = `<li class="c-ranking__item">
+          <div>
+            <p class="u-mb-clear c-ranking__item--nummer">0</p>
+            <p class="u-mb-clear c-ranking__item--name">Te wijning Data</p>
+          </div>
+          <p class="u-mb-clear c-ranking__item--sec"><span>0</span>sec</p>
+        </li>`;
+  } else {
+    let wall = document.querySelector('.js-ranking');
+    let html = ``;
+    for (let i = 0; i < ranking.length; i++) {
+      html += `<li class="c-ranking__item">
           <div>
             <p class="u-mb-clear c-ranking__item--nummer">${ranking.rang}</p>
             <p class="u-mb-clear c-ranking__item--name">${ranking.climber.firstname} ${ranking.climber.firstname}</p>
           </div>
           <p class="u-mb-clear c-ranking__item--sec"><span>${ranking.prestation}</span>sec</p>
         </li>`;
+    }
+    wall.innerHTML = html;
   }
-  wall.innerHTML = html;
 };
 
 const showComments = function (comments) {
@@ -345,21 +354,25 @@ const showComments = function (comments) {
 };
 
 const showCommunity = function (data) {
-  let html = '<h1 class="c-community--title">Recente activiteiten</h1>';
-  for (let i = 0; i < data.length; i++) {
-    let liked;
-    for (let j = 0; j < data[i].likedby.length; j++) {
-      if (data[i].likes[j].climberId === currentUser.climberID) {
-        liked = 'checked';
-      } else {
-        liked = '';
+  if (data.lengte == 0) {
+    let html = `<h1 class="c-community--title">Recente activiteiten</h1>`;
+    html += `<p class="c-community--empty">Er zijn nog geen activiteiten</p>`;
+  } else {
+    let html = '<h1 class="c-community--title">Recente activiteiten</h1>';
+    for (let i = 0; i < data.length; i++) {
+      let liked;
+      for (let j = 0; j < data[i].likedby.length; j++) {
+        if (data[i].likes[j].climberId === currentUser.climberID) {
+          liked = 'checked';
+        } else {
+          liked = '';
+        }
       }
-    }
-    let comments = data[i].comments;
-    let length = comments.length > 3 ? 3 : comments.length;
-    let commentshmtl = '<div class="c-comments">';
-    for (let j = 0; j < length; j++) {
-      commentshmtl += `<div class="c-comment">
+      let comments = data[i].comments;
+      let length = comments.length > 3 ? 3 : comments.length;
+      let commentshmtl = '<div class="c-comments">';
+      for (let j = 0; j < length; j++) {
+        commentshmtl += `<div class="c-comment">
               <div class="c-comment-top">
                 <img src="${comments[j].commentedby.image}" alt="Profiel foto van ${comments[j].commentedby.firstname} ${comments[j].commentedby.lastname}" class="c-comment__img" />
                 <div>
@@ -370,10 +383,10 @@ const showCommunity = function (data) {
               <div class="c-comment__text">${comments[j].comment}</div>
             </div>
           `;
-    }
-    commentshmtl += '</div>';
+      }
+      commentshmtl += '</div>';
 
-    html += `<div class="c-community__item">
+      html += `<div class="c-community__item">
         <div class="c-community__item--topbar">
           <div class="c-community__item--topbar--left">
             <img src="${data[i].climber.image}" alt="profile picture of ${data[i].climber.firstname} ${data[i].climber.lastname}" class="c-community__item--avatar" />
@@ -416,10 +429,11 @@ const showCommunity = function (data) {
         </div>
           ${commentshmtl}
       </div>`;
+    }
+    listenToLikeButton();
+    listenToAddCommentButton();
   }
   document.querySelector('.js-ommunity').innerHTML = html;
-  listenToLikeButton();
-  listenToAddCommentButton();
 };
 
 const listenToAddCommentButton = function () {
@@ -571,7 +585,7 @@ const addFriendsearch = async function (event) {
   for (let i = 0; i < lengte; i++) {
     html += `<div class="c-overlay--friend-sug">
           <p class="u-mb-clear">${data[i].firstname} ${data[i].lastname}</p>
-          <input type="button" value="toevoegen" data-id=${data[i].climberID} class="js-add-fried-button"/>
+          <input type="button" value="toevoegen" data-id=${data[i].climberID} class="js-add-fried-button c-overlay-add-friend--button"/>
         </div>`;
   }
 
@@ -590,7 +604,13 @@ const addFriend = async function (id) {
   let data = {
     friendID: id,
   };
-  let response = await fetchPromise(url, 'POST', data);
+  let response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
   if (response.status == 201) {
     document.querySelector('.js-overlay--addfriend').style.display = 'none';
     document.querySelector('.js-cancel-friend').removeEventListener('click', cancelFriend);
@@ -1149,6 +1169,7 @@ const showLogin = function () {
       document.querySelector('.js-link-rfid').style.display = 'none';
     }
   }
+  document.querySelector('.js-button-more').href = `http://127.0.0.1:5500/index.html`;
 };
 
 const showDetailUser = function (user) {
@@ -1256,7 +1277,10 @@ const showActivityUser = function (data) {
 
 const logout = async function () {
   let url = 'https://meeclimb.be/auth/logout';
-  await fetchPromise(url, 'GET');
+  const result = await fetch(url);
+  if (result.status === 200) {
+    window.location.href = 'https://meeclimb.be/home';
+  }
 };
 // #endregion
 
