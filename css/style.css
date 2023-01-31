@@ -1502,24 +1502,22 @@ input:disabled {
   transition: all 0.125s ease-in
 }
 
-.c-db-option--hidden:checked+.c-db-label--options {
-  background-color: var(--global-color-gray-xxxx-light);
-
-}
-
-.c-db-option--hidden:checked+.c-db-label--options .c-db-custom-option__symbol {
-  stroke: var(--global-color-alpha-xx-dark);
-
-}
-
 .c-db-option--hidden:hover+.c-db-label--options,
 .c-db-option--hidden:focus+.c-db-label--options {
-  background-color: var(--global-color-alpha-x-dark);
+  background-color: var(--global-color-alpha-xx-light);
 }
 
 .c-db-option--hidden:hover+.c-db-label--options .c-db-custom-option__symbol,
 .c-db-option--hidden:focus+.c-db-label--options .c-db-custom-option__symbol {
-  stroke: var(--global-color-gray-xxxx-light);
+  stroke: var(--global-color-gray-xxxxx-dark);
+}
+
+.c-db-option--selected {
+  background-color: var(--global-color-gray-xxxx-light);
+}
+
+.c-db-option--selected .c-db-custom-option__symbol {
+  stroke: var(--global-color-alpha-xx-dark);
 }
 
 /*
@@ -2813,6 +2811,56 @@ mobile dasboard navbar
   cursor: pointer;
 }
 
-.u-display--none {
+.u-display--block {
   display: block !important;
+}
+
+.u-hide {
+  display: none !important;
+}
+
+.c-db-user {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 8px;
+  background: var(--global-color-alpha-x-dark);
+  color: var(--global-color-gray-xxx-light);
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.c-db-user__name {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.c-db-user__email {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.c-db-user__button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 4px;
+  border-radius: 3px;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+  color: var(--global-color-gray-xxxx-light);
+  background: var(--global-color-alpha);
+  cursor: pointer;
+}
+
+.c-db-user__button--add {
+  background: var(--global-color-alpha-x-dark);
 }

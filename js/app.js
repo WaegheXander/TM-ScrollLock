@@ -428,7 +428,7 @@ const listenToAddCommentButton = function () {
 };
 
 const addCommentActivitie = async function (event) {
-  const id = event.target.dataset.id;
+  const id = event.target.getAttribute('data-id');
   const comment = document.querySelector('.js-add-comment-activitie--text').value;
   const data = {
     activityID: id,
@@ -448,7 +448,7 @@ const listenToLikeButton = function () {
 };
 
 const likeActivitie = async function (event) {
-  const id = event.target.dataset.id;
+  const id = event.target.getAttribute('data-id');
   const liked = event.target.checked;
 
   if (liked) {
@@ -627,7 +627,7 @@ const listenToNotification = function () {
     let buttons = document.querySelectorAll('.js-notification');
     for (let i = 0; i < buttons.length; i++) {
       buttons[i].addEventListener('click', function () {
-        document.querySelector('.js-notification-item').classList.toggle('u-display--none');
+        document.querySelector('.js-notification-item').classList.toggle('u-display--block');
         if (notification != null) {
           updateNotification();
           document.querySelector('.js-notification-ignore').style.display = 'block';
@@ -639,7 +639,7 @@ const listenToNotification = function () {
       });
     }
     document.querySelector('.js-close-notification').addEventListener('click', function () {
-      document.querySelector('.js-notification-item').classList.toggle('u-display--none');
+      document.querySelector('.js-notification-item').classList.toggle('u-display--block');
     });
 
     document.querySelector('.js-notification-accept').addEventListener('click', async function () {
@@ -647,7 +647,7 @@ const listenToNotification = function () {
       await fetchPromise(url);
     });
     document.querySelector('.js-notification-ignore').addEventListener('click', function () {
-      document.querySelector('.js-notification-item').classList.toggle('u-display--none');
+      document.querySelector('.js-notification-item').classList.toggle('u-display--block');
       document.querySelector('.js-notification-text').innerHTML = 'Je hebt geen notificaties';
     });
   }
@@ -1300,6 +1300,71 @@ const acceptFriendRequest = async function () {
     document.querySelector('.js-notification-text').innerHTML = 'Je hebt geen notificaties';
   }
 };
+
+const listenToHome = function () {
+  const button = document.querySelector('.js-home');
+  button.addEventListener('click', function () {
+    window.location.href = 'https://meeclimb.be/home';
+  });
+};
+
+const listenToEditWall = function () {
+  const button = document.querySelector('.js-edit-wall');
+  button.addEventListener('click', function () {
+    document.querySelector('.js-main-edit').classList.remove('u-hide');
+    document.querySelector('.js-main-setting').classList.add('u-hide');
+    document.querySelector('.js-label-edit').classList.add('c-db-option--selected');
+    document.querySelector('.js-label-setting').classList.remove('c-db-option--selected');
+  });
+};
+
+const listentToSetting = function () {
+  const button = document.querySelector('.js-setting');
+  button.addEventListener('click', function () {
+    document.querySelector('.js-main-edit').classList.add('u-hide');
+    document.querySelector('.js-main-setting').classList.remove('u-hide');
+    document.querySelector('.js-label-edit').classList.remove('c-db-option--selected');
+    document.querySelector('.js-label-setting').classList.add('c-db-option--selected');
+    getAllUsers();
+  });
+};
+
+const getAllUsers = async function () {
+  let url = 'https://meeclimb.be/api/users';
+  const response = await fetchPromise(url);
+  showAllusers(response);
+};
+
+const showAllusers = function (data) {
+  let html = '';
+  for (let i = 0; i < data.length; i++) {
+    html += `<div class="c-db-user">
+      <div class="c-db-user__name">${data[i].firstname} ${data[i].lastname}</div>
+      <div class="c-db-user__email">${data[i].nickname}</div>  
+      <div class="c-db-user__button">
+        <button class="c-db-user__button--add js-remove-user" data-id="${data[i].climberID}">User verwijderen</button>
+      </div>
+    </div>`;
+  }
+  document.querySelector('.js-all-users').innerHTML = html;
+  listenToAddFriendButton();
+};
+
+const listenToAddFriendButton = function () {
+  const buttons = document.querySelectorAll('.js-remove-user');
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', removeUser);
+  }
+};
+
+const removeUser = async function (event) {
+  let url = 'https://meeclimb.be/api/user/' + event.target.getAttribute('data-id');
+  const response = await fetchPromise(url, 'DELETE');
+  if (response.status == 200) {
+    getAllUsers();
+  }
+};
+
 // #endregion
 
 // #region ***  Init / DOMContentLoaded                  ***********
@@ -1320,6 +1385,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   if (document.querySelector('#dashboard')) {
     getRopesSelect();
+    listenToHome();
+    listenToLogout();
+    listentToSetting();
+    listenToEditWall();
   }
   if (document.querySelector('#account')) {
     listenToSeachFriend();
