@@ -8,12 +8,7 @@ let wall,
   loggedinUser,
   notification;
 
-// fix ignore on notification
-// fix accept on notification
-// fix ranklijst loading in
-// fix naming
-
-const fetchPromis = function (url, method = 'GET', body = null) {
+const fetchPromise = function (url, method = 'GET', body = null) {
   return fetch(url, {
     method: method,
     body: body,
@@ -113,7 +108,6 @@ const showWall = function () {
 
 const showRouteButtons = function () {
   let html = '';
-
   for (let i = 0; i < routes.length; i++) {
     let route_id = routes[i].routeID;
     let routeName = 'Route: ' + (i + 1);
@@ -226,7 +220,7 @@ const showRopesRanking = function (ropes) {
 
 const getSelectedRopeRoutes = async function () {
   const url = 'https://meeclimb.be/api/routes?rope=' + selectedRope;
-  routes = await fetchPromis(url);
+  routes = await fetchPromise(url);
   if (routes.length != 0) {
     selectedRoute = routes[0].routeID;
     showRouteRanking(routes);
@@ -261,9 +255,27 @@ const listenToSelectchange = function () {
 };
 
 const getRankingOfRoute = async function () {
-  // const url = 'https://meeclimb.be/api/ranking?route=' + selectedRoute;
-  // ranking = await fetchPromis(url);
-  // showRanking(ranking);
+  const url = 'https://meeclimb.be/api/ranking';
+  const data = {
+    routeID: selectedRoute,
+  };
+  ranking = await fetchPromise(url, 'POST', data);
+  showRanking(ranking);
+};
+
+const showRanking = function (ranking) {
+  let wall = document.querySelector('.js-ranking');
+  let html = ``;
+  for (let i = 0; i < ranking.length; i++) {
+    html += `<li class="c-ranking__item">
+          <div>
+            <p class="u-mb-clear c-ranking__item--nummer">${ranking.rang}</p>
+            <p class="u-mb-clear c-ranking__item--name">${ranking.climber.firstname} ${ranking.climber.firstname}</p>
+          </div>
+          <p class="u-mb-clear c-ranking__item--sec"><span>${ranking.prestation}</span>sec</p>
+        </li>`;
+  }
+  wall.innerHTML = html;
 };
 
 const showComments = function (comments) {
@@ -424,7 +436,7 @@ const addCommentActivitie = async function (event) {
     comment: comment,
   };
   let url = 'https://meeclimb.be/api/activity/comment';
-  const response = await fetchPromis(url, 'POST', data);
+  const response = await fetchPromise(url, 'POST', data);
   document.querySelector('.js-add-comment-activitie').removeEventListener('click', addCommentActivitie);
   getCommunity();
 };
@@ -445,10 +457,10 @@ const likeActivitie = async function (event) {
     const data = {
       activityID: id,
     };
-    const response = await fetchPromis(url, 'POST', data);
+    const response = await fetchPromise(url, 'POST', data);
   } else {
     let url = 'https://meeclimb.be/api/activity/like/' + id;
-    const response = await fetchPromis(url, 'DELETE');
+    const response = await fetchPromise(url, 'DELETE');
   }
   removeEventListenerLikes();
   getCommunity();
@@ -476,33 +488,37 @@ const getRopeId = function () {
 
 const getWallRoutes = async function (rope_id) {
   const url = 'https://meeclimb.be/api/routes?rope=' + rope_id;
-  routes = await fetchPromis(url);
+  routes = await fetchPromise(url);
   showRouteButtons();
 };
 
 const getRopes = async function () {
   const url = 'https://meeclimb.be/api/ropes';
-  const ropes = await fetchPromis(url);
+  const ropes = await fetchPromise(url);
   showRopes(ropes);
 };
 
 const getRopesRanking = async function () {
   const url = 'https://meeclimb.be/api/ropes';
-  const ropes = await fetchPromis(url);
-  console.log(ropes);
-  selectedRope = ropes[0].rope;
-  showRopesRanking(ropes);
+  const ropes = await fetchPromise(url);
+  if (ropes.length != 0) {
+    selectedRope = ropes[0].rope;
+    showRopesRanking(ropes);
+  } else {
+    document.querySelector('.js-select-rope').innerHTML = `<option value="0" data-builder="0">Geen routes</option>`;
+    document.querySelector('.js-select-route').innerHTML = `<option value="0" data-builder="0">Geen routes</option>`;
+  }
 };
 
 const getRouteDetailsByID = async function () {
   const url = 'https://meeclimb.be/api/routes?routeID=' + selectedPath;
-  const response = await fetchPromis(url);
+  const response = await fetchPromise(url);
   showComments(response);
 };
 
 const getCommunity = async function () {
   const url = 'https://meeclimb.be/api/friends/activities';
-  const response = await fetchPromis(url);
+  const response = await fetchPromise(url);
   showCommunity(response);
 };
 // #endregion
@@ -534,7 +550,6 @@ const listenToLogout = function () {
 
 const listenToSeachFriend = function () {
   document.querySelector('.js-search-climber').addEventListener('click', function (event) {
-    console.log('click');
     document.querySelector('.js-overlay--addfriend').style.display = 'flex';
     document.querySelector('.js-cancel-friend').addEventListener('click', cancelFriend);
     document.querySelector('.js-add-friend-name').addEventListener('input', addFriendsearch);
@@ -547,16 +562,14 @@ const cancelFriend = function () {
 };
 
 const addFriendsearch = async function (event) {
-  console.log('search');
   let search = event.target.value;
   let url = 'https://meeclimb.be/api/user?nickname=' + search;
-  let data = await fetchPromis(url);
+  let data = await fetchPromise(url);
 
   let lengte = data.length > 5 ? 5 : data.length;
 
   let html = ``;
   for (let i = 0; i < lengte; i++) {
-    console.log(data[i]);
     html += `<div class="c-overlay--friend-sug">
           <p class="u-mb-clear">${data[i].firstname} ${data[i].lastname}</p>
           <input type="button" value="toevoegen" data-id=${data[i].climberID} class="js-add-fried-button"/>
@@ -576,9 +589,9 @@ const addFriendsearch = async function (event) {
 const addFriend = async function (id) {
   let url = 'https://meeclimb.be/api/friend/request';
   let data = {
-    climberID: id,
+    friendID: id,
   };
-  let response = await fetchPromis(url, 'POST', data);
+  let response = await fetchPromise(url, 'POST', data);
   if (response.status == 201) {
     document.querySelector('.js-overlay--addfriend').style.display = 'none';
     document.querySelector('.js-cancel-friend').removeEventListener('click', cancelFriend);
@@ -587,7 +600,6 @@ const addFriend = async function (id) {
 };
 
 const listenToAddComment = function () {
-  console.log(document.querySelector('.js-add-comment'));
   document.querySelector('.js-add-comment').addEventListener('click', addComment);
 };
 
@@ -598,7 +610,6 @@ const addComment = async function () {
     comment: document.querySelector('.js-comment').value,
     rating: document.querySelector('.js-star-rating').getAttribute('data-stars'),
   };
-  console.log(data);
   let response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -634,7 +645,7 @@ const listenToNotification = function () {
 
     document.querySelector('.js-notification-accept').addEventListener('click', async function () {
       let url = 'https://meeclimb.be/api/friend/request/accept';
-      await fetchPromis(url);
+      await fetchPromise(url);
     });
     document.querySelector('.js-notification-ignore').addEventListener('click', function () {
       document.querySelector('.js-notification-item').classList.toggle('u-display--none');
@@ -644,49 +655,18 @@ const listenToNotification = function () {
 };
 // #endregion
 
-// #region ***  Init / DOMContentLoaded                  ***********
-document.addEventListener('DOMContentLoaded', async function () {
-  toggleNav();
-  await GetLogin();
-  createSocketConnection();
-  listenToNotification();
-
-  if (document.querySelector('#ropes')) {
-    getRopes();
-  }
-  if (document.querySelector('#ropeDetail')) {
-    showWall();
-    getRopeId();
-    listenToWindowResize();
-  }
-
-  if (document.querySelector('#dashboard')) {
-    getRopesSelect();
-  }
-  if (document.querySelector('#account')) {
-    listenToSeachFriend();
-    listenToLogout();
-    getActivityUser();
-  }
-
-  if (document.querySelector('#ranking')) {
-    getRopesRanking();
-  }
-  if (document.querySelector('#community')) {
-    getCommunity();
-  }
-});
-
-// #endregion
-
 let selectedRope, selectedRoute, selectedBuidler;
 
 // #region get dashboard data
 const getRopesSelect = async function () {
   let url = 'https://meeclimb.be/api/ropes';
-  const data = await fetchPromis(url);
-  selectedRope = data[0].rope;
-  showRopesDashboard(data);
+  const data = await fetchPromise(url);
+  if (data.length != 0) {
+    selectedRope = data[0].rope;
+    showRopesDashboard(data);
+  } else {
+    document.querySelector('.js-select-rope').innerHTML = `<option value="0">Geen touwen</option>`;
+  }
 };
 
 const showRopesDashboard = function (ropes) {
@@ -700,8 +680,8 @@ const showRopesDashboard = function (ropes) {
 
 const getRouteSelect = async function () {
   let url = 'https://meeclimb.be/api/routes?rope=' + selectedRope;
-  const data = await fetchPromis(url);
-  if (data.length > 0) {
+  const data = await fetchPromise(url);
+  if (data.length != 0) {
     selectedRoute = data[0].routeID;
     selectedBuidler = data[0].builder.climberID;
     showRoutesDashboard(data);
@@ -721,7 +701,7 @@ const showRoutesDashboard = function (data) {
 
 const getDetailRouteSelect = async function () {
   let url = 'https://meeclimb.be/api/routes?routeID=' + selectedRoute;
-  const data = await fetchPromis(url);
+  const data = await fetchPromise(url);
   showDetailRouteDashboard(data);
 };
 
@@ -894,7 +874,6 @@ const toevoegenRope = async function () {
       image: document.querySelector('.js-route-image').value,
     }),
   });
-  console.log(res);
   if (res.status == 201) {
     document.querySelector('.js-overlay--addrope').style.display = 'none';
     document.querySelector('.js-annuleren-rope').removeEventListener('click', cancelAddRope);
@@ -973,7 +952,6 @@ const deleteRoute = async function () {
   const response = await fetch(url, {
     method: 'DELETE',
   });
-  console.log(response);
   if (response.status == 200) {
     getRopesSelect();
   }
@@ -984,8 +962,6 @@ const deleteTouw = async function () {
   const response = await fetch(url, {
     method: 'DELETE',
   });
-  console.log(response);
-  console.log(response.status);
   if (response.status == 200) {
     getRopesSelect();
   }
@@ -1041,7 +1017,6 @@ const showWallDashboard = function () {
 
 const showGripsDashboard = function (data) {
   showWallDashboard();
-  console.log(data.grips.length);
   if (data.grips.length == 0) {
     removeEventListeners();
     listenToUIDashboard();
@@ -1086,7 +1061,7 @@ const showGripsDashboard = function (data) {
           break;
       }
     } catch (error) {
-      console.warn(error);
+      console.log(error);
     }
   }
   removeEventListeners();
@@ -1123,11 +1098,9 @@ const GetLogin = async function () {
   // let url = 'https://meeclimb.be/auth/login';
   let url = 'http://127.0.0.1:5500/js/dummy.json';
   try {
-    currentuser = await fetchPromis(url);
-    console.log(currentuser);
+    currentuser = await fetchPromise(url);
     showLogin();
   } catch (error) {
-    console.log('not logged in');
     currentuser = null;
   }
 };
@@ -1172,8 +1145,10 @@ const showLogin = function () {
       document.querySelector('.js-link-rfid').addEventListener('click', function () {
         const url = 'https://meeclimb.be/api/user/onboarding/process';
         const data = {};
-        fetchPromis(url, 'POST', data);
+        fetchPromise(url, 'POST', data);
       });
+    } else {
+      document.querySelector('.js-link-rfid').style.display = 'none';
     }
   }
 };
@@ -1196,8 +1171,7 @@ const showDetailUser = function (user) {
 
 const getActivityUser = async function () {
   let url = 'https://meeclimb.be/api/activities';
-  const activity = await fetchPromis(url);
-  console.log(activity);
+  const activity = await fetchPromise(url);
   showActivityUser(activity);
 };
 
@@ -1280,7 +1254,7 @@ const showActivityUser = function (data) {
 
 const logout = async function () {
   let url = 'https://meeclimb.be/auth/logout';
-  await fetchPromis(url, 'GET');
+  await fetchPromise(url, 'GET');
 };
 // #endregion
 
@@ -1303,4 +1277,38 @@ const createSocketConnection = async function () {
     setTimeout(createSocketConnection, 1000);
   };
 };
+// #endregion
+
+// #region ***  Init / DOMContentLoaded                  ***********
+document.addEventListener('DOMContentLoaded', async function () {
+  toggleNav();
+  await GetLogin();
+  createSocketConnection();
+  listenToNotification();
+
+  if (document.querySelector('#ropes')) {
+    getRopes();
+  }
+  if (document.querySelector('#ropeDetail')) {
+    showWall();
+    getRopeId();
+    listenToWindowResize();
+  }
+
+  if (document.querySelector('#dashboard')) {
+    getRopesSelect();
+  }
+  if (document.querySelector('#account')) {
+    listenToSeachFriend();
+    listenToLogout();
+    getActivityUser();
+  }
+
+  if (document.querySelector('#ranking')) {
+    getRopesRanking();
+  }
+  if (document.querySelector('#community')) {
+    getCommunity();
+  }
+});
 // #endregion

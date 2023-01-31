@@ -946,6 +946,16 @@ input:disabled {
 
 .c-wall__grid--item {
   background-color: var(--global-color-gray-x-light);
+  position: relative;
+}
+
+.c-wall__grid--item:after {
+  content: ' ';
+  position: relative;
+  display: block;
+  top: -6px;
+  left: -6px;
+  padding: 8px;
 }
 
 .c-wall__grid--item--grip--bak:after {
