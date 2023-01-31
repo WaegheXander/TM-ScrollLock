@@ -2903,3 +2903,17 @@ mobile dasboard navbar
   z-index: 100;
   background: var(--global-color-alpha-xx-light);
 }
+
+.c-community--empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  background: var(--global-color-alpha-x-dark);
+  color: var(--global-color-gray-xxx-light);
+  border-radius: 3px;
+  margin-bottom: 8px;
+}

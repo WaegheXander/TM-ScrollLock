@@ -147,7 +147,7 @@ const showRouteButtons = function () {
   document.querySelector('.js-wall_route--options').innerHTML = html;
   showGrips();
 
-  if (currentuser !== null) {
+  if (currentuser != null) {
     getRouteDetailsByID();
   }
 };
@@ -263,8 +263,9 @@ const getRankingOfRoute = async function () {
 };
 
 const showRanking = function (ranking) {
+  let wall = document.querySelector('.js-ranking');
   if (ranking.length <= 3) {
-    document.querySelector('.js-ranking').innerHTML = `<li class="c-ranking__item">
+    wall.innerHTML = `<li class="c-ranking__item">
           <div>
             <p class="u-mb-clear c-ranking__item--nummer">0</p>
             <p class="u-mb-clear c-ranking__item--name">Te wijning Data</p>
@@ -272,8 +273,6 @@ const showRanking = function (ranking) {
           <p class="u-mb-clear c-ranking__item--sec"><span>0</span>sec</p>
         </li>`;
   } else {
-    let wall = document.querySelector('.js-ranking');
-    let html = ``;
     for (let i = 0; i < ranking.length; i++) {
       html += `<li class="c-ranking__item">
           <div>
@@ -354,11 +353,13 @@ const showComments = function (comments) {
 };
 
 const showCommunity = function (data) {
+  console.log(data);
+  let html = '';
   if (data.lengte == 0) {
-    let html = `<h1 class="c-community--title">Recente activiteiten</h1>`;
+    html += `<h1 class="c-community--title">Recente activiteiten</h1>`;
     html += `<p class="c-community--empty">Er zijn nog geen activiteiten</p>`;
   } else {
-    let html = '<h1 class="c-community--title">Recente activiteiten</h1>';
+    html = '<h1 class="c-community--title">Recente activiteiten</h1>';
     for (let i = 0; i < data.length; i++) {
       let liked;
       for (let j = 0; j < data[i].likedby.length; j++) {
@@ -496,6 +497,7 @@ const getRopeId = function () {
   if (ropeId == null) {
     ropeId = 1;
   }
+  document.querySelector('.js-rope-name').innerHTML = 'Touw ' + ropeId;
   getWallRoutes(ropeId);
 };
 
@@ -643,23 +645,17 @@ const addComment = async function () {
 };
 
 const listenToNotification = function () {
-  if (currentuser != null) {
-    let buttons = document.querySelectorAll('.js-notification');
-    for (let i = 0; i < buttons.length; i++) {
-      buttons[i].addEventListener('click', function () {
-        document.querySelector('.js-notification-item').classList.toggle('u-display--block');
-        if (notification != null) {
-          updateNotification();
-          document.querySelector('.js-notification-ignore').style.display = 'block';
-          document.querySelector('.js-notification-ignore').style.display = 'block';
-        } else {
-          document.querySelector('.js-notification-accept').style.display = 'none';
-          document.querySelector('.js-notification-ignore').style.display = 'none';
-        }
-      });
-    }
-    document.querySelector('.js-close-notification').addEventListener('click', function () {
+  let buttons = document.querySelectorAll('.js-notification');
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', function () {
       document.querySelector('.js-notification-item').classList.toggle('u-display--block');
+      if (notification != null) {
+        document.querySelector('.js-notification-ignore').style.display = 'block';
+        document.querySelector('.js-notification-ignore').style.display = 'block';
+      } else {
+        document.querySelector('.js-notification-accept').style.display = 'none';
+        document.querySelector('.js-notification-ignore').style.display = 'none';
+      }
     });
 
     document.querySelector('.js-notification-accept').addEventListener('click', async function () {
@@ -1161,6 +1157,7 @@ const showLogin = function () {
     showDetailUser();
     if (currentuser.rfid == '00000') {
       document.querySelector('.js-link-rfid').addEventListener('click', function () {
+        alert('scan nu je kaartje');
         const url = 'https://meeclimb.be/api/user/onboarding/process';
         const data = {};
         fetchPromise(url, 'POST', data);
