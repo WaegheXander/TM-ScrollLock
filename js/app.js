@@ -198,7 +198,7 @@ const showRopes = function (ropes) {
   let html = ``;
   for (let i = 0; i < ropes.length; i++) {
     html += `<div class="c-touw">
-    <img src="${ropes[i].image}" class="c-touw__backgouround" alt="rope achtergrond" />
+    <img src="${ropes[i].image}" class="c-touw__backgouround" alt="Rope achtergrond" />
     <div class="c-touw__content">
       <h1 class="c-touw__content--title">Touw ${ropes[i].rope}</h1>
       <a href="touwDetail.html?touw=${ropes[i].rope}" class="c-touw__content--button">Bekijk routes</a>
@@ -279,10 +279,9 @@ const showRanking = function (ranking) {
 };
 
 const showComments = function (comments) {
-  // if (comments.length != 0) {
-  let html = `<div class="c-commend__add" title="je moet ingelogd zijn om comments achter te laten" aria-disabled="TFrue">
+  let html = `<div class="c-commend__add">
     <label for="cocmment">Voeg een comment toe:</label>
-    <textarea name="comment" id="comment" class="c-comment__area js-comment" rows="4" placeholder="Wat vind u van deze route?"></textarea>
+    <textarea name="comment" id="comment" class="c-comment__area js-comment" rows="4" placeholder="Wat vond u van deze route?"></textarea>
     <div class="stars js-star-rating" data-stars="1">
       <svg xmlns="http://www.w3.org/2000/svg" class="star rating" data-rating="1" width="24" height="24" viewBox="0 0 40 38">
         <path d="M11.65,44,14.9,29.95,4,20.5l14.4-1.25L24,6l5.6,13.25L44,20.5,33.1,29.95,36.35,44,24,36.55Z" transform="translate(-4 -6)" />
@@ -324,7 +323,7 @@ const showComments = function (comments) {
     }
     html += `<div class="c-comment">
               <div class="c-comment-top">
-                <img src="${comments.ratings[i].ratedBy.image}" alt="profile picture from ${comments.ratings[i].ratedBy.firstname} ${comments.ratings[i].ratedBy.lastname}" class="c-comment__img" />
+                <img src="${comments.ratings[i].ratedBy.image}" alt="Profile picture from ${comments.ratings[i].ratedBy.firstname} ${comments.ratings[i].ratedBy.lastname}" class="c-comment__img" />
                 <div>
                   <p class="c-comment__name u-mb-xs">${comments.ratings[i].ratedBy.firstname} ${comments.ratings[i].ratedBy.lastname}</p>
                   <p class="c-comment__date u-mb-clear">${new Date(comments.ratings[i].timestamp).toLocaleString('nl-be', {
@@ -362,7 +361,7 @@ const showCommunity = function (data) {
     for (let j = 0; j < length; j++) {
       commentshmtl += `<div class="c-comment">
               <div class="c-comment-top">
-                <img src="${comments[j].commentedby.image}" alt="profiel foto van ${comments[j].commentedby.firstname} ${comments[j].commentedby.lastname}" class="c-comment__img" />
+                <img src="${comments[j].commentedby.image}" alt="Profiel foto van ${comments[j].commentedby.firstname} ${comments[j].commentedby.lastname}" class="c-comment__img" />
                 <div>
                   <p class="c-comment__name u-mb-xs">${comments[j].commentedby.firstname} ${comments[j].commentedby.lastname}</p>
                   <p class="c-comment__date u-mb-clear">${new Date(comments[j].timestsamp)}</p>
@@ -505,7 +504,7 @@ const getRopesRanking = async function () {
     selectedRope = ropes[0].rope;
     showRopesRanking(ropes);
   } else {
-    document.querySelector('.js-select-rope').innerHTML = `<option value="0" data-builder="0">Geen routes</option>`;
+    document.querySelector('.js-select-rope').innerHTML = `<option value="0" data-builder="0">Geen touwen</option>`;
     document.querySelector('.js-select-route').innerHTML = `<option value="0" data-builder="0">Geen routes</option>`;
   }
 };
@@ -1095,8 +1094,7 @@ const getGripsCoords = function () {
 
 // #region ***  User / login  ***********
 const GetLogin = async function () {
-  // let url = 'https://meeclimb.be/auth/login';
-  let url = 'http://127.0.0.1:5500/js/dummy.json';
+  let url = 'https://meeclimb.be/auth/login';
   try {
     currentuser = await fetchPromise(url);
     showLogin();
@@ -1195,7 +1193,11 @@ const showActivityUser = function (data) {
                 <img src="${comments[j].commentedby.image}" alt="profiel foto van ${comments[j].commentedby.firstname} ${comments[j].commentedby.lastname}" class="c-comment__img" />
                 <div>
                   <p class="c-comment__name u-mb-xs">${comments[j].commentedby.firstname} ${comments[j].commentedby.lastname}</p>
-                  <p class="c-comment__date u-mb-clear">${comments[j].commentedby.timestsamp}</p>
+                  <p class="c-comment__date u-mb-clear">${new Date(comments[j].commentedby.timestsamp).toLocaleString('nl-be', {
+                    weekday: 'long',
+                    month: 'short',
+                    year: 'numeric',
+                  })}</p>
                 </div>
               </div>
               <div class="c-comment__text">${comments[j].comment}</div>
@@ -1270,12 +1272,33 @@ const createSocketConnection = async function () {
 
   ws.onmessage = (event) => {
     console.log(`[Server] ${event.data}`);
+    listenToAcceptButton(event);
   };
 
   ws.onclose = () => {
     console.log('[Disconnected]');
     setTimeout(createSocketConnection, 1000);
   };
+};
+
+const listenToAcceptButton = function (event) {
+  notification = event.data;
+  const button = document.querySelector('.js-notification-accept');
+  button.addEventListener('click', acceptFriendRequest);
+};
+
+const acceptFriendRequest = async function () {
+  let url = 'https://meeclimb.be/api/friend/request/accept';
+  let data = {
+    friendID: notification.climberID,
+    accept: true,
+  };
+  const response = await fetchPromise(url, 'PUT', data);
+
+  if (response.status == 200) {
+    notification = null;
+    document.querySelector('.js-notification-text').innerHTML = 'Je hebt geen notificaties';
+  }
 };
 // #endregion
 
