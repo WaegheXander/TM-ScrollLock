@@ -2884,6 +2884,7 @@ mobile dasboard navbar
   justify-content: center;
   align-items: center;
   width: 100%;
+  max-width: 100px;
   padding: 4px;
   border-radius: 3px;
   border: none;
@@ -2893,15 +2894,6 @@ mobile dasboard navbar
   color: var(--global-color-gray-xxxx-light);
   background: var(--global-color-alpha);
   cursor: pointer;
-}
-
-.c-overly-popup {
-  position: absolute;
-  top: 80px;
-  right: 45px;
-  max-width: 300px;
-  z-index: 100;
-  background: var(--global-color-alpha-xx-light);
 }
 
 .c-community--empty {

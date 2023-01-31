@@ -5,7 +5,6 @@ let wall,
   selectedPath,
   ropeId = 1,
   currentuser,
-  loggedinUser,
   notification;
 
 // fix al er geen activies zijn
@@ -228,6 +227,7 @@ const getSelectedRopeRoutes = async function () {
     showRouteRanking(routes);
   } else {
     document.querySelector('.js-select-route').innerHTML = `<option value="0">Geen routes op dit touw</option>`;
+    listenToSelectchange();
   }
 };
 
@@ -264,8 +264,9 @@ const getRankingOfRoute = async function () {
 
 const showRanking = function (ranking) {
   let wall = document.querySelector('.js-ranking');
+  let html;
   if (ranking.length <= 3) {
-    wall.innerHTML = `<li class="c-ranking__item">
+    html = `<li class="c-ranking__item">
           <div>
             <p class="u-mb-clear c-ranking__item--nummer">0</p>
             <p class="u-mb-clear c-ranking__item--name">Te wijning Data</p>
@@ -274,12 +275,18 @@ const showRanking = function (ranking) {
         </li>`;
   } else {
     for (let i = 0; i < ranking.length; i++) {
+      document.querySelector('.js-1-name').innerHTML = ranking[0].climber.firstname + ' ' + ranking[0].climber.lastname;
+      document.querySelector('.js-1-time').innerHTML = ranking[0].prestation;
+      document.querySelector('.js-2-name').innerHTML = ranking[1].ranking[i].climber.firstname + ' ' + ranking[i].climber.lastname;
+      document.querySelector('.js-2-time').innerHTML = ranking[1].prestation;
+      document.querySelector('.js-3-name').innerHTML = ranking[2].ranking[i].climber.firstname + ' ' + ranking[i].climber.lastname;
+      document.querySelector('.js-3-time').innerHTML = ranking[2].prestation;
       html += `<li class="c-ranking__item">
           <div>
-            <p class="u-mb-clear c-ranking__item--nummer">${ranking.rang}</p>
-            <p class="u-mb-clear c-ranking__item--name">${ranking.climber.firstname} ${ranking.climber.firstname}</p>
+            <p class="u-mb-clear c-ranking__item--nummer">${ranking[i].rang}</p>
+            <p class="u-mb-clear c-ranking__item--name">${ranking[i].climber.firstname} ${ranking[i].climber.firstname}</p>
           </div>
-          <p class="u-mb-clear c-ranking__item--sec"><span>${ranking.prestation}</span>sec</p>
+          <p class="u-mb-clear c-ranking__item--sec"><span>${ranking[i].prestation}</span>sec</p>
         </li>`;
     }
     wall.innerHTML = html;
@@ -355,7 +362,7 @@ const showComments = function (comments) {
 const showCommunity = function (data) {
   console.log(data);
   let html = '';
-  if (data.lengte == 0) {
+  if (data.length == 0) {
     html += `<h1 class="c-community--title">Recente activiteiten</h1>`;
     html += `<p class="c-community--empty">Er zijn nog geen activiteiten</p>`;
   } else {
@@ -434,7 +441,6 @@ const showCommunity = function (data) {
     listenToLikeButton();
     listenToAddCommentButton();
   }
-  document.querySelector('.js-ommunity').innerHTML = html;
 };
 
 const listenToAddCommentButton = function () {
@@ -685,12 +691,17 @@ const getRopesSelect = async function () {
 };
 
 const showRopesDashboard = function (ropes) {
-  let html = ``;
-  for (let i = 0; i < ropes.length; -i++) {
-    html += `<option value="${ropes[i].rope}">Touw ${ropes[i].rope}</option>`;
+  if (ropes.length == 0) {
+    document.querySelector('.js-select-rope').innerHTML = `<option value="0">Geen touwen</option>`;
+    listenToUIDashboard();
+  } else {
+    let html = ``;
+    for (let i = 0; i < ropes.length; -i++) {
+      html += `<option value="${ropes[i].rope}">Touw ${ropes[i].rope}</option>`;
+    }
+    document.querySelector('.js-select-rope').innerHTML = html;
+    getRouteSelect();
   }
-  document.querySelector('.js-select-rope').innerHTML = html;
-  getRouteSelect();
 };
 
 const getRouteSelect = async function () {
@@ -702,6 +713,7 @@ const getRouteSelect = async function () {
     showRoutesDashboard(data);
   } else {
     document.querySelector('.js-select-route').innerHTML = `<option value="0" data-builder="0">Geen routes</option>`;
+    listenToUIDashboard();
   }
 };
 
@@ -1110,13 +1122,11 @@ const getGripsCoords = function () {
 
 // #region ***  User / login  ***********
 const GetLogin = async function () {
-  let url = 'https://meeclimb.be/auth/login';
-  try {
-    currentuser = await fetchPromise(url);
-    showLogin();
-  } catch (error) {
-    currentuser = null;
-  }
+  // let url = 'https://meeclimb.be/auth/login';
+  let url = 'http://127.0.0.1:5500/js/dummy.json';
+  currentuser = await fetchPromise(url);
+  console.log(currentuser);
+  showLogin();
 };
 
 const showLogin = function () {
@@ -1156,20 +1166,22 @@ const showLogin = function () {
   if (document.querySelector('#account')) {
     showDetailUser();
     if (currentuser.rfid == '00000') {
-      document.querySelector('.js-link-rfid').addEventListener('click', function () {
+      document.querySelector('.js-link-rfid').addEventListener('click', async function () {
         alert('scan nu je kaartje');
         const url = 'https://meeclimb.be/api/user/onboarding/process';
         const data = {};
-        fetchPromise(url, 'POST', data);
+        await fetchPromise(url, 'POST', data);
       });
     } else {
       document.querySelector('.js-link-rfid').style.display = 'none';
     }
   }
-  document.querySelector('.js-button-more').href = `http://127.0.0.1:5500/index.html`;
+  if (document.querySelector('#index')) {
+    document.querySelector('.js-button-more').href = `http://127.0.0.1:5500/index.html`;
+  }
 };
 
-const showDetailUser = function (user) {
+const showDetailUser = function () {
   document.querySelector('.js-profile-name').innerHTML = `${currentuser.firstname} ${currentuser.lastname}`;
   document.querySelector('.js-profile-nickname').innerHTML = `${currentuser.nickname}`;
   document.querySelector('.js-profile-img').src = `${currentuser.image}`;
@@ -1293,7 +1305,6 @@ const createSocketConnection = async function () {
 
   ws.onmessage = (event) => {
     console.log(`[Server] ${event.data}`);
-    listenToAcceptButton(event);
   };
 
   ws.onclose = () => {
@@ -1323,30 +1334,44 @@ const acceptFriendRequest = async function () {
 };
 
 const listenToHome = function () {
-  const button = document.querySelector('.js-home');
-  button.addEventListener('click', function () {
-    window.location.href = 'https://meeclimb.be/home';
+  const button = document.querySelectorAll('.js-home');
+  button.forEach((element) => {
+    element.addEventListener('click', function () {
+      window.location.href = 'https://meeclimb.be/home';
+    });
   });
 };
 
 const listenToEditWall = function () {
-  const button = document.querySelector('.js-edit-wall');
-  button.addEventListener('click', function () {
-    document.querySelector('.js-main-edit').classList.remove('u-hide');
-    document.querySelector('.js-main-setting').classList.add('u-hide');
-    document.querySelector('.js-label-edit').classList.add('c-db-option--selected');
-    document.querySelector('.js-label-setting').classList.remove('c-db-option--selected');
+  const button = document.querySelectorAll('.js-edit-wall');
+  button.forEach((element) => {
+    element.addEventListener('click', function () {
+      document.querySelector('.js-main-edit').classList.remove('u-hide');
+      document.querySelector('.js-main-setting').classList.add('u-hide');
+      document.querySelectorAll('.js-label-edit').forEach(function (e) {
+        e.target.classList.add('c-db-option--selected');
+      });
+      document.querySelector('.js-label-setting').forEach(function (e) {
+        e.classList.remove('c-db-option--selected');
+      });
+    });
   });
 };
 
 const listentToSetting = function () {
-  const button = document.querySelector('.js-setting');
-  button.addEventListener('click', function () {
-    document.querySelector('.js-main-edit').classList.add('u-hide');
-    document.querySelector('.js-main-setting').classList.remove('u-hide');
-    document.querySelector('.js-label-edit').classList.remove('c-db-option--selected');
-    document.querySelector('.js-label-setting').classList.add('c-db-option--selected');
-    getAllUsers();
+  const button = document.querySelectorAll('.js-setting');
+  button.forEach((element) => {
+    element.addEventListener('click', function () {
+      document.querySelector('.js-main-edit').classList.add('u-hide');
+      document.querySelector('.js-main-setting').classList.remove('u-hide');
+      document.querySelectorAll('.js-label-edit').forEach(function (e) {
+        e.target.classList.remove('c-db-option--selected');
+      });
+      document.querySelector('.js-label-setting').forEach(function (e) {
+        e.classList.add('c-db-option--selected');
+      });
+      getAllUsers();
+    });
   });
 };
 
@@ -1393,7 +1418,7 @@ const removeUser = async function (event) {
 // #region ***  Init / DOMContentLoaded                  ***********
 document.addEventListener('DOMContentLoaded', async function () {
   toggleNav();
-  await GetLogin();
+  GetLogin();
   createSocketConnection();
   listenToNotification();
 
