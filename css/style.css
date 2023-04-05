@@ -2909,3 +2909,13 @@ mobile dasboard navbar
   border-radius: 3px;
   margin-bottom: 8px;
 }
+
+.c-overlay--invite {
+  width: 100%;
+  height: 100dvh;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
